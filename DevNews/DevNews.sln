@@ -7,7 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{CB211192-0C7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{69715175-964D-4E31-8B56-AB624C3BF41B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevNews.Server", "DevNews.Server\DevNews.Server.csproj", "{6BA5B329-B5DA-43AB-9A84-D2EAE410091A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevNews.Server", "DevNews.Server\DevNews.Server.csproj", "{6BA5B329-B5DA-43AB-9A84-D2EAE410091A}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "DevNews.Client", "DevNews.Client\DevNews.Client.njsproj", "{3C485CDF-73C3-426F-8346-B0F24C2CDF51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{6BA5B329-B5DA-43AB-9A84-D2EAE410091A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BA5B329-B5DA-43AB-9A84-D2EAE410091A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BA5B329-B5DA-43AB-9A84-D2EAE410091A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C485CDF-73C3-426F-8346-B0F24C2CDF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C485CDF-73C3-426F-8346-B0F24C2CDF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C485CDF-73C3-426F-8346-B0F24C2CDF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C485CDF-73C3-426F-8346-B0F24C2CDF51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -26,6 +32,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{69715175-964D-4E31-8B56-AB624C3BF41B} = {CB211192-0C77-46DC-BCAA-85F9B35B5C0F}
 		{6BA5B329-B5DA-43AB-9A84-D2EAE410091A} = {69715175-964D-4E31-8B56-AB624C3BF41B}
+		{3C485CDF-73C3-426F-8346-B0F24C2CDF51} = {69715175-964D-4E31-8B56-AB624C3BF41B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2FD0411-424E-4E82-AAF5-99FB273F999C}
