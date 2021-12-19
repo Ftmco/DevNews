@@ -1,3 +1,0 @@
-w# DevNews.Client
-
-
