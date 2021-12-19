@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ArticleNews.DataLayer\ArticleNews.DataLayer.csproj" />
+    <ProjectReference Include="..\ArticleNews.Entity\ArticleNews.Entity.csproj" />
+    <ProjectReference Include="..\ArticleNews.ViewModel\ArticleNews.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>
