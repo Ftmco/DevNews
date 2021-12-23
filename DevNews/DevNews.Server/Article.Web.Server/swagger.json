@@ -1,0 +1,816 @@
+{
+  "openapi": "3.0.1",
+
+  "info": {
+    "title": "Identity.Web.Server",
+    "version": "1.0"
+  },
+
+  "paths": {
+
+    "/api/Account/Login": {
+
+      "post": {
+
+        "tags": [
+          "Account"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/LoginViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/LoginViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/LoginViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Account/SignUp": {
+
+      "post": {
+
+        "tags": [
+          "Account"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/SignUpViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/SignUpViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/SignUpViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Account/LogOut": {
+
+      "post": {
+
+        "tags": [
+          "Account"
+        ],
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Account/ChangePassword": {
+
+      "post": {
+
+        "tags": [
+          "Account"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Account/ForgotPassword": {
+
+      "post": {
+
+        "tags": [
+          "Account"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Account/ResetPassword": {
+
+      "post": {
+
+        "tags": [
+          "Account"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Application/GetApplications": {
+
+      "get": {
+
+        "tags": [
+          "Application"
+        ],
+
+        "parameters": [
+
+          {
+            "name": "page",
+            "in": "query",
+
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+
+          {
+            "name": "count",
+            "in": "query",
+
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Application/Create": {
+
+      "post": {
+
+        "tags": [
+          "Application"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/CUApplicationViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/CUApplicationViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/CUApplicationViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Application/Update": {
+
+      "post": {
+
+        "tags": [
+          "Application"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/CUApplicationViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/CUApplicationViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/CUApplicationViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Application/Delete": {
+
+      "post": {
+
+        "tags": [
+          "Application"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/DeleteApplicationViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/DeleteApplicationViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/DeleteApplicationViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Application/GetUsers": {
+
+      "post": {
+
+        "tags": [
+          "Application"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Profile/GetProfile": {
+
+      "post": {
+
+        "tags": [
+          "Profile"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationRequest"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+
+    "/api/Profile/UpdateProfile": {
+
+      "post": {
+
+        "tags": [
+          "Profile"
+        ],
+
+        "requestBody": {
+
+          "content": {
+
+            "application/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileViewModel"
+              }
+            },
+
+            "text/json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileViewModel"
+              }
+            },
+
+            "application/*+json": {
+
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileViewModel"
+              }
+            }
+          }
+        },
+
+        "responses": {
+
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+
+    "schemas": {
+
+      "ApplicationRequest": {
+        "type": "object",
+
+        "properties": {
+
+          "apiKey": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "ChangePasswordViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "currentPassword": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "CUApplicationViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "file": {
+            "$ref": "#/components/schemas/FileBase64ViewModel"
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "DeleteApplicationViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "FileBase64ViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "extension": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "base64": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "ForgotPasswordViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "userName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "LoginViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "application": {
+            "$ref": "#/components/schemas/ApplicationRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "ResetPasswordViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "SignUpViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "mobileNo": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "application": {
+            "$ref": "#/components/schemas/ApplicationRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "UpdateProfileViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "application": {
+            "$ref": "#/components/schemas/ApplicationRequest"
+          },
+
+          "image": {
+            "$ref": "#/components/schemas/FileBase64ViewModel"
+          },
+
+          "json": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "user": {
+            "$ref": "#/components/schemas/UserViewModel"
+          }
+        },
+        "additionalProperties": false
+      },
+
+      "UserViewModel": {
+        "type": "object",
+
+        "properties": {
+
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "mobileNo": {
+            "type": "string",
+            "nullable": true
+          },
+
+          "registerDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
