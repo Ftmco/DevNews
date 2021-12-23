@@ -46,6 +46,14 @@
     <Folder Include="public\images\" />
     <Folder Include="routes\" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="data base\context\index.ts" />
+    <TypeScriptCompile Include="data base\context\setup.ts" />
+    <TypeScriptCompile Include="data base\models\article.ts" />
+    <TypeScriptCompile Include="data base\models\articleGroup.ts" />
+    <TypeScriptCompile Include="data base\models\group.ts" />
+    <TypeScriptCompile Include="routes\article.ts" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
     <VisualStudio>

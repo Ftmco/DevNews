@@ -2,6 +2,8 @@ import * as express from 'express';
 import { AddressInfo } from "net";
 import * as path from 'path';
 import * as bodyParser from 'body-parser'
+import { log } from 'console';
+import sequelize from './data base/context/index';
 
 
 const app = express();
@@ -50,9 +52,22 @@ app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-
     })
 });
 
+//Data Base 
+async function assertDataBaseOk() {
+    log("Checking Data Base Connection ...");
+    try {
+        await sequelize.authenticate()
+        log("Data Base Connected Successfully!")
+    } catch (e) {
+        log("Unable To Connect Data Base ")
+        log(e.message)
+        process.exit(1)
+    }
+}
+
 app.set('port', process.env.PORT || 3000);
 
-const server = app.listen(app.get('port'), function () {
-
+const server = app.listen(app.get('port'), async () => {
     console.log(`Application Started On ${(server.address() as AddressInfo).port}`)
+    await assertDataBaseOk()
 });
