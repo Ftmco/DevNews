@@ -12,11 +12,14 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
+    "axios": "^0.24.0",
     "register-service-worker": "^1.7.1",
     "vue": "2.6.12",
     "vue-class-component": "7.2.6",
     "vue-property-decorator": "9.1.2",
-    "vuetify": "^2.4.0"
+    "vue-router": "^3.5.3",
+    "vuetify": "^2.4.0",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.5.13",
