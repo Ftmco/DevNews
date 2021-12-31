@@ -5,9 +5,8 @@ module.exports = (sequelize) => {
     sequelize.define("Article", {
         id: {
             type: sequelize_1.DataTypes.UUID,
-            autoIncrement: true,
-            primaryKey: true,
-            allowNull: false
+            defaultValue: sequelize_1.DataTypes.UUIDV1,
+            primaryKey: true
         }
     });
 };

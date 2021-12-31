@@ -10,7 +10,9 @@ const sequelize = new Sequelize("ArticleDb", "fteam", "1G14ijWA", {
 const modelDefines = [
     require("../models/article"),
     require("../models/articleGroup"),
-    require("../models/group")
+    require("../models/group"),
+    require("../models/user/user"),
+    require("../models/user/session"),
 ];
 
 for (const modelDefine of modelDefines)
@@ -18,6 +20,6 @@ for (const modelDefine of modelDefines)
 
 applyExtraSetup(sequelize)
 
-sequelize.sync({ force: true })
+//sequelize.sync({ force:true })
 
 export default sequelize

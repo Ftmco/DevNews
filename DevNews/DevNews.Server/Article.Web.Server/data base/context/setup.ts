@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 export default function applyExtraSetup(sequelize: Sequelize) {
-    const { Group, Article, ArticleGroups } = sequelize.models;
+    const { Group, Article, ArticleGroups, User, Session } = sequelize.models;
 
     Group.hasMany(Group);
     Group.belongsTo(Group);
@@ -11,5 +11,8 @@ export default function applyExtraSetup(sequelize: Sequelize) {
 
     Group.hasMany(ArticleGroups)
     ArticleGroups.belongsTo(Group)
+
+    User.hasMany(Session)
+    Session.belongsTo(User)
 
 }

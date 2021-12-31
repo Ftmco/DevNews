@@ -5,8 +5,7 @@ module.exports = (sequelize) => {
     sequelize.define("ArticleGroups", {
         id: {
             type: DataTypes.UUID,
-            autoIncrement: true,
-            allowNull: false,
+            defaultValue: DataTypes.UUIDV1,
             primaryKey: true
         }
     })

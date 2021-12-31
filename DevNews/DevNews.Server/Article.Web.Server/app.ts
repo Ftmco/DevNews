@@ -18,7 +18,19 @@ app.use(express.urlencoded({ limit: '100mb' }))
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }))
 app.use(bodyParser.json({ limit: '100mb' }))
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/docs",swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Methods", "*");
+    next();
+});
+
+//Application Routes 
+import adminGroup from './routes/admin/group'
+app.use("/api/admin/group", adminGroup)
+import account from './routes/client/account'
+app.use("/api/account", account)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -55,7 +67,7 @@ app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-
 //Data Base 
 async function assertDataBaseOk() {
     log("Checking Data Base Connection ...");
-    try {
+    try {        
         await sequelize.authenticate()
         log("Data Base Connected Successfully!")
     } catch (e) {
