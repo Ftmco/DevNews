@@ -32,6 +32,7 @@
   <ItemGroup>
     <None Include="app.ts" />
     <Content Include="service\base\Base.ts" />
+    <Content Include="service\service\Profile.ts" />
     <Content Include="swagger.json">
       <SubType>Code</SubType>
     </Content>
@@ -43,6 +44,7 @@
     <Folder Include="data base\" />
     <Folder Include="data base\models\" />
     <Folder Include="data base\context\" />
+    <Folder Include="data base\models\channle\" />
     <Folder Include="data base\models\user\" />
     <Folder Include="model\" />
     <Folder Include="service\" />
@@ -60,6 +62,8 @@
     <TypeScriptCompile Include="data base\context\setup.ts" />
     <TypeScriptCompile Include="data base\models\article.ts" />
     <TypeScriptCompile Include="data base\models\articleGroup.ts" />
+    <TypeScriptCompile Include="data base\models\channle\channle.ts" />
+    <TypeScriptCompile Include="data base\models\channle\channleUsers.ts" />
     <TypeScriptCompile Include="data base\models\group.ts" />
     <TypeScriptCompile Include="data base\models\user\session.ts" />
     <TypeScriptCompile Include="data base\models\user\user.ts" />
@@ -67,8 +71,10 @@
     <TypeScriptCompile Include="model\api.ts" />
     <TypeScriptCompile Include="routes\admin\group.ts" />
     <TypeScriptCompile Include="routes\client\account.ts" />
+    <TypeScriptCompile Include="routes\client\profile.ts" />
     <TypeScriptCompile Include="service\base\IBase.ts" />
     <TypeScriptCompile Include="service\rule\IAccount.ts" />
+    <TypeScriptCompile Include="service\rule\IProfile.ts" />
     <TypeScriptCompile Include="service\service\Account.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

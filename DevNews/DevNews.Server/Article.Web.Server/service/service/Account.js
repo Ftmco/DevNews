@@ -19,6 +19,25 @@ class Account {
         this._userBase = new Base_1.default(context_1.default, "User");
         this._sessionBase = new Base_1.default(context_1.default, "Session");
     }
+    getUserBySession(header) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sessionValue = header["Token"];
+            let session = yield this._sessionBase.findOne({
+                where: {
+                    value: sessionValue
+                }
+            });
+            if (session != null) {
+                let user = yield this._userBase.findOne({
+                    where: {
+                        id: session.UserId
+                    }
+                });
+                return user;
+            }
+            return null;
+        });
+    }
     activation(activation) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

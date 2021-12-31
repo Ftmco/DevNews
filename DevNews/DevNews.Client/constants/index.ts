@@ -5,12 +5,19 @@ export const bottomItems = [
         title: 'Home',
         icon: 'mdi-home',
         to: '/'
-    }, {
+    },
+    {
         id: 1,
+        title: 'Channels',
+        icon: 'mdi-newspaper-variant-multiple-outline',
+        to: '/channel/channels'
+    },
+    {
+        id: 2,
         title: 'Profile',
         icon: 'mdi-account',
         to: '/account/profile'
-    }
+    },
 ]
 
 export const navigationItems = [
@@ -25,6 +32,13 @@ export const navigationItems = [
         title: 'Profile',
         icon: 'mdi-account',
         to: '/account/profile'
+    },
+
+    {
+        id: 2,
+        title: 'Channels',
+        icon: 'mdi-newspaper-variant-multiple-outline',
+        to: '/channel/channels'
     },
 
 ]

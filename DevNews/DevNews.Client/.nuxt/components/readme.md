@@ -6,9 +6,10 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
+- `<AccountBase>` | `<account-base>` (components/account/AccountBase.vue)
+- `<ChannelListItem>` | `<channel-list-item>` (components/channel/listItem.vue)
 - `<CoreAppBar>` | `<core-app-bar>` (components/core/AppBar.vue)
 - `<CoreBottomNavigation>` | `<core-bottom-navigation>` (components/core/BottomNavigation.vue)
 - `<CoreNavigationDrawer>` | `<core-navigation-drawer>` (components/core/NavigationDrawer.vue)
 - `<CoreTheLoading>` | `<core-the-loading>` (components/core/TheLoading.vue)
 - `<CoreTheSnackbar>` | `<core-the-snackbar>` (components/core/TheSnackbar.vue)
-- `<AccountBase>` | `<account-base>` (components/account/AccountBase.vue)

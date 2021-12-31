@@ -11,6 +11,8 @@ const modelDefines = [
     require("../models/article"),
     require("../models/articleGroup"),
     require("../models/group"),
+    require("../models/channle/channle"),
+    require("../models/channle/channleUsers"),
     require("../models/user/user"),
     require("../models/user/session"),
 ];
@@ -20,6 +22,6 @@ for (const modelDefine of modelDefines)
 
 applyExtraSetup(sequelize)
 
-//sequelize.sync({ force:true })
+//sequelize.sync({ force: true })
 
 export default sequelize

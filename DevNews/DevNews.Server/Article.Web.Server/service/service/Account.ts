@@ -7,6 +7,7 @@ import IBase from "../base/IBase";
 import IAccount from "../rule/IAccount";
 import * as crypto from 'crypto'
 import { log } from "console";
+import { IncomingHttpHeaders } from "http2";
 
 export default class Account implements IAccount {
 
@@ -17,6 +18,24 @@ export default class Account implements IAccount {
     constructor() {
         this._userBase = new Base(sequelize, "User")
         this._sessionBase = new Base(sequelize, "Session")
+    }
+
+    async getUserBySession(header: IncomingHttpHeaders) {
+        let sessionValue = header["Token"]
+        let session = await this._sessionBase.findOne({
+            where: {
+                value: sessionValue
+            }
+        })
+        if (session != null) {
+            let user = await this._userBase.findOne({
+                where: {
+                    id: session.UserId
+                }
+            })
+            return user
+        }
+        return null;
     }
 
     async activation(activation: Activation) {
@@ -79,7 +98,7 @@ export default class Account implements IAccount {
     async login(login: Login) {
         try {
             let user = await this.getUserByUserName(login.userName)
-            
+
             if (user != null) {
                 user = user.get()
                 if (user.isActive && user.password == this.createHash(login.password)) {

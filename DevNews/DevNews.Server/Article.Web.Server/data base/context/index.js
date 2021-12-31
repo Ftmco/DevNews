@@ -11,12 +11,14 @@ const modelDefines = [
     require("../models/article"),
     require("../models/articleGroup"),
     require("../models/group"),
+    require("../models/channle/channle"),
+    require("../models/channle/channleUsers"),
     require("../models/user/user"),
     require("../models/user/session"),
 ];
 for (const modelDefine of modelDefines)
     modelDefine(sequelize);
 (0, setup_1.default)(sequelize);
-//sequelize.sync({ force:true })
+//sequelize.sync({ force: true })
 exports.default = sequelize;
 //# sourceMappingURL=index.js.map

@@ -7,6 +7,8 @@
         <Nuxt />
       </v-container>
     </v-main>
+    <br/>
+    <br/>
     <bottom-navigation />
     <TheSnackbar />
     <TheLoading />

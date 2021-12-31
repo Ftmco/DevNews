@@ -14,6 +14,20 @@
     "_name": "_4adae7ac"
   },
   {
+    "name": "channel-channel",
+    "path": "/channel/channel",
+    "component": "E:\\\\project\\\\Teams\\\\FTeam\\\\DevNews\\\\DevNews\\\\DevNews.Client\\\\pages\\\\channel\\\\channel.vue",
+    "chunkName": "pages/channel/channel",
+    "_name": "_307b1220"
+  },
+  {
+    "name": "channel-channels",
+    "path": "/channel/channels",
+    "component": "E:\\\\project\\\\Teams\\\\FTeam\\\\DevNews\\\\DevNews\\\\DevNews.Client\\\\pages\\\\channel\\\\channels.vue",
+    "chunkName": "pages/channel/channels",
+    "_name": "_14380833"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "E:\\\\project\\\\Teams\\\\FTeam\\\\DevNews\\\\DevNews\\\\DevNews.Client\\\\pages\\\\index.vue",

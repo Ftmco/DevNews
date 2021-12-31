@@ -1,4 +1,10 @@
 {
+  "AccountBase": {
+    "description": "Auto imported from components/account/AccountBase.vue"
+  },
+  "ChannelListItem": {
+    "description": "Auto imported from components/channel/listItem.vue"
+  },
   "CoreAppBar": {
     "description": "Auto imported from components/core/AppBar.vue"
   },
@@ -13,8 +19,5 @@
   },
   "CoreTheSnackbar": {
     "description": "Auto imported from components/core/TheSnackbar.vue"
-  },
-  "AccountBase": {
-    "description": "Auto imported from components/account/AccountBase.vue"
   }
 }
