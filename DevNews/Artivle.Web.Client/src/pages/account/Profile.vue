@@ -75,7 +75,6 @@ export default Vue.extend({
     profileService: new ProfileService(apiCall),
     profile: {
       image: "",
-      json: {},
       user: {},
     },
     rules: rules,
@@ -89,11 +88,7 @@ export default Vue.extend({
         .getProfile()
         .then((res) => {
           if (res.status)
-            this.profile = {
-              image: res.result.image,
-              json: res.result.json,
-              user: res.result.user,
-            };
+            this.profile = res.result;
           this.showMessage(res.title);
         })
         .catch((e) => {

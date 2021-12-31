@@ -21,7 +21,7 @@ class Account {
     }
     getUserBySession(header) {
         return __awaiter(this, void 0, void 0, function* () {
-            let sessionValue = header["Token"];
+            let sessionValue = header["token"];
             let session = yield this._sessionBase.findOne({
                 where: {
                     value: sessionValue

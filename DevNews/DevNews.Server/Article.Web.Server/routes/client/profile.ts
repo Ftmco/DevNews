@@ -9,3 +9,5 @@ router.get("/Get", async (req: Request, res: Response) => {
     res.json(profile)
     res.end()
 })
+
+export default router;

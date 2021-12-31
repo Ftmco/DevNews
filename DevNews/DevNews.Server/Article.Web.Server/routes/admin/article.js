@@ -10,13 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-const Profile_1 = require("../../service/service/Profile");
 const router = express.Router();
-const _profile = new Profile_1.default();
-router.get("/Get", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let profile = yield _profile.get(req.headers);
-    res.json(profile);
-    res.end();
+router.get("/Get", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    next();
 }));
-exports.default = router;
-//# sourceMappingURL=profile.js.map
+//# sourceMappingURL=article.js.map

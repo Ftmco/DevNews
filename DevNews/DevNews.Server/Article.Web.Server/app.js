@@ -34,6 +34,8 @@ const group_1 = require("./routes/admin/group");
 app.use("/api/admin/group", group_1.default);
 const account_1 = require("./routes/client/account");
 app.use("/api/account", account_1.default);
+const profile_1 = require("./routes/client/profile");
+app.use("/api/profile", profile_1.default);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
     const err = new Error('Not Found');
@@ -77,7 +79,7 @@ function assertDataBaseOk() {
         }
     });
 }
-app.set('port', process.env.PORT || 3000);
+app.set('port', 3000);
 const server = app.listen(app.get('port'), () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(`Application Started On ${server.address().port}`);
     yield assertDataBaseOk();

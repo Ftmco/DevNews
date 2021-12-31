@@ -21,7 +21,7 @@ export default class Account implements IAccount {
     }
 
     async getUserBySession(header: IncomingHttpHeaders) {
-        let sessionValue = header["Token"]
+        let sessionValue = header["token"]
         let session = await this._sessionBase.findOne({
             where: {
                 value: sessionValue

@@ -19,7 +19,7 @@ export default class ProfileService implements IProfileRules {
 
     async getProfile() {
         try {
-            let request = await this._axios.post("Profile/GetProfile", this.application)
+            let request = await this._axios.get("Profile/Get")
             let response = await request.data;
             if (response.status && response.result.json != "")
                 response.result.json = JSON.parse(response.result.json)

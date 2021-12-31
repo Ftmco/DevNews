@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.378a87ae66b3eb38030d13b5baa49561.js"
+  "/precache-manifest.b83daab0f5027674f9dcd194f5e99b2a.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "artivle.web.client"});

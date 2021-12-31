@@ -1,7 +1,6 @@
 export type Login = {
     userName: string;
     password: string;
-    application: Application
 }
 
 export type SignUp = {
@@ -9,11 +8,10 @@ export type SignUp = {
     fullName: string;
     password: string;
     email: string;
-    mobileNo: string;
-    application: Application
+    phoneNumber: string;
 }
 
-export type Application = {
-    apikey: string;
-    password: string;
+export type Activation = {
+    userName: string;
+    activeCode: string;
 }

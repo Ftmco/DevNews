@@ -31,7 +31,8 @@ export const navigationItems = [
         title: 'Home',
         icon: 'mdi-home',
         to: '/'
-    }, {
+    },
+    {
         id: 1,
         title: 'Channels',
         icon: 'mdi-newspaper-variant-multiple',
@@ -42,7 +43,8 @@ export const navigationItems = [
         title: 'Search',
         icon: 'mdi-magnify',
         to: '/search'
-    }, {
+    },
+    {
         id: 3,
         title: 'Profile',
         icon: 'mdi-account',
