@@ -21,17 +21,12 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { navigationItems } from "~/constants";
 export default Vue.extend({
   data: () => ({
     drawer: false,
     miniVariant: false,
-    items: [
-      {
-        icon: "mdi-home",
-        title: "Home",
-        to: "/",
-      },
-    ],
+    items: navigationItems,
   }),
   created() {
     this.$root.$refs.NavigationDrawer = this;

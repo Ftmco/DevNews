@@ -51,11 +51,7 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
-    workbox: {
-      offline: true,
-      autoRegister: '/sw.js',
-      enabled: true
-    },
+
     manifest: {
       lang: 'en',
       background_color: '#121212',

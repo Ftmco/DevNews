@@ -9,3 +9,6 @@ You can directly use them in pages and other components without the need to impo
 - `<CoreAppBar>` | `<core-app-bar>` (components/core/AppBar.vue)
 - `<CoreBottomNavigation>` | `<core-bottom-navigation>` (components/core/BottomNavigation.vue)
 - `<CoreNavigationDrawer>` | `<core-navigation-drawer>` (components/core/NavigationDrawer.vue)
+- `<CoreTheLoading>` | `<core-the-loading>` (components/core/TheLoading.vue)
+- `<CoreTheSnackbar>` | `<core-the-snackbar>` (components/core/TheSnackbar.vue)
+- `<AccountBase>` | `<account-base>` (components/account/AccountBase.vue)

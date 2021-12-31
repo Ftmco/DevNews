@@ -7,5 +7,14 @@
   },
   "CoreNavigationDrawer": {
     "description": "Auto imported from components/core/NavigationDrawer.vue"
+  },
+  "CoreTheLoading": {
+    "description": "Auto imported from components/core/TheLoading.vue"
+  },
+  "CoreTheSnackbar": {
+    "description": "Auto imported from components/core/TheSnackbar.vue"
+  },
+  "AccountBase": {
+    "description": "Auto imported from components/account/AccountBase.vue"
   }
 }
