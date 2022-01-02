@@ -108,6 +108,7 @@
     <Content Include="src\pages\account\Login.vue" />
     <Content Include="src\pages\account\Profile.vue" />
     <Content Include="src\pages\account\SignUp.vue" />
+    <Content Include="src\pages\channel\channles.vue" />
     <Content Include="src\pages\home\index.vue" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
@@ -136,6 +137,7 @@
     <Folder Include="src\pages\" />
     <Folder Include="src\pages\account\" />
     <Folder Include="src\pages\home\" />
+    <Folder Include="src\pages\channel\" />
     <Folder Include="src\router\" />
     <Folder Include="src\router\middleware\" />
     <Folder Include="src\services\" />
