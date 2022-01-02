@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { messages } from "@/constants";
-import { Login, SignUp,  Activation } from "../models/account.model";
+import { Login, SignUp, Activation } from "../models/account.model";
 import IAccountRule from "../rules/account.rule";
 import { changeConfigHeader } from "..";
 import { message } from "ant-design-vue";
@@ -8,7 +8,7 @@ import { message } from "ant-design-vue";
 export default class AccountServiec implements IAccountRule {
 
     private readonly _axios: AxiosInstance;
-      
+
     constructor(axios: AxiosInstance) {
         this._axios = axios;
     }
@@ -18,7 +18,7 @@ export default class AccountServiec implements IAccountRule {
         try {
             let request = await this._axios.post("/Account/Activation", active)
             return await request.data
-        } catch (e:any) {
+        } catch (e: any) {
             return messages.netWorkError(e.message)
         }
     }
@@ -50,13 +50,13 @@ export default class AccountServiec implements IAccountRule {
     async LogOut() {
         try {
             let request = await this._axios.get("Account/Logout")
-            let response = await request.data
-            if (response.status) {
-                localStorage.removeItem("I-Authentication")
-            }
+            let response = await request.data            
             return response
-        } catch (e:any) {
+        } catch (e: any) {
             return messages.netWorkError(e.message);
+        }
+        finally{
+            localStorage.removeItem('Token')
         }
     }
 }
