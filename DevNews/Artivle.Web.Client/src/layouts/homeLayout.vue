@@ -1,9 +1,11 @@
 <template>
     <div>
         <AppBar />
+        
         <v-main>
             <router-view />
         </v-main>
+        <br/><br/>
         <TheBottomNavigation />
         <TheSnackbar />
         <TheLoading />
