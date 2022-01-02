@@ -22,18 +22,21 @@ export default class Account implements IAccount {
 
     async getUserBySession(header: IncomingHttpHeaders) {
         let sessionValue = header["token"]
-        let session = await this._sessionBase.findOne({
-            where: {
-                value: sessionValue
-            }
-        })
-        if (session != null) {
-            let user = await this._userBase.findOne({
+        if (sessionValue != undefined) {
+            let session = await this._sessionBase.findOne({
                 where: {
-                    id: session.UserId
+                    value: sessionValue
                 }
             })
-            return user
+            if (session != null) {
+                let user = await this._userBase.findOne({
+                    where: {
+                        id: session.UserId
+                    }
+                })
+                return user
+            }
+            return null
         }
         return null;
     }
