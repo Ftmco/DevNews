@@ -11,8 +11,9 @@ const modelDefines = [
     require("../models/article"),
     require("../models/articleGroup"),
     require("../models/group"),
-    require("../models/channle/channle"),
-    require("../models/channle/channleUsers"),
+    require("../models/channle/channel"),
+    require("../models/channle/channelUsers"),
+    require("../models/channle/channelAvatar"),
     require("../models/user/user"),
     require("../models/user/session"),
 ];
