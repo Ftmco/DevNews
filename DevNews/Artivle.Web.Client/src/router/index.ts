@@ -28,6 +28,15 @@ const routes: RouteConfig[] = [
                 })
             },
             {
+                path: "/channels",
+                name: "Channels",
+                component: () => import("@/pages/channel/channels.vue"),
+                meta: (route: Route) => ({
+                    route: route,
+                    title: 'Channels'
+                })
+            },
+            {
                 path: "/account/login",
                 name: "Login",
                 component: () => import("@/pages/account/Login.vue"),
