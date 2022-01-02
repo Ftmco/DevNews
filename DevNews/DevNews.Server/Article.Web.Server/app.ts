@@ -33,6 +33,8 @@ import account from './routes/client/account'
 app.use("/api/account", account)
 import profile from './routes/client/profile'
 app.use("/api/profile", profile)
+import channel from "./routes/client/channel"
+app.use("/api/channel", channel)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
