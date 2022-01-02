@@ -1,5 +1,3 @@
-import { Application } from "@/api/models/account.model"
-
 export const bottomItems = [
     {
         id: 0,
