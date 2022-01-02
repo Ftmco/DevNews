@@ -13,6 +13,10 @@ export default class Base implements IBase {
         this._dbSet = model
     }
 
+    async getAllEntity() {
+        return await this._db.models[this._dbSet].findAll();
+    }
+
     async upsert(values: any, options?: UpsertOptions<any>) {
         return await this._db.models[this._dbSet].upsert(values, options)
     }
@@ -22,8 +26,8 @@ export default class Base implements IBase {
     }
 
     async getAll(where: FindOptions<any>) {
-        let data = where != null ? await this._db.models[this._dbSet].findAll(where) : await this._db.models[this._dbSet].findAll()
-        return data
+        return await this._db.models[this._dbSet].findAll(where) 
     }
 
+    
 }
