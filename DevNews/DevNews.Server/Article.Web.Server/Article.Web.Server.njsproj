@@ -31,6 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
+    <Content Include="public\files\profile\b53630fd-7e07-4660-bcde-fa8093e653561641153896520.png" />
+    <Content Include="public\files\profile\null.png" />
+    <Content Include="routes\client\channel.ts" />
     <Content Include="service\base\Base.ts" />
     <Content Include="service\service\Profile.ts" />
     <Content Include="swagger.json">
@@ -47,9 +50,11 @@
     <Folder Include="data base\models\channle\" />
     <Folder Include="data base\models\user\" />
     <Folder Include="model\" />
+    <Folder Include="public\files\channel\" />
+    <Folder Include="public\files\profile\" />
     <Folder Include="service\" />
     <Folder Include="public\" />
-    <Folder Include="public\images\" />
+    <Folder Include="public\files\" />
     <Folder Include="routes\" />
     <Folder Include="routes\admin\" />
     <Folder Include="routes\client\" />
@@ -62,20 +67,26 @@
     <TypeScriptCompile Include="data base\context\setup.ts" />
     <TypeScriptCompile Include="data base\models\article.ts" />
     <TypeScriptCompile Include="data base\models\articleGroup.ts" />
-    <TypeScriptCompile Include="data base\models\channle\channle.ts" />
-    <TypeScriptCompile Include="data base\models\channle\channleUsers.ts" />
+    <TypeScriptCompile Include="data base\models\channle\channel.ts" />
+    <TypeScriptCompile Include="data base\models\channle\channelAvatar.ts" />
+    <TypeScriptCompile Include="data base\models\channle\channelUsers.ts" />
     <TypeScriptCompile Include="data base\models\group.ts" />
     <TypeScriptCompile Include="data base\models\user\session.ts" />
     <TypeScriptCompile Include="data base\models\user\user.ts" />
     <TypeScriptCompile Include="model\account.ts" />
     <TypeScriptCompile Include="model\api.ts" />
+    <TypeScriptCompile Include="model\channel.ts" />
     <TypeScriptCompile Include="routes\admin\group.ts" />
     <TypeScriptCompile Include="routes\client\account.ts" />
     <TypeScriptCompile Include="routes\client\profile.ts" />
     <TypeScriptCompile Include="service\base\IBase.ts" />
     <TypeScriptCompile Include="service\rule\IAccount.ts" />
+    <TypeScriptCompile Include="service\rule\IChannel.ts" />
+    <TypeScriptCompile Include="service\rule\IFile.ts" />
     <TypeScriptCompile Include="service\rule\IProfile.ts" />
     <TypeScriptCompile Include="service\service\Account.ts" />
+    <TypeScriptCompile Include="service\service\Channel.ts" />
+    <TypeScriptCompile Include="service\service\File.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

@@ -10,26 +10,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-const Profile_1 = require("../../service/service/Profile");
+const Channel_1 = require("../../service/service/Channel");
 const router = express.Router();
-const _profile = new Profile_1.default();
+const _channel = new Channel_1.default();
 router.get("/Get", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let profile = yield _profile.get(req.headers);
-    res.json(profile);
+    let channels = yield _channel.getUserChannels(req.headers);
+    res.json(channels);
     res.end();
 }));
-router.post("/Update", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let body = req.body;
-    let profile = {
-        image: body.image,
-        fullName: body.fullName,
-        email: body.email,
-        phoneNumber: body.phoneNumber,
-        userName: body.userName
-    };
-    let updateProfile = yield _profile.update(req.headers, profile);
-    res.json(updateProfile);
+router.get("/GetTemproryChannels", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let temproryItems = yield _channel.getTemporaryChannelItems(req.headers);
+    res.json(temproryItems);
     res.end();
 }));
 exports.default = router;
-//# sourceMappingURL=profile.js.map
+//# sourceMappingURL=channel.js.map

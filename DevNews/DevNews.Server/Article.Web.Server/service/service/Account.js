@@ -22,18 +22,21 @@ class Account {
     getUserBySession(header) {
         return __awaiter(this, void 0, void 0, function* () {
             let sessionValue = header["token"];
-            let session = yield this._sessionBase.findOne({
-                where: {
-                    value: sessionValue
-                }
-            });
-            if (session != null) {
-                let user = yield this._userBase.findOne({
+            if (sessionValue != undefined) {
+                let session = yield this._sessionBase.findOne({
                     where: {
-                        id: session.UserId
+                        value: sessionValue
                     }
                 });
-                return user;
+                if (session != null) {
+                    let user = yield this._userBase.findOne({
+                        where: {
+                            id: session.UserId
+                        }
+                    });
+                    return user;
+                }
+                return null;
             }
             return null;
         });

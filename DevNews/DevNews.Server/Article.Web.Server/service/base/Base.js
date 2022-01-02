@@ -14,6 +14,11 @@ class Base {
         this._db = sequelize;
         this._dbSet = model;
     }
+    getAllEntity() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this._db.models[this._dbSet].findAll();
+        });
+    }
     upsert(values, options) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._db.models[this._dbSet].upsert(values, options);
@@ -26,8 +31,7 @@ class Base {
     }
     getAll(where) {
         return __awaiter(this, void 0, void 0, function* () {
-            let data = where != null ? yield this._db.models[this._dbSet].findAll(where) : yield this._db.models[this._dbSet].findAll();
-            return data;
+            return yield this._db.models[this._dbSet].findAll(where);
         });
     }
 }

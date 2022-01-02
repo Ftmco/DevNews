@@ -1,8 +1,8 @@
 {
-  "name": "artivle.web.client",
+  "name": "DevNews",
   "version": "0.1.0",
   "private": true,
-  "description": "Artivle.Web.Client",
+  "description": "DevNews",
   "author": {
     "name": ""
   },
