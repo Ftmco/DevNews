@@ -23,7 +23,7 @@ export default class ChannelService implements IChannelRule {
 
     async getChannels() {
         try {
-            let request = await this._axios.get("Channels/Get")
+            let request = await this._axios.get("Channel/Get")
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)

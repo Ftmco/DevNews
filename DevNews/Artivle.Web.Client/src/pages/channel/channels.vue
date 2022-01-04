@@ -9,10 +9,10 @@
           :to="{ name: 'Channel', query: { token: channel.token } }"
         >
           <v-list-item-avatar>
-            <v-icon class="grey lighten-1" dark> mdi-folder </v-icon>
+            <v-img :src="channel.avatar" :lazy-src="channel.avatar" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
+            <v-list-item-title v-text="channel.name"></v-list-item-title>
           </v-list-item-content>
           <v-list-item-avatar>
             <v-chip color="error">5</v-chip>
@@ -34,6 +34,9 @@ export default Vue.extend({
     channels: [],
     channelService: new ChannelService(apiCall),
   }),
+  mounted() {
+    this.getChannels();
+  },
   methods: {
     getChannels() {
       (this.$root.$refs.loading as any).open();
@@ -47,7 +50,6 @@ export default Vue.extend({
           this.showMessage(messages.netWorkError(e.message).title);
         });
     },
-
     showMessage(text: string) {
       (this.$root.$refs.loading as any).close();
       (this.$root.$refs.snackbar as any).open(text);

@@ -1,6 +1,7 @@
 export type ChannelModel = {
     link: string;
-    avatar: string[];
+    title: string;
+    avatar: string;
     name: string;
     token: string;
     id: string;

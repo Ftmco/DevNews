@@ -1,4 +1,5 @@
 import { IncomingHttpHeaders } from "http";
+import { ChannelModel } from "../../model/channel";
 
 
 export default interface IChannel {
@@ -7,4 +8,6 @@ export default interface IChannel {
     getUserChannels(header: IncomingHttpHeaders): any;
 
     getTemporaryChannelItems(header: IncomingHttpHeaders): any;
+
+    createChannel(channel: ChannelModel): any
 }

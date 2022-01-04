@@ -9,6 +9,7 @@ import IChannel from "../rule/IChannel";
 import IFile from "../rule/IFile";
 import Account from "./Account";
 import File from "./File";
+import * as crypto from 'crypto'
 
 export default class Channel implements IChannel {
 
@@ -48,6 +49,7 @@ export default class Channel implements IChannel {
                     let channel = await this._channelBase.findOne({ where: { id: userChannels[i].ChannelId } })
                     channels.push(await this.createChannelModel(channel))
                 }
+                
                 return success('User Channels', '', channels)
             }
             return faild(403, 'Please Login To Your Account', '')
@@ -61,21 +63,14 @@ export default class Channel implements IChannel {
     }
 
     async createChannelModel(channel: any) {
-        let avatars = await this._channelAvatarBase.getAll({
-            where: {
-                ChannelId: channel.id
-            }
-        })
-        let avatarLinks: string[]
-        for (var i = 0; i < avatars.length; i++) {
-            avatarLinks.push(this._file.crateFileAddress(avatars[i].image, "channel"))
-        }
+
         return {
             name: channel.name,
             id: channel.id,
-            avatar: avatarLinks,
+            avatar: this._file.crateFileAddress(channel.avatar, "channel"),
             link: channel.link,
-            token: channel.token
+            token: channel.token,
+            title: channel.title
         }
     }
 
@@ -87,4 +82,35 @@ export default class Channel implements IChannel {
         return channelsModel
     }
 
+    async createChannel(channel: ChannelModel) {
+        try {
+            let model = {
+                name: channel.name,
+                title: channel.title,
+                link: channel.link,
+                token: this.createToken(),
+                avatar: await this._file.saveFile({
+                    base64: channel.avatar,
+                    path: "channel"
+                })
+            };
+            model = await this._channelBase.upsert(model)
+            model[0].avatar = this._file.crateFileAddress(model[0].avatar,"channel")
+            return success('Success To Create Channel', '', model)
+
+        } catch (e) {
+            return exception(e.message)
+        }
+    }
+
+
+    createToken() {
+        let newId = crypto.randomUUID() + "-" + crypto.randomUUID();
+        let hashSession = this.createHash(newId);
+        return hashSession;
+    }
+
+    createHash(string: string) {
+        return crypto.createHash("sha256").update(string, "binary").digest("base64");
+    }
 }

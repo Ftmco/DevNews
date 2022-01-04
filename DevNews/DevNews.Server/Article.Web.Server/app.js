@@ -38,6 +38,8 @@ const profile_1 = require("./routes/client/profile");
 app.use("/api/profile", profile_1.default);
 const channel_1 = require("./routes/client/channel");
 app.use("/api/channel", channel_1.default);
+const group_2 = require("./routes/client/group");
+app.use("/api/group", group_2.default);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
     const err = new Error('Not Found');

@@ -14,6 +14,7 @@ const api_1 = require("../../model/api");
 const Base_1 = require("../base/Base");
 const Account_1 = require("./Account");
 const File_1 = require("./File");
+const crypto = require("crypto");
 class Channel {
     constructor() {
         this._channelBase = new Base_1.default(context_1.default, "Channel");
@@ -54,21 +55,13 @@ class Channel {
     }
     createChannelModel(channel) {
         return __awaiter(this, void 0, void 0, function* () {
-            let avatars = yield this._channelAvatarBase.getAll({
-                where: {
-                    ChannelId: channel.id
-                }
-            });
-            let avatarLinks;
-            for (var i = 0; i < avatars.length; i++) {
-                avatarLinks.push(this._file.crateFileAddress(avatars[i].image, "channel"));
-            }
             return {
                 name: channel.name,
                 id: channel.id,
-                avatar: avatarLinks,
+                avatar: this._file.crateFileAddress(channel.avatar, "channel"),
                 link: channel.link,
-                token: channel.token
+                token: channel.token,
+                title: channel.title
             };
         });
     }
@@ -80,6 +73,36 @@ class Channel {
             }
             return channelsModel;
         });
+    }
+    createChannel(channel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let model = {
+                    name: channel.name,
+                    title: channel.title,
+                    link: channel.link,
+                    token: this.createToken(),
+                    avatar: yield this._file.saveFile({
+                        base64: channel.avatar,
+                        path: "channel"
+                    })
+                };
+                model = yield this._channelBase.upsert(model);
+                model[0].avatar = this._file.crateFileAddress(model[0].avatar, "channel");
+                return (0, api_1.success)('Success To Create Channel', '', model);
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
+            }
+        });
+    }
+    createToken() {
+        let newId = crypto.randomUUID() + "-" + crypto.randomUUID();
+        let hashSession = this.createHash(newId);
+        return hashSession;
+    }
+    createHash(string) {
+        return crypto.createHash("sha256").update(string, "binary").digest("base64");
     }
 }
 exports.default = Channel;

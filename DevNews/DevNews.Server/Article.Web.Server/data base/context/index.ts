@@ -13,7 +13,6 @@ const modelDefines = [
     require("../models/group"),
     require("../models/channle/channel"),
     require("../models/channle/channelUsers"),
-    require("../models/channle/channelAvatar"),
     require("../models/user/user"),
     require("../models/user/session"),
 ];

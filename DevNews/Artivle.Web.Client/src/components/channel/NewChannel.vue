@@ -36,6 +36,8 @@
             v-model="channel.categories"
             :items="categories"
             :rules="[rules.require]"
+            item-text="name"
+            item-value="id"
             chips
             outlined
             label="Chips"
@@ -72,7 +74,7 @@ export default Vue.extend({
     categoryService: new CategoryService(apiCall),
   }),
   mounted() {
-      this.getCategories()
+    this.getCategories();
   },
   methods: {
     createChannel() {
