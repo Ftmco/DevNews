@@ -1,23 +1,47 @@
 <template>
-  <v-col cols="12">
+  <div>
     <v-col cols="12" align="center">
-      <v-list-item-avatar size="200" color="grey">
-        <v-img :src="profile.image" :lazy-src="profile.image" />
-      </v-list-item-avatar>
-      <v-file-input
-        @change="profileSelect"
-        placeholder="User Profile"
-        label="User Profile"
-        prepend-icon="mdi-paperclip"
-      >
-        <template v-slot:selection="{ text }">
-          <v-chip small label color="primary">
-            {{ text }}
-          </v-chip>
-        </template>
-      </v-file-input>
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-list-item-avatar size="150" color="grey">
+            <v-img :src="profile.image" :lazy-src="profile.image" />
+          </v-list-item-avatar>
+          <v-file-input
+            @change="profileSelect"
+            prepend-icon="mdi-camera"
+            hide-input
+          />
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-row>
+            <v-col>
+              <v-btn block outlined color="primary" text>Followers : 25</v-btn>
+            </v-col>
+            <v-col>
+              <v-btn block outlined color="primary" text>Following : 25 </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn block outlined color="primary" text
+                >Following Channels : 25
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
     </v-col>
 
+    <v-col cols="12">
+      <v-card elevation="1">
+        <v-card-title> Channels </v-card-title>
+        <channel-temprory />
+        <v-card-actions>
+          <v-btn outlined color="info" text @click="newChannel">
+            Create New Channel
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
     <v-col cols="12">
       <v-row>
         <v-col cols="12" sm="6">
@@ -61,9 +85,27 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-btn color="primary" outlined @click="changeProfile"> Update </v-btn>
+      <v-row>
+        <v-col>
+          <v-btn color="primary" block outlined @click="changeProfile">
+            Update
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn color="primary" block outlined>
+            Settings
+            <v-icon>mdi-wrench</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-col>
-  </v-col>
+    <app-dialog title="Create New Channel">
+      <template slot="body">
+        <NewChannel/>
+      </template>
+    </app-dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -71,7 +113,10 @@ import Vue from "vue";
 import ProfileService from "@/api/service/profile.service";
 import { apiCall } from "@/api";
 import { messages, rules } from "@/constants";
+import ChannelTemprory from "@/components/channel/ChannelTemprory.vue";
 import { message } from "ant-design-vue";
+import AppDialog from "@/components/core/AppDialog.vue";
+import NewChannel from "@/components/channel/NewChannel.vue"
 export default Vue.extend({
   data: () => ({
     profileService: new ProfileService(apiCall),
@@ -84,6 +129,11 @@ export default Vue.extend({
     },
     rules: rules,
   }),
+  components: {
+    ChannelTemprory,
+    AppDialog,
+    NewChannel
+  },
   mounted() {
     this.getProfile();
   },
@@ -122,6 +172,9 @@ export default Vue.extend({
           this.profile.image = fileReader.result;
         };
       }
+    },
+    newChannel() {
+      this.$root.$refs.dialog.open();
     },
     showMessage(text: string) {
       (this.$root.$refs.loading as any).close();
