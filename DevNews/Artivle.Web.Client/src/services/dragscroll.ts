@@ -4,7 +4,7 @@ export default function (className: string) {
     let startx: number;
     let scrollLeft: number;
 
-    slider.addEventListener('mousedown', (e) => {
+    slider.addEventListener('mousedown', (e: any) => {
         isDown = true;
         slider.classList.add('active');
         startx = e.pageX - slider.offsetLeft;
@@ -21,7 +21,7 @@ export default function (className: string) {
         slider.classList.remove('active');
     });
 
-    slider.addEventListener('mousemove', (e) => {
+    slider.addEventListener('mousemove', (e: any) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
