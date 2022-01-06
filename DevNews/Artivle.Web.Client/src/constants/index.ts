@@ -98,10 +98,16 @@ export const rules = {
     password: (value: string) => !!value && (value.length > 5 || 'Password required more than 6 characters')
 }
 
-export const app: Application = {
-    apikey: "54AD86E7-BC7B-4B24-A43A-4AD0ADD6EBAF",
-    password: "1G14ijWA"
-}
+export const channelOptions = [
+    {
+        title: 'Leve Channel',
+        icon:'mdi-logout',
+        func:()=>{
+            
+        }
+    },
+   
+]
 
 export const userTableHeaders = [
     {
