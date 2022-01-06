@@ -20,7 +20,7 @@
         props: {
             timeout: {
                 type: Number,
-                default: 3500,
+                default: 1500,
             },
         },
         data: () => ({
