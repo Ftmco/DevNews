@@ -6,7 +6,10 @@
         <v-list-item
           v-for="(channel, i) in channels"
           :key="i"
-          :to="{ name: 'Channel', query: { token: channel.token } }"
+          :to="{
+            name: 'Channel',
+            query: { token: channel.token, name: channel.name },
+          }"
         >
           <v-list-item-avatar>
             <v-img :src="channel.avatar" :lazy-src="channel.avatar" />
