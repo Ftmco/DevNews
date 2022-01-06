@@ -12,11 +12,17 @@ export const bottomItems = [
     },
     {
         id: 2,
+        title: 'Articles',
+        icon: 'mdi-newspaper',
+        to: '/articles'
+    },
+    {
+        id: 3,
         title: 'Search',
         icon: 'mdi-magnify',
         to: '/search'
     }, {
-        id: 3,
+        id: 4,
         title: 'Profile',
         icon: 'mdi-account',
         to: '/account/profile'
@@ -38,18 +44,24 @@ export const navigationItems = [
     },
     {
         id: 2,
+        title: 'Articles',
+        icon: 'mdi-newspaper',
+        to: '/articles'
+    },
+    {
+        id: 3,
         title: 'Search',
         icon: 'mdi-magnify',
         to: '/search'
     },
     {
-        id: 3,
+        id: 4,
         title: 'Profile',
         icon: 'mdi-account',
         to: '/account/profile'
     },
     {
-        id: 4,
+        id: 5,
         title: 'Settings',
         icon: 'mdi-wrench',
         to: '/setting'
@@ -66,33 +78,6 @@ export const messages = {
     invalidForm: 'Please fill in all fields'
 }
 
-export const applicationTableHeaders = [
-    {
-        text: 'Image',
-        align: 'start',
-        sortable: false,
-        value: 'image',
-    },
-    {
-        text: 'Name',
-        align: 'start',
-        sortable: true,
-        value: 'name'
-    },
-    {
-        text: 'Api Key',
-        align: 'start',
-        sortable: true,
-        value: 'apiKey'
-    },
-    {
-        text: 'Actions',
-        align: 'start',
-        sortable: false,
-        value: 'actions'
-    }
-]
-
 export const rules = {
     require: (value: string) => !!value || 'Required.',
     password: (value: string) => !!value && (value.length > 5 || 'Password required more than 6 characters')
@@ -101,40 +86,10 @@ export const rules = {
 export const channelOptions = [
     {
         title: 'Leve Channel',
-        icon:'mdi-logout',
-        func:()=>{
-            
+        icon: 'mdi-logout',
+        func: () => {
+
         }
     },
-   
-]
 
-export const userTableHeaders = [
-    {
-        text: 'User Name',
-        align: 'start',
-        sortable: true,
-        value: 'userName',
-    },
-    {
-        text: 'Full Name',
-        align: 'start',
-        sortable: true,
-        value: 'fullName',
-    }, {
-        text: 'E-main',
-        align: 'start',
-        sortable: true,
-        value: 'email',
-    }, {
-        text: 'Mobile No',
-        align: 'start',
-        sortable: true,
-        value: 'mobileNo',
-    }, {
-        text: 'Actions',
-        align: 'start',
-        sortable: false,
-        value: 'actions'
-    }
 ]
