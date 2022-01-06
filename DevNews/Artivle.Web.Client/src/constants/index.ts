@@ -12,17 +12,11 @@ export const bottomItems = [
     },
     {
         id: 2,
-        title: 'Articles',
-        icon: 'mdi-newspaper',
-        to: '/articles'
-    },
-    {
-        id: 3,
         title: 'Search',
         icon: 'mdi-magnify',
         to: '/search'
     }, {
-        id: 4,
+        id: 3,
         title: 'Profile',
         icon: 'mdi-account',
         to: '/account/profile'
