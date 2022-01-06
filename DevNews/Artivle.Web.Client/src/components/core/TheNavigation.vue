@@ -19,6 +19,12 @@
           </v-list-item-icon>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
+        <v-list-item @click="changeTheme">
+          <v-list-item-icon>
+            <v-icon>mdi-theme-light-dark</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>{{ theme }}</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
 
@@ -50,6 +56,7 @@ export default Vue.extend({
     group: null,
     accountServices: new AccountServiec(apiCall),
     profileService: new ProfileService(apiCall),
+    theme: "Light",
   }),
   created() {
     this.$root.$refs.navigationDrawer = this;
@@ -69,6 +76,10 @@ export default Vue.extend({
           }
         });
       }
+    },
+    changeTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      this.theme = this.$vuetify.theme.dark ? "Dark" : "Light";
     },
     logOut() {
       this.accountServices.LogOut().then(() => {
