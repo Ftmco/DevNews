@@ -8,10 +8,11 @@ const sequelize = new Sequelize("ArticleDb", "fteam", "1G14ijWA", {
 })
 
 const modelDefines = [
-    require("../models/article"),
-    require("../models/articleGroup"),
-    require("../models/group"),
+    require("../models/article/article"),
+    require("../models/article/articleGroup"),
+    require("../models/article/group"),
     require("../models/channle/channel"),
+    require("../models/channle/channelAdmins"),
     require("../models/channle/channelUsers"),
     require("../models/user/user"),
     require("../models/user/session"),
@@ -22,6 +23,6 @@ for (const modelDefine of modelDefines)
 
 applyExtraSetup(sequelize)
 
-//sequelize.sync({ force: true })
+sequelize.sync({ alter: { drop: false } })
 
 export default sequelize

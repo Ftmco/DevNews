@@ -1,5 +1,5 @@
 export default function (className: string) {
-    const slider: Element = document.querySelector(className);
+    const slider: any = document.querySelector(className);
     let isDown = false;
     let startx: number;
     let scrollLeft: number;

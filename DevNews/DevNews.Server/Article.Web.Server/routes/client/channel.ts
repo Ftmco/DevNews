@@ -28,7 +28,7 @@ router.post("/Create", async (req: Request, res: Response) => {
         token: '',
         id: ''
     }
-    let channel = await _channel.createChannel(model)
+    let channel = await _channel.createChannel(model, req.headers)
     res.json(channel)
     res.end()
 })

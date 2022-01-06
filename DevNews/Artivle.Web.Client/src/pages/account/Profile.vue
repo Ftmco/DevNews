@@ -102,7 +102,7 @@
     </v-col>
     <app-dialog title="Create New Channel">
       <template slot="body">
-        <NewChannel/>
+        <NewChannel @channelCreated="channelCreated" />
       </template>
     </app-dialog>
   </div>
@@ -114,9 +114,10 @@ import ProfileService from "@/api/service/profile.service";
 import { apiCall } from "@/api";
 import { messages, rules } from "@/constants";
 import ChannelTemprory from "@/components/channel/ChannelTemprory.vue";
-import { message } from "ant-design-vue";
 import AppDialog from "@/components/core/AppDialog.vue";
-import NewChannel from "@/components/channel/NewChannel.vue"
+import NewChannel from "@/components/channel/NewChannel.vue";
+import { convertToBase64File } from "@/services/file";
+import { showMessage } from "@/services/message";
 export default Vue.extend({
   data: () => ({
     profileService: new ProfileService(apiCall),
@@ -132,7 +133,7 @@ export default Vue.extend({
   components: {
     ChannelTemprory,
     AppDialog,
-    NewChannel
+    NewChannel,
   },
   mounted() {
     this.getProfile();
@@ -144,12 +145,12 @@ export default Vue.extend({
         .getProfile()
         .then((res) => {
           if (res.status) this.profile = res.result;
-          this.showMessage(res.title);
+          showMessage(this,res.title);
         })
         .catch((e) => {
           console.log(e);
 
-          this.showMessage(messages.netWorkError(e.message).title);
+          showMessage(this,messages.netWorkError(e.message).title);
         });
     },
     changeProfile() {
@@ -158,27 +159,27 @@ export default Vue.extend({
         .updateProfile(this.profile)
         .then((res) => {
           if (res.status) this.profile = res.result;
-          this.showMessage(res.title);
+          showMessage(this,res.title);
         })
         .catch((e) => {
-          this.showMessage(messages.netWorkError(e).title);
+          showMessage(this,messages.netWorkError(e).title);
         });
     },
     profileSelect(file: any) {
-      if (file != null) {
-        let fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
-        fileReader.onload = () => {
-          this.profile.image = fileReader.result;
-        };
-      }
+      convertToBase64File(file)
+        .then((res: any) => {
+          this.profile.image = res.base64;
+        })
+        .catch(() => {
+          this.profile.image = "";
+        });
     },
     newChannel() {
-      this.$root.$refs.dialog.open();
+      (this.$root.$refs.dialog as any).open();
     },
-    showMessage(text: string) {
-      (this.$root.$refs.loading as any).close();
-      (this.$root.$refs.snackbar as any).open(text);
+    channelCreated(channel: any) {
+      (this.$root.$refs.dialog as any).close();
+      console.log(channel);
     },
   },
 });

@@ -17,8 +17,6 @@ export default class Channel implements IChannel {
 
     private readonly _channelUsersBase: IBase;
 
-    private readonly _channelAvatarBase: IBase;
-
     private readonly _account: IAccount;
 
     private readonly _file: IFile;
@@ -27,8 +25,21 @@ export default class Channel implements IChannel {
         this._channelBase = new Base(sequelize, "Channel")
         this._channelUsersBase = new Base(sequelize, "ChannelUsers")
         this._account = new Account()
-        this._channelAvatarBase = new Base(sequelize, "ChannelAvatar")
         this._file = new File()
+    }
+
+
+    async addChannelUser(userId: string, channelId: string) {
+        try {
+            let channelUser = {
+                UserId: userId,
+                ChannelId: channelId
+            }
+            let join = await this._channelUsersBase.upsert(channelUser)
+            return join[1] ? success('User Joined In Channel', '', join[0]) : exception('Plase Try Again')
+        } catch (e) {
+            return exception(e.message)
+        }
     }
 
     getTemporaryChannelItems(header: IncomingHttpHeaders) {
@@ -47,9 +58,10 @@ export default class Channel implements IChannel {
                 })
                 for (let i = 0; i < userChannels.length; i++) {
                     let channel = await this._channelBase.findOne({ where: { id: userChannels[i].ChannelId } })
-                    channels.push(await this.createChannelModel(channel))
+                    if (channel != null)
+                        channels.push(await this.createChannelModel(channel))
                 }
-                
+
                 return success('User Channels', '', channels)
             }
             return faild(403, 'Please Login To Your Account', '')
@@ -63,15 +75,17 @@ export default class Channel implements IChannel {
     }
 
     async createChannelModel(channel: any) {
-
-        return {
-            name: channel.name,
-            id: channel.id,
-            avatar: this._file.crateFileAddress(channel.avatar, "channel"),
-            link: channel.link,
-            token: channel.token,
-            title: channel.title
+        if (channel != null) {
+            return {
+                name: channel.name,
+                id: channel.id,
+                avatar: this._file.crateFileAddress(channel.avatar, "channel"),
+                link: channel.link,
+                token: channel.token,
+                title: channel.title
+            }
         }
+        return null
     }
 
     async createChannelModels(channels: any) {
@@ -82,27 +96,32 @@ export default class Channel implements IChannel {
         return channelsModel
     }
 
-    async createChannel(channel: ChannelModel) {
+    async createChannel(channel: ChannelModel, header: IncomingHttpHeaders) {
         try {
-            let model = {
-                name: channel.name,
-                title: channel.title,
-                link: channel.link,
-                token: this.createToken(),
-                avatar: await this._file.saveFile({
-                    base64: channel.avatar,
-                    path: "channel"
-                })
-            };
-            model = await this._channelBase.upsert(model)
-            model[0].avatar = this._file.crateFileAddress(model[0].avatar,"channel")
-            return success('Success To Create Channel', '', model)
+            let user = await this._account.getUserBySession(header)
+            if (user != null) {
+                let model = {
+                    name: channel.name,
+                    title: channel.title,
+                    link: channel.link,
+                    token: this.createToken(),
+                    ownerId: user.id,
+                    avatar: await this._file.saveFile({
+                        base64: channel.avatar,
+                        path: "channel"
+                    })
+                };
+                model = await this._channelBase.upsert(model)
+                model[0].avatar = this._file.crateFileAddress(model[0].avatar, "channel")
+                await this.addChannelUser(user.id, model[0].id)
+                return success('Success To Create Channel', '', model)
+            }
+            return faild(403, 'User Not Found', '')
 
         } catch (e) {
             return exception(e.message)
         }
     }
-
 
     createToken() {
         let newId = crypto.randomUUID() + "-" + crypto.randomUUID();

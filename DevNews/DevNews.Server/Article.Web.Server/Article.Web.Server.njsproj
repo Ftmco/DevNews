@@ -71,6 +71,7 @@
     <TypeScriptCompile Include="data base\models\article\article.ts" />
     <TypeScriptCompile Include="data base\models\article\articleGroup.ts" />
     <TypeScriptCompile Include="data base\models\channle\channel.ts" />
+    <TypeScriptCompile Include="data base\models\channle\channelAdmins.ts" />
     <TypeScriptCompile Include="data base\models\channle\channelUsers.ts" />
     <TypeScriptCompile Include="data base\models\article\group.ts" />
     <TypeScriptCompile Include="data base\models\user\session.ts" />
@@ -82,16 +83,19 @@
     <TypeScriptCompile Include="routes\client\account.ts" />
     <TypeScriptCompile Include="routes\client\group.ts" />
     <TypeScriptCompile Include="routes\client\profile.ts" />
+    <TypeScriptCompile Include="routes\client\search.ts" />
     <TypeScriptCompile Include="service\base\IBase.ts" />
     <TypeScriptCompile Include="service\rule\IAccount.ts" />
     <TypeScriptCompile Include="service\rule\IChannel.ts" />
     <TypeScriptCompile Include="service\rule\IFile.ts" />
     <TypeScriptCompile Include="service\rule\IGroup.ts" />
     <TypeScriptCompile Include="service\rule\IProfile.ts" />
+    <TypeScriptCompile Include="service\rule\ISearch.ts" />
     <TypeScriptCompile Include="service\service\Account.ts" />
     <TypeScriptCompile Include="service\service\Channel.ts" />
     <TypeScriptCompile Include="service\service\File.ts" />
     <TypeScriptCompile Include="service\service\Group.ts" />
+    <TypeScriptCompile Include="service\service\Search.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

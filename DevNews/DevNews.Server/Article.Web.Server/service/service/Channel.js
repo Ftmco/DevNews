@@ -20,8 +20,22 @@ class Channel {
         this._channelBase = new Base_1.default(context_1.default, "Channel");
         this._channelUsersBase = new Base_1.default(context_1.default, "ChannelUsers");
         this._account = new Account_1.default();
-        this._channelAvatarBase = new Base_1.default(context_1.default, "ChannelAvatar");
         this._file = new File_1.default();
+    }
+    addChannelUser(userId, channelId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channelUser = {
+                    UserId: userId,
+                    ChannelId: channelId
+                };
+                let join = yield this._channelUsersBase.upsert(channelUser);
+                return join[1] ? (0, api_1.success)('User Joined In Channel', '', join[0]) : (0, api_1.exception)('Plase Try Again');
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
+            }
+        });
     }
     getTemporaryChannelItems(header) {
         throw new Error("Method not implemented.");
@@ -39,7 +53,8 @@ class Channel {
                     });
                     for (let i = 0; i < userChannels.length; i++) {
                         let channel = yield this._channelBase.findOne({ where: { id: userChannels[i].ChannelId } });
-                        channels.push(yield this.createChannelModel(channel));
+                        if (channel != null)
+                            channels.push(yield this.createChannelModel(channel));
                     }
                     return (0, api_1.success)('User Channels', '', channels);
                 }
@@ -55,14 +70,17 @@ class Channel {
     }
     createChannelModel(channel) {
         return __awaiter(this, void 0, void 0, function* () {
-            return {
-                name: channel.name,
-                id: channel.id,
-                avatar: this._file.crateFileAddress(channel.avatar, "channel"),
-                link: channel.link,
-                token: channel.token,
-                title: channel.title
-            };
+            if (channel != null) {
+                return {
+                    name: channel.name,
+                    id: channel.id,
+                    avatar: this._file.crateFileAddress(channel.avatar, "channel"),
+                    link: channel.link,
+                    token: channel.token,
+                    title: channel.title
+                };
+            }
+            return null;
         });
     }
     createChannelModels(channels) {
@@ -74,22 +92,28 @@ class Channel {
             return channelsModel;
         });
     }
-    createChannel(channel) {
+    createChannel(channel, header) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let model = {
-                    name: channel.name,
-                    title: channel.title,
-                    link: channel.link,
-                    token: this.createToken(),
-                    avatar: yield this._file.saveFile({
-                        base64: channel.avatar,
-                        path: "channel"
-                    })
-                };
-                model = yield this._channelBase.upsert(model);
-                model[0].avatar = this._file.crateFileAddress(model[0].avatar, "channel");
-                return (0, api_1.success)('Success To Create Channel', '', model);
+                let user = yield this._account.getUserBySession(header);
+                if (user != null) {
+                    let model = {
+                        name: channel.name,
+                        title: channel.title,
+                        link: channel.link,
+                        token: this.createToken(),
+                        ownerId: user.id,
+                        avatar: yield this._file.saveFile({
+                            base64: channel.avatar,
+                            path: "channel"
+                        })
+                    };
+                    model = yield this._channelBase.upsert(model);
+                    model[0].avatar = this._file.crateFileAddress(model[0].avatar, "channel");
+                    yield this.addChannelUser(user.id, model[0].id);
+                    return (0, api_1.success)('Success To Create Channel', '', model);
+                }
+                return (0, api_1.faild)(403, 'User Not Found', '');
             }
             catch (e) {
                 return (0, api_1.exception)(e.message);

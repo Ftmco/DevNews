@@ -91,6 +91,9 @@ export default Vue.extend({
             categories: this.channel.categories,
           })
           .then((res) => {
+            if (res.status) {
+              this.$emit("channelCreated", res.result);
+            }
             this.showMessage(res.title);
           })
           .catch((e) => {

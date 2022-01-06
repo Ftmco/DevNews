@@ -9,5 +9,7 @@ export default interface IChannel {
 
     getTemporaryChannelItems(header: IncomingHttpHeaders): any;
 
-    createChannel(channel: ChannelModel): any
+    createChannel(channel: ChannelModel, header: IncomingHttpHeaders): any
+
+    addChannelUser(userId: string, channelId: string): any
 }

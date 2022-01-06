@@ -30,11 +30,21 @@ const routes: RouteConfig[] = [
             {
                 path: "/channels",
                 name: "Channels",
-                component: () => import("@/pages/channel/channels.vue"),
+                component: () => import("@/pages/channel/Channels.vue"),
                 meta: (route: Route) => ({
                     route: route,
                     title: 'Channels',
-                    hasBack:true
+                    hasBack: true
+                })
+            },
+            {
+                path: "/search",
+                name: "Search",
+                component: () => import("@/pages/search/Search.vue"),
+                meta: (route: Route) => ({
+                    route: route,
+                    title: 'Search',
+                    hasBack: true
                 })
             },
             {
@@ -45,8 +55,8 @@ const routes: RouteConfig[] = [
                     route: route,
                     title: `${route.query.name}`,
                     noBottomNavigation: true,
-                    hasBack:true,
-                    unShow:true
+                    hasBack: true,
+                    unShow: true
                 })
             },
             {

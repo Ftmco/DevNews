@@ -82,6 +82,7 @@
 import Vue from "vue";
 import AccountBase from "@/components/account/AccountBase.vue";
 import { messages, rules } from "@/constants";
+import { showMessage } from "@/services/message";
 
 export default Vue.extend({
   data: () => ({
@@ -100,19 +101,16 @@ export default Vue.extend({
   },
   methods: {
     sendCode() {
-      let isValid = this.$refs.forgotForm.validate();
+      let isValid = (this.$refs.forgotForm as any).validate();
       if (isValid) {
         this.inReset = true;
-      } else this.showMessage(messages.invalidForm);
+      } else showMessage(this,messages.invalidForm);
     },
     reset() {
-      let isValid = this.$refs.forgotForm.validate();
+      let isValid = (this.$refs.forgotForm as any).validate();
       if (isValid) {
-          this.showMessage("valid")
-      } else this.showMessage(messages.invalidForm);
-    },
-    showMessage(text: string) {
-      this.$root.$refs.snackbar.open(text);
+          showMessage(this,"valid")
+      } else showMessage(this,messages.invalidForm);
     },
   },
 });

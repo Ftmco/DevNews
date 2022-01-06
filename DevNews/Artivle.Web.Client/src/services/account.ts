@@ -1,6 +1,6 @@
 export default {
     authenticationToken() {
-        return localStorage.getItem("Token") ?? null;
+        return localStorage.getItem("Token") ?? "";
     },
     isAuthenticated() {
         let token = this.authenticationToken()

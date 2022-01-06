@@ -19,6 +19,14 @@ module.exports = (sequelize) => {
         token: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false
+        },
+        link: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: true
+        },
+        ownerId: {
+            type: sequelize_1.DataTypes.UUID,
+            allowNull: true,
         }
     });
 };

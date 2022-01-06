@@ -83,7 +83,7 @@ export default Vue.extend({
     },
     logOut() {
       this.accountServices.LogOut().then(() => {
-        window.location = "/account/login";
+        (window.location as any) = "/account/login";
       });
     },
   },

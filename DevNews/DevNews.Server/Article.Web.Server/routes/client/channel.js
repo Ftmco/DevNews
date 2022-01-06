@@ -33,7 +33,7 @@ router.post("/Create", (req, res) => __awaiter(void 0, void 0, void 0, function*
         token: '',
         id: ''
     };
-    let channel = yield _channel.createChannel(model);
+    let channel = yield _channel.createChannel(model, req.headers);
     res.json(channel);
     res.end();
 }));

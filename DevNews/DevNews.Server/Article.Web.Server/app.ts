@@ -37,6 +37,8 @@ import channel from "./routes/client/channel"
 app.use("/api/channel", channel)
 import group from "./routes/client/group"
 app.use("/api/group", group)
+import search from './routes/client/search'
+app.use("/api/search", search)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
