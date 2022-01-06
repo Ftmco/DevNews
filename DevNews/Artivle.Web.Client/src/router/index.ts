@@ -33,7 +33,20 @@ const routes: RouteConfig[] = [
                 component: () => import("@/pages/channel/channels.vue"),
                 meta: (route: Route) => ({
                     route: route,
-                    title: 'Channels'
+                    title: 'Channels',
+                    hasBack:true
+                })
+            },
+            {
+                path: "/channel",
+                name: "Channel",
+                component: () => import("@/pages/channel/ChannelItems.vue"),
+                meta: (route: Route) => ({
+                    route: route,
+                    title: `${route.query.name}`,
+                    noBottomNavigation: true,
+                    hasBack:true,
+                    unShow:true
                 })
             },
             {
