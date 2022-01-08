@@ -1,7 +1,7 @@
 import { IncomingHttpHeaders } from "http";
 import sequelize from "../../data base/context";
 import { exception, faild, success } from "../../model/api";
-import { ChannelModel } from "../../model/channel";
+import { ChannelInfo, ChannelModel } from "../../model/channel";
 import Base from "../base/Base";
 import IBase from "../base/IBase";
 import IAccount from "../rule/IAccount";
@@ -10,12 +10,15 @@ import IFile from "../rule/IFile";
 import Account from "./Account";
 import File from "./File";
 import * as crypto from 'crypto'
+import { Op } from "sequelize";
 
 export default class Channel implements IChannel {
 
     private readonly _channelBase: IBase;
 
     private readonly _channelUsersBase: IBase;
+
+    private readonly _userBase: IBase;
 
     private readonly _account: IAccount;
 
@@ -24,8 +27,43 @@ export default class Channel implements IChannel {
     constructor() {
         this._channelBase = new Base(sequelize, "Channel")
         this._channelUsersBase = new Base(sequelize, "ChannelUsers")
+        this._userBase = new Base(sequelize, "User")
         this._account = new Account()
         this._file = new File()
+    }
+
+    async getChannelByToken(token: string) {
+        try {
+            let channel = await this._channelBase.findOne({
+                where: {
+                    token: token
+                }
+            })
+            return channel
+        } catch {
+            throw new Error('Channel Not Found')
+        }
+    }
+
+
+    async followChannel(token: string, header: IncomingHttpHeaders) {
+        try {
+            let user = await this._account.getUserBySession(header)
+            if (user != null) {
+                let channel = await this.getChannelByToken(token)
+                if (channel != null) {
+                    await this._channelUsersBase.upsert({
+                        ChannelId: channel.id,
+                        UserId: user.id
+                    })
+                    return success(`Followed Channel ${channel.name}`, '', channel)
+                }
+                return faild(404, 'Channel Not Found', '')
+            }
+            return faild(403, 'User Not Found', '')
+        } catch (e) {
+            return exception(e.message)
+        }
     }
 
 
@@ -123,6 +161,52 @@ export default class Channel implements IChannel {
         }
     }
 
+    async getChannel(token: string, header: IncomingHttpHeaders) {
+        try {
+            let channel = await this._channelBase.findOne({
+                where: {
+                    token: token
+                }
+            })
+            if (channel != null) {
+                let user = await this._account.getUserBySession(header);
+                let isIn = await this._channelUsersBase.findOne({
+                    where: {
+                        [Op.and]: {
+                            UserId: user.id,
+                            ChannelId: channel.id
+                        }
+                    }
+                })
+                let owner = await this._userBase.findOne({ where: { id: channel.ownerId } })
+                let response: ChannelInfo = {
+                    channel: {
+                        avatar: this._file.crateFileAddress(channel.avatar, "channel"),
+                        id: channel.id,
+                        link: channel.link,
+                        name: channel.name,
+                        title: channel.title,
+                        token: channel.token,
+                    },
+                    owner: {
+                        avatar: this._file.crateFileAddress(owner.image, "profile"),
+                        email: owner.email,
+                        userName: owner.userName,
+                        token: ''
+                    },
+                    isAdmin: user.id == channel.ownerId,
+                    mute: true,
+                    isIn: isIn != null
+                }
+                return success(channel.name, '', response)
+            }
+
+            return faild(404, 'Channel Not Found', '')
+        } catch (e) {
+            return exception(e.message)
+        }
+    }
+
     createToken() {
         let newId = crypto.randomUUID() + "-" + crypto.randomUUID();
         let hashSession = this.createHash(newId);
@@ -130,6 +214,6 @@ export default class Channel implements IChannel {
     }
 
     createHash(string: string) {
-        return crypto.createHash("sha256").update(string, "binary").digest("base64");
+        return crypto.createHash("sha256").update(string, "binary").digest();
     }
 }
