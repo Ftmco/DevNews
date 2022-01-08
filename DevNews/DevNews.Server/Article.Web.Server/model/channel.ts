@@ -11,3 +11,18 @@ export type SaveFile = {
     base64: string;
     path: string;
 }
+
+export type ChannelAdmin = {
+    userName: string;
+    email: string;
+    avatar: string;
+    token: string;
+}
+
+export type ChannelInfo = {
+    channel: ChannelModel;
+    owner: ChannelAdmin;
+    isAdmin: boolean;
+    mute: boolean;
+    isIn: boolean;
+}
