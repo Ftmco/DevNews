@@ -37,5 +37,17 @@ router.post("/Create", (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.json(channel);
     res.end();
 }));
+router.get("/Channel", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let token = req.query.token.toString();
+    let channel = yield _channel.getChannel(token, req.headers);
+    res.json(channel);
+    res.end();
+}));
+router.post("/Follow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let token = req.body.token;
+    let follow = yield _channel.followChannel(token, req.headers);
+    res.json(follow);
+    res.end();
+}));
 exports.default = router;
 //# sourceMappingURL=channel.js.map
