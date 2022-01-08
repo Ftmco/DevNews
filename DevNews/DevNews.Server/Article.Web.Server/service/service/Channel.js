@@ -15,12 +15,51 @@ const Base_1 = require("../base/Base");
 const Account_1 = require("./Account");
 const File_1 = require("./File");
 const crypto = require("crypto");
+const sequelize_1 = require("sequelize");
 class Channel {
     constructor() {
         this._channelBase = new Base_1.default(context_1.default, "Channel");
         this._channelUsersBase = new Base_1.default(context_1.default, "ChannelUsers");
+        this._userBase = new Base_1.default(context_1.default, "User");
         this._account = new Account_1.default();
         this._file = new File_1.default();
+    }
+    getChannelByToken(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channel = yield this._channelBase.findOne({
+                    where: {
+                        token: token
+                    }
+                });
+                return channel;
+            }
+            catch (_a) {
+                throw new Error('Channel Not Found');
+            }
+        });
+    }
+    followChannel(token, header) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let user = yield this._account.getUserBySession(header);
+                if (user != null) {
+                    let channel = yield this.getChannelByToken(token);
+                    if (channel != null) {
+                        yield this._channelUsersBase.upsert({
+                            ChannelId: channel.id,
+                            UserId: user.id
+                        });
+                        return (0, api_1.success)(`Followed Channel ${channel.name}`, '', channel);
+                    }
+                    return (0, api_1.faild)(404, 'Channel Not Found', '');
+                }
+                return (0, api_1.faild)(403, 'User Not Found', '');
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
+            }
+        });
     }
     addChannelUser(userId, channelId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -120,13 +159,60 @@ class Channel {
             }
         });
     }
+    getChannel(token, header) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channel = yield this._channelBase.findOne({
+                    where: {
+                        token: token
+                    }
+                });
+                if (channel != null) {
+                    let user = yield this._account.getUserBySession(header);
+                    let isIn = yield this._channelUsersBase.findOne({
+                        where: {
+                            [sequelize_1.Op.and]: {
+                                UserId: user.id,
+                                ChannelId: channel.id
+                            }
+                        }
+                    });
+                    let owner = yield this._userBase.findOne({ where: { id: channel.ownerId } });
+                    let response = {
+                        channel: {
+                            avatar: this._file.crateFileAddress(channel.avatar, "channel"),
+                            id: channel.id,
+                            link: channel.link,
+                            name: channel.name,
+                            title: channel.title,
+                            token: channel.token,
+                        },
+                        owner: {
+                            avatar: this._file.crateFileAddress(owner.image, "profile"),
+                            email: owner.email,
+                            userName: owner.userName,
+                            token: ''
+                        },
+                        isAdmin: user.id == channel.ownerId,
+                        mute: true,
+                        isIn: isIn != null
+                    };
+                    return (0, api_1.success)(channel.name, '', response);
+                }
+                return (0, api_1.faild)(404, 'Channel Not Found', '');
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
+            }
+        });
+    }
     createToken() {
         let newId = crypto.randomUUID() + "-" + crypto.randomUUID();
         let hashSession = this.createHash(newId);
         return hashSession;
     }
     createHash(string) {
-        return crypto.createHash("sha256").update(string, "binary").digest("base64");
+        return crypto.createHash("sha256").update(string, "binary").digest();
     }
 }
 exports.default = Channel;
