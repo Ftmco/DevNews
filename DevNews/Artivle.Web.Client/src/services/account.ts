@@ -4,6 +4,6 @@ export default {
     },
     isAuthenticated() {
         let token = this.authenticationToken()
-        return token != null
+        return token != ""
     },
 };
