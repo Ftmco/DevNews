@@ -33,4 +33,18 @@ router.post("/Create", async (req: Request, res: Response) => {
     res.end()
 })
 
+router.get("/Channel", async (req: Request, res: Response) => {
+    let token = req.query.token.toString()
+    let channel = await _channel.getChannel(token, req.headers)
+    res.json(channel)
+    res.end()
+})
+
+router.post("/Follow", async (req: Request, res: Response) => {
+    let token = req.body.token
+    let follow = await _channel.followChannel(token, req.headers)
+    res.json(follow)
+    res.end()
+})
+
 export default router
