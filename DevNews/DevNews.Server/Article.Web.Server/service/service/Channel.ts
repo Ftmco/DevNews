@@ -11,6 +11,10 @@ import Account from "./Account";
 import File from "./File";
 import * as crypto from 'crypto'
 import { Op } from "sequelize";
+import IPost from "../rule/IPost";
+import Post from "./Post";
+import { PostModel } from "../../model/post";
+import { log } from "console";
 
 export default class Channel implements IChannel {
 
@@ -24,12 +28,15 @@ export default class Channel implements IChannel {
 
     private readonly _file: IFile;
 
+    private readonly _post: IPost;
+
     constructor() {
         this._channelBase = new Base(sequelize, "Channel")
         this._channelUsersBase = new Base(sequelize, "ChannelUsers")
         this._userBase = new Base(sequelize, "User")
         this._account = new Account()
         this._file = new File()
+        this._post = new Post()
     }
 
     async getChannelByToken(token: string) {
@@ -45,6 +52,18 @@ export default class Channel implements IChannel {
         }
     }
 
+    async getChannelPosts(token: string) {
+        try {
+            let channel = await this.getChannelByToken(token)
+            if (channel != null) {
+                let posts = await this._post.getChannelPost(channel.id)
+                return success('', '', posts)
+            }
+            return faild(404, 'Channel Not Found', '')
+        } catch (e) {
+            return exception(e.message)
+        }
+    }
 
     async followChannel(token: string, header: IncomingHttpHeaders) {
         try {
@@ -201,6 +220,29 @@ export default class Channel implements IChannel {
                 return success(channel.name, '', response)
             }
 
+            return faild(404, 'Channel Not Found', '')
+        } catch (e) {
+            return exception(e.message)
+        }
+    }
+
+    async sendPost(post: PostModel, headers: IncomingHttpHeaders) {
+        try {
+            let channel = await this.getChannelByToken(post.post.token)
+            if (channel != null) {
+                let user = await this._account.getUserBySession(headers)
+                if (user != null) {
+                    channel = channel.get()
+                    user = user.get()
+                    if (channel.ownerId == user.id) {
+                        post.post.channelId = channel.id
+                        let sendPost = await this._post.sendPost(post)
+                        return sendPost
+                    }
+                    return faild(403, 'Access Denied', '')
+                }
+                return faild(404, 'User Not Found', '')
+            }
             return faild(404, 'Channel Not Found', '')
         } catch (e) {
             return exception(e.message)

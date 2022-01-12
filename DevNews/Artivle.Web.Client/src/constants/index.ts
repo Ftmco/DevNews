@@ -1,3 +1,5 @@
+import Vue from "vue"
+
 export const bottomItems = [
     {
         id: 0,
@@ -90,28 +92,28 @@ export const channelOptions = [
 
 export const channelItems = [
     {
-        id:0,
-        title:'File',
-        icon:'mdi-file'
+        id: 0,
+        title: 'File',
+        icon: 'mdi-file',
     },
     {
-        id:1,
-        title:'Image',
-        icon:'mdi-image'
+        id: 1,
+        title: 'Image',
+        icon: 'mdi-image'
     },
     {
-        id:2,
-        title:'Video',
-        icon:'mdi-video'
+        id: 2,
+        title: 'Video',
+        icon: 'mdi-video'
     },
     {
-        id:3,
-        title:'Voice',
-        icon:'mdi-microphone'
+        id: 3,
+        title: 'Voice',
+        icon: 'mdi-microphone'
     },
     {
-        id:4,
-        title:'Article',
-        icon:'mdi-newspaper'
+        id: 4,
+        title: 'Article',
+        icon: 'mdi-newspaper'
     }
 ]

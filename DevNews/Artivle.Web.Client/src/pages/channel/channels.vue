@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" tile>
+  <v-card class="mx-auto" elevation="5" tile>
     <v-list rounded>
       <v-text-field outlined placeholder="Search" label="Search" />
       <v-list-item-group v-model="selectedItem" color="primary">

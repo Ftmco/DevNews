@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function applyExtraSetup(sequelize) {
-    const { Group, Article, ArticleGroups, User, Session, Channel, ChannelUsers, ChannelAdmins } = sequelize.models;
+    const { Group, Article, ArticleGroups, User, Session, Channel, ChannelUsers, ChannelAdmins, Post } = sequelize.models;
     Group.hasMany(Group);
     Group.belongsTo(Group);
     Article.hasMany(ArticleGroups);
@@ -16,6 +16,10 @@ function applyExtraSetup(sequelize) {
     ChannelUsers.belongsTo(Channel);
     Channel.hasMany(ChannelAdmins);
     ChannelAdmins.belongsTo(Channel);
+    Channel.hasMany(Post);
+    Post.belongsTo(Channel);
+    Channel.hasMany(Article);
+    Article.belongsTo(Channel);
 }
 exports.default = applyExtraSetup;
 //# sourceMappingURL=setup.js.map

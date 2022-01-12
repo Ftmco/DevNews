@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const post_1 = require("../../model/post");
 const Channel_1 = require("../../service/service/Channel");
 const router = express.Router();
 const _channel = new Channel_1.default();
@@ -47,6 +48,26 @@ router.post("/Follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
     let token = req.body.token;
     let follow = yield _channel.followChannel(token, req.headers);
     res.json(follow);
+    res.end();
+}));
+router.get("/Posts", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let token = req.query.token.toString();
+    let posts = yield _channel.getChannelPosts(token);
+    res.json(posts);
+    res.end();
+}));
+router.post("/SendMessage", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let body = req.body;
+    let message = {
+        type: post_1.PostType.Message,
+        post: {
+            message: body.message,
+            token: body.token,
+            file: body.file
+        }
+    };
+    let sendMessage = yield _channel.sendPost(message, req.headers);
+    res.json(sendMessage);
     res.end();
 }));
 exports.default = router;

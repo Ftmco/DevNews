@@ -1,5 +1,6 @@
 import { IncomingHttpHeaders } from "http";
 import { ChannelModel } from "../../model/channel";
+import { PostModel } from "../../model/post";
 
 
 export default interface IChannel {
@@ -18,4 +19,8 @@ export default interface IChannel {
     followChannel(token: string, header: IncomingHttpHeaders): any
 
     getChannelByToken(token: string): any
+
+    getChannelPosts(token: string): any
+
+    sendPost(post: PostModel, headers: IncomingHttpHeaders): any
 }

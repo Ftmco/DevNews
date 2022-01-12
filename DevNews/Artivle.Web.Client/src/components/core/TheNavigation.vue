@@ -30,7 +30,7 @@
 
     <template v-slot:append v-if="user.isAuthenticated">
       <div class="pa-2">
-        <v-btn block color="error" @click="logOut"> Logout </v-btn>
+        <v-btn block color="error" elevation="10" @click="logOut"> Logout </v-btn>
       </div>
     </template>
   </v-navigation-drawer>

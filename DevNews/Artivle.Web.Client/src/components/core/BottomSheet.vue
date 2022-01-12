@@ -3,15 +3,7 @@
     <v-bottom-sheet v-model="sheet">
       <v-list>
         <v-subheader>{{ title }}</v-subheader>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          @click="
-            () => {
-              item.func();
-            }
-          "
-        >
+        <v-list-item v-for="item in items" :key="item.title" @click="emitFunc(item)">
           <v-list-item-avatar>
             <v-avatar size="32px" tile>
               <v-icon>{{ item.icon }}</v-icon>
@@ -27,7 +19,7 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props: ["items", "title"],
+  props: ["items", "title", "component"],
   data: () => ({
     sheet: false,
   }),
@@ -40,6 +32,11 @@ export default Vue.extend({
     },
     close() {
       this.sheet = false;
+    },
+    emitFunc(item: any) {
+      this.$emit("event", {
+        item,
+      });
     },
   },
 });

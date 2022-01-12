@@ -16,6 +16,7 @@ const Account_1 = require("./Account");
 const File_1 = require("./File");
 const crypto = require("crypto");
 const sequelize_1 = require("sequelize");
+const Post_1 = require("./Post");
 class Channel {
     constructor() {
         this._channelBase = new Base_1.default(context_1.default, "Channel");
@@ -23,6 +24,7 @@ class Channel {
         this._userBase = new Base_1.default(context_1.default, "User");
         this._account = new Account_1.default();
         this._file = new File_1.default();
+        this._post = new Post_1.default();
     }
     getChannelByToken(token) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -36,6 +38,21 @@ class Channel {
             }
             catch (_a) {
                 throw new Error('Channel Not Found');
+            }
+        });
+    }
+    getChannelPosts(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channel = yield this.getChannelByToken(token);
+                if (channel != null) {
+                    let posts = yield this._post.getChannelPost(channel.id);
+                    return (0, api_1.success)('', '', posts);
+                }
+                return (0, api_1.faild)(404, 'Channel Not Found', '');
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
             }
         });
     }
@@ -198,6 +215,31 @@ class Channel {
                         isIn: isIn != null
                     };
                     return (0, api_1.success)(channel.name, '', response);
+                }
+                return (0, api_1.faild)(404, 'Channel Not Found', '');
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
+            }
+        });
+    }
+    sendPost(post, headers) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channel = yield this.getChannelByToken(post.post.token);
+                if (channel != null) {
+                    let user = yield this._account.getUserBySession(headers);
+                    if (user != null) {
+                        channel = channel.get();
+                        user = user.get();
+                        if (channel.ownerId == user.id) {
+                            post.post.channelId = channel.id;
+                            let sendPost = yield this._post.sendPost(post);
+                            return sendPost;
+                        }
+                        return (0, api_1.faild)(403, 'Access Denied', '');
+                    }
+                    return (0, api_1.faild)(404, 'User Not Found', '');
                 }
                 return (0, api_1.faild)(404, 'Channel Not Found', '');
             }

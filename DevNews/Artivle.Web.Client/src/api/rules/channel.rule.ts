@@ -8,4 +8,8 @@ export default interface IChannelRule {
     getChannel(token: string): any
 
     followChannel(token: string): any
+
+    getChannelPosts(token: string): any
+
+    sendMessage(post: any): any
 }

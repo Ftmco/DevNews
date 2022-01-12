@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.cd6e5301994fa19aebb8562e8f67e801.js"
+  "/precache-manifest.e26a4b573d7e74ad2085fd9a440e8ad1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "DevNews"});

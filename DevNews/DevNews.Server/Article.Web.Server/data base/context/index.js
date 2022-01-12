@@ -12,6 +12,7 @@ const modelDefines = [
     require("../models/article/articleGroup"),
     require("../models/article/group"),
     require("../models/channle/channel"),
+    require("../models/article/post"),
     require("../models/channle/channelAdmins"),
     require("../models/channle/channelUsers"),
     require("../models/user/user"),
