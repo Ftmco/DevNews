@@ -3,6 +3,8 @@ using Entity.Channel;
 using Entity.Comment;
 using Entity.User;
 using Microsoft.Extensions.DependencyInjection;
+using Service.Rules;
+using Service.Service;
 using Services.Base;
 
 namespace Service.Injection;
@@ -35,6 +37,12 @@ public static class Injector
 
     public static IServiceCollection AddServiceDepdency(this IServiceCollection service)
     {
+        service.AddTransient<IAccountRules, AccountServices>();
+        service.AddTransient<IArticleRules, ArticleServices>();
+        service.AddTransient<ICategoryRules, CategoryServices>();
+        service.AddTransient<IChannelRules, ChannelServices>();
+        service.AddTransient<IFileRules, FileServices>();
+        service.AddTransient<IPostRules, PostServices>();
         return service;
     }
 
