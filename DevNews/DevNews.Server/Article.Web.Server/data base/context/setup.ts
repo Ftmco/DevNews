@@ -27,7 +27,4 @@ export default function applyExtraSetup(sequelize: Sequelize) {
 
     Channel.hasMany(Post)
     Post.belongsTo(Channel)
-
-    Channel.hasMany(Article)
-    Article.belongsTo(Channel)
 }

@@ -63,11 +63,17 @@ router.post("/SendMessage", (req, res) => __awaiter(void 0, void 0, void 0, func
         post: {
             message: body.message,
             token: body.token,
-            file: body.file
+            file: body.file,
         }
     };
     let sendMessage = yield _channel.sendPost(message, req.headers);
     res.json(sendMessage);
+    res.end();
+}));
+router.get("/Leave", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let token = req.query.token.toString();
+    let leave = yield _channel.leaveChannel(token, req.headers);
+    res.json(leave);
     res.end();
 }));
 exports.default = router;

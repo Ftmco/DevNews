@@ -23,4 +23,8 @@ export default interface IChannel {
     getChannelPosts(token: string): any
 
     sendPost(post: PostModel, headers: IncomingHttpHeaders): any
+
+    leaveChannel(token: string, headers: IncomingHttpHeaders): any
+
+    getChannelById(id: string): any
 }

@@ -37,6 +37,7 @@
     <Content Include="public\files\profile\null.png" />
     <Content Include="routes\client\channel.ts" />
     <Content Include="service\base\Base.ts" />
+    <Content Include="service\service\ChannelFile.ts" />
     <Content Include="service\service\Profile.ts" />
     <Content Include="swagger.json">
       <SubType>Code</SubType>
@@ -55,6 +56,7 @@
     <Folder Include="model\" />
     <Folder Include="public\files\channel\" />
     <Folder Include="public\files\channelPost\" />
+    <Folder Include="public\files\article\" />
     <Folder Include="public\files\profile\" />
     <Folder Include="service\" />
     <Folder Include="public\" />
@@ -69,6 +71,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="data base\context\index.ts" />
     <TypeScriptCompile Include="data base\context\setup.ts" />
+    <TypeScriptCompile Include="data base\models\article\apFiles.ts" />
     <TypeScriptCompile Include="data base\models\article\article.ts" />
     <TypeScriptCompile Include="data base\models\article\articleGroup.ts" />
     <TypeScriptCompile Include="data base\models\article\post.ts" />
@@ -80,22 +83,27 @@
     <TypeScriptCompile Include="data base\models\user\user.ts" />
     <TypeScriptCompile Include="model\account.ts" />
     <TypeScriptCompile Include="model\api.ts" />
+    <TypeScriptCompile Include="model\article.ts" />
     <TypeScriptCompile Include="model\channel.ts" />
     <TypeScriptCompile Include="model\post.ts" />
     <TypeScriptCompile Include="routes\admin\group.ts" />
     <TypeScriptCompile Include="routes\client\account.ts" />
+    <TypeScriptCompile Include="routes\client\article.ts" />
     <TypeScriptCompile Include="routes\client\group.ts" />
     <TypeScriptCompile Include="routes\client\profile.ts" />
     <TypeScriptCompile Include="routes\client\search.ts" />
     <TypeScriptCompile Include="service\base\IBase.ts" />
     <TypeScriptCompile Include="service\rule\IAccount.ts" />
+    <TypeScriptCompile Include="service\rule\IArticle.ts" />
     <TypeScriptCompile Include="service\rule\IChannel.ts" />
+    <TypeScriptCompile Include="service\rule\IChannelFile.ts" />
     <TypeScriptCompile Include="service\rule\IFile.ts" />
     <TypeScriptCompile Include="service\rule\IGroup.ts" />
     <TypeScriptCompile Include="service\rule\IPost.ts" />
     <TypeScriptCompile Include="service\rule\IProfile.ts" />
     <TypeScriptCompile Include="service\rule\ISearch.ts" />
     <TypeScriptCompile Include="service\service\Account.ts" />
+    <TypeScriptCompile Include="service\service\Article.ts" />
     <TypeScriptCompile Include="service\service\Channel.ts" />
     <TypeScriptCompile Include="service\service\File.ts" />
     <TypeScriptCompile Include="service\service\Group.ts" />

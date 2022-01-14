@@ -3,9 +3,7 @@ import { Request, Response } from 'express-serve-static-core'
 import { ChannelModel } from '../../model/channel'
 import { PostModel, PostType } from '../../model/post'
 import IChannel from '../../service/rule/IChannel'
-import IPost from '../../service/rule/IPost'
 import Channel from '../../service/service/Channel'
-import Post from '../../service/service/Post'
 const router = express.Router()
 const _channel: IChannel = new Channel()
 
@@ -64,11 +62,18 @@ router.post("/SendMessage", async (req: Request, res: Response) => {
         post: {
             message: body.message,
             token: body.token,
-            file: body.file
+            file: body.file,
         }
     }
     let sendMessage = await _channel.sendPost(message, req.headers)
     res.json(sendMessage)
+    res.end()
+})
+
+router.get("/Leave", async (req: Request, res: Response) => {
+    let token = req.query.token.toString()
+    let leave = await _channel.leaveChannel(token, req.headers)
+    res.json(leave)
     res.end()
 })
 

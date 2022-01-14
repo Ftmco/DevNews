@@ -6,8 +6,8 @@
           width="300"
           height="300"
           class="rounded-xl"
-          :src="fileBase64"
-          :lazy-src="fileBase64"
+          :src="file.base64"
+          :lazy-src="file.base64"
         />
         <v-file-input label="Image" @change="fileSelected" accept="image/*" />
         <v-textarea
@@ -20,7 +20,9 @@
       </v-col>
     </v-card>
     <br />
-    <v-btn block color="primary" elevation="7" @click="submitItems"> Send </v-btn>
+    <v-btn block color="primary" elevation="7" @click="submitItems">
+      Send
+    </v-btn>
   </v-col>
 </template>
 
@@ -33,14 +35,18 @@ export default Vue.extend({
     type: Number,
   },
   data: () => ({
-    fileBase64: "",
+    file: {
+      base64: "",
+      type: "",
+      ogName: "",
+    },
     message: "",
   }),
   methods: {
     fileSelected(file: any) {
       convertToBase64File(file)
         .then((res: any) => {
-          this.fileBase64 = res.base64;
+          this.file = res;
         })
         .catch(() => {
           showMessage(this, "Exception to read file");
@@ -48,7 +54,7 @@ export default Vue.extend({
     },
     submitItems() {
       this.$emit("submit", {
-        base64: this.fileBase64,
+        file: this.file,
         message: this.message,
       });
     },

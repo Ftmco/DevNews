@@ -39,6 +39,8 @@ import group from "./routes/client/group"
 app.use("/api/group", group)
 import search from './routes/client/search'
 app.use("/api/search", search)
+import article from "./routes/client/article"
+app.use("/api/article", article)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

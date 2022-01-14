@@ -20,7 +20,7 @@ class Group {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 let groups = yield this._groupBase.getAllEntity();
-                return (0, api_1.success)('Groups', '', groups);
+                return (0, api_1.success)('', '', groups);
             }
             catch (e) {
                 return (0, api_1.exception)(e.message);

@@ -14,6 +14,11 @@ class Base {
         this._db = sequelize;
         this._dbSet = model;
     }
+    delete(where) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this._db.models[this._dbSet].destroy(where);
+        });
+    }
     getAllEntity() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._db.models[this._dbSet].findAll();

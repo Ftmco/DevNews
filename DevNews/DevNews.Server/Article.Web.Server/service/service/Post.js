@@ -12,12 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const context_1 = require("../../data base/context");
 const api_1 = require("../../model/api");
 const Base_1 = require("../base/Base");
-const File_1 = require("./File");
+const Article_1 = require("./Article");
+const ChannelFile_1 = require("./ChannelFile");
 class Post {
     constructor() {
         this._postBase = new Base_1.default(context_1.default, "Post");
-        this._articleBase = new Base_1.default(context_1.default, "Article");
-        this._file = new File_1.default();
+        this._channelFile = new ChannelFile_1.default();
+        this._article = new Article_1.default();
     }
     sendPost(post) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -25,19 +26,36 @@ class Post {
                 let postModel = {
                     message: post.post.message,
                     ChannelId: post.post.channelId,
-                    file: post.post.file != null ? yield this._file.saveFile({
-                        base64: post.post.file,
-                        path: 'channelPost'
-                    }) : null
                 };
                 let insert = yield this._postBase.upsert(postModel);
-                let data = insert[0];
-                data.file = data.file != null ? this._file.crateFileAddress(data.file, "channelPost") : null;
-                return (0, api_1.success)('Post Sent', '', data);
+                if (insert[1]) {
+                    yield this._channelFile.saveFile({
+                        objId: insert[0].id,
+                        file: post.post.file
+                    });
+                    let data = yield this.getPost(insert[0].id);
+                    return (0, api_1.success)('Post Sent', '', data);
+                }
+                return (0, api_1.exception)('Can Not Add New Post');
             }
             catch (e) {
                 return (0, api_1.exception)(e.message);
             }
+        });
+    }
+    getPost(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let post = yield this._postBase.findOne({
+                where: {
+                    id: id
+                }
+            });
+            if (post != null) {
+                post = post.get();
+                let files = yield this._channelFile.getFiles(post.id);
+                return Object.assign(Object.assign({}, post), { file: files });
+            }
+            return null;
         });
     }
     getChannelPost(channelId) {
@@ -46,17 +64,17 @@ class Post {
                 let posts = yield this._postBase.getAll({
                     where: {
                         ChannelId: channelId
-                    }
+                    },
+                    order: [
+                        ["createdAt", "ASC"]
+                    ]
                 });
-                posts.forEach((post) => {
-                    post.file = this._file.crateFileAddress(post.file, "channelPost");
-                });
-                let articles = yield this._articleBase.getAll({
-                    where: {
-                        ChannelId: channelId
-                    }
-                });
-                return { posts, articles };
+                let postResult = [];
+                posts.forEach((post) => __awaiter(this, void 0, void 0, function* () {
+                    postResult.push(Object.assign(Object.assign({}, post.get()), { file: yield this._channelFile.getFiles(post.id) }));
+                }));
+                let articles = yield this._article.getChannelArticles(channelId);
+                return { posts: postResult, articles };
             }
             catch (e) {
                 throw e;

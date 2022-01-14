@@ -26,3 +26,14 @@ export type ChannelInfo = {
     mute: boolean;
     isIn: boolean;
 }
+
+export type FileModel = {
+    base64: string;
+    ogName: string;
+    type: string;
+}
+
+export type SaveChannelFile = {
+    file: FileModel;
+    objId: string;
+}

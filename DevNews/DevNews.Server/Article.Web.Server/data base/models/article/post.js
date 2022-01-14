@@ -12,10 +12,6 @@ module.exports = (sequelize) => {
             type: sequelize_1.DataTypes.STRING,
             allowNull: true
         },
-        file: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: true
-        }
     });
 };
 //# sourceMappingURL=post.js.map

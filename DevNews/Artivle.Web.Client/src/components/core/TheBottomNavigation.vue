@@ -22,18 +22,18 @@ export default Vue.extend({
   }),
   watch: {
     $route(route) {
-      let meta = route.meta(route);
-      if (meta.noBottomNavigation) {
-        this.show = false;
-      } else this.setShow();
+      this.setShow(route);
     },
   },
   mounted() {
-    this.setShow();
+    this.setShow(this.$route);
   },
   methods: {
-    setShow() {
-      this.show = window.screen.width <= 700;
+    setShow(route: any) {
+      let meta = route.meta(route);
+      if (meta.noBottomNavigation) {
+        this.show = false;
+      } else this.show = window.screen.width <= 700;
     },
   },
 });

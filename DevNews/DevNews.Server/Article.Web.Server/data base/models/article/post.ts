@@ -11,9 +11,5 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-        file: {
-            type: DataTypes.STRING,
-            allowNull: true
-        }
     })
 }

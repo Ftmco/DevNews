@@ -31,6 +31,7 @@ import { apiCall } from "@/api";
 import Vue from "vue";
 import ChannelService from "@/api/service/channel.service";
 import { messages } from "@/constants";
+import { showMessage } from "@/services/message";
 export default Vue.extend({
   data: () => ({
     selectedItem: 1,
@@ -47,15 +48,11 @@ export default Vue.extend({
         .getChannels()
         .then((res) => {
           if (res.status) this.channels = res.result;
-          this.showMessage(res.title);
+          showMessage(this, res.title);
         })
         .catch((e) => {
-          this.showMessage(messages.netWorkError(e.message).title);
+          showMessage(this, messages.netWorkError(e.message).title);
         });
-    },
-    showMessage(text: string) {
-      (this.$root.$refs.loading as any).close();
-      (this.$root.$refs.snackbar as any).open(text);
     },
   },
 });

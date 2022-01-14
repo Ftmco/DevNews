@@ -1,4 +1,4 @@
-import { FindOptions, Sequelize, UpsertOptions } from "sequelize";
+import { DestroyOptions, FindOptions, Sequelize, UpsertOptions } from "sequelize";
 import IBase from "./IBase";
 
 
@@ -11,6 +11,10 @@ export default class Base implements IBase {
     constructor(sequelize: Sequelize, model: string) {
         this._db = sequelize
         this._dbSet = model
+    }
+
+    async delete(where: DestroyOptions<any>) {
+        return await this._db.models[this._dbSet].destroy(where)
     }
 
     async getAllEntity() {
@@ -26,8 +30,8 @@ export default class Base implements IBase {
     }
 
     async getAll(where: FindOptions<any>) {
-        return await this._db.models[this._dbSet].findAll(where) 
+        return await this._db.models[this._dbSet].findAll(where)
     }
 
-    
+
 }

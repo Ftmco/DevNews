@@ -14,7 +14,6 @@ import { Op } from "sequelize";
 import IPost from "../rule/IPost";
 import Post from "./Post";
 import { PostModel } from "../../model/post";
-import { log } from "console";
 
 export default class Channel implements IChannel {
 
@@ -37,6 +36,47 @@ export default class Channel implements IChannel {
         this._account = new Account()
         this._file = new File()
         this._post = new Post()
+    }
+
+    async getChannelById(id: string) {
+        try {
+            let channel = await this._channelBase.findOne({
+                where: {
+                    id: id
+                }
+            })
+            if (channel != null) {
+                channel = channel.get()
+                channel.avatar = this._file.crateFileAddress(channel.avatar, "channel")
+                return channel
+            }
+            return null
+        }
+        catch {
+            return null
+        }
+    }
+
+    async leaveChannel(token: string, headers: IncomingHttpHeaders) {
+        try {
+            let channel = await this.getChannelByToken(token)
+            if (channel != null) {
+                let user = await this._account.getUserBySession(headers)
+                if (user != null) {
+                    await this._channelUsersBase.delete({
+                        where: {
+                            ChannelId: channel.id,
+                            UserId: user.id
+                        }
+                    })
+                    return success(`Success To Leave From ${channel.name}`, '', channel)
+                }
+                return faild(404, 'User Not Found', '')
+            }
+            return faild(404, 'Channel Not Found', '')
+        } catch (e) {
+            return exception(e.message)
+        }
     }
 
     async getChannelByToken(token: string) {
@@ -93,7 +133,7 @@ export default class Channel implements IChannel {
                 ChannelId: channelId
             }
             let join = await this._channelUsersBase.upsert(channelUser)
-            return join[1] ? success('User Joined In Channel', '', join[0]) : exception('Plase Try Again')
+            return join[1] ? success('Joined In Channel', '', join[0]) : exception('Plase Try Again')
         } catch (e) {
             return exception(e.message)
         }
@@ -119,7 +159,7 @@ export default class Channel implements IChannel {
                         channels.push(await this.createChannelModel(channel))
                 }
 
-                return success('User Channels', '', channels)
+                return success('', 'User Channels', channels)
             }
             return faild(403, 'Please Login To Your Account', '')
         } catch (e: any) {
@@ -217,7 +257,7 @@ export default class Channel implements IChannel {
                     mute: true,
                     isIn: isIn != null
                 }
-                return success(channel.name, '', response)
+                return success('', `${channel.name} Info`, response)
             }
 
             return faild(404, 'Channel Not Found', '')

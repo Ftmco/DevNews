@@ -1,4 +1,4 @@
-import { FindOptions, UpsertOptions } from "sequelize";
+import { DestroyOptions, FindOptions, UpsertOptions } from "sequelize";
 
 
 export default interface IBase {
@@ -9,4 +9,6 @@ export default interface IBase {
     findOne(where: FindOptions<any>): any;
 
     upsert(values: any, options?: UpsertOptions<any>): any;
+
+    delete(where: DestroyOptions): any
 }

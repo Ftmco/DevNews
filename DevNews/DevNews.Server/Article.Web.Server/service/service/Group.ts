@@ -16,7 +16,7 @@ export default class Group implements IGroup {
     async getGroups() {
         try {
             let groups = await this._groupBase.getAllEntity()
-            return success('Groups', '', groups)
+            return success('', '', groups)
         }
         catch (e: any) {
             return exception(e.message)

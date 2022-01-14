@@ -79,41 +79,45 @@ export const rules = {
     password: (value: string) => !!value && (value.length > 5 || 'Password required more than 6 characters')
 }
 
-export const channelOptions = [
-    {
-        title: 'Leve Channel',
-        icon: 'mdi-logout',
-        func: () => {
-
-        }
-    },
-
-]
+export const channelItemTypes = {
+    File: 0,
+    Image: 1,
+    Video: 2,
+    Voice: 3,
+    Article: 4
+}
 
 export const channelItems = [
     {
         id: 0,
         title: 'File',
         icon: 'mdi-file',
+        type: channelItemTypes.File
     },
     {
         id: 1,
         title: 'Image',
-        icon: 'mdi-image'
+        icon: 'mdi-image',
+        type: channelItemTypes.Image
     },
     {
         id: 2,
         title: 'Video',
-        icon: 'mdi-video'
+        icon: 'mdi-video',
+        type: channelItemTypes.Video
     },
     {
         id: 3,
         title: 'Voice',
-        icon: 'mdi-microphone'
+        icon: 'mdi-microphone',
+        type: channelItemTypes.Voice
     },
     {
         id: 4,
         title: 'Article',
-        icon: 'mdi-newspaper'
+        icon: 'mdi-newspaper',
+        type: channelItemTypes.Article
     }
 ]
+
+

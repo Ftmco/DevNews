@@ -26,6 +26,50 @@ class Channel {
         this._file = new File_1.default();
         this._post = new Post_1.default();
     }
+    getChannelById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channel = yield this._channelBase.findOne({
+                    where: {
+                        id: id
+                    }
+                });
+                if (channel != null) {
+                    channel = channel.get();
+                    channel.avatar = this._file.crateFileAddress(channel.avatar, "channel");
+                    return channel;
+                }
+                return null;
+            }
+            catch (_a) {
+                return null;
+            }
+        });
+    }
+    leaveChannel(token, headers) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let channel = yield this.getChannelByToken(token);
+                if (channel != null) {
+                    let user = yield this._account.getUserBySession(headers);
+                    if (user != null) {
+                        yield this._channelUsersBase.delete({
+                            where: {
+                                ChannelId: channel.id,
+                                UserId: user.id
+                            }
+                        });
+                        return (0, api_1.success)(`Success To Leave From ${channel.name}`, '', channel);
+                    }
+                    return (0, api_1.faild)(404, 'User Not Found', '');
+                }
+                return (0, api_1.faild)(404, 'Channel Not Found', '');
+            }
+            catch (e) {
+                return (0, api_1.exception)(e.message);
+            }
+        });
+    }
     getChannelByToken(token) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -86,7 +130,7 @@ class Channel {
                     ChannelId: channelId
                 };
                 let join = yield this._channelUsersBase.upsert(channelUser);
-                return join[1] ? (0, api_1.success)('User Joined In Channel', '', join[0]) : (0, api_1.exception)('Plase Try Again');
+                return join[1] ? (0, api_1.success)('Joined In Channel', '', join[0]) : (0, api_1.exception)('Plase Try Again');
             }
             catch (e) {
                 return (0, api_1.exception)(e.message);
@@ -112,7 +156,7 @@ class Channel {
                         if (channel != null)
                             channels.push(yield this.createChannelModel(channel));
                     }
-                    return (0, api_1.success)('User Channels', '', channels);
+                    return (0, api_1.success)('', 'User Channels', channels);
                 }
                 return (0, api_1.faild)(403, 'Please Login To Your Account', '');
             }
@@ -214,7 +258,7 @@ class Channel {
                         mute: true,
                         isIn: isIn != null
                     };
-                    return (0, api_1.success)(channel.name, '', response);
+                    return (0, api_1.success)('', `${channel.name} Info`, response);
                 }
                 return (0, api_1.faild)(404, 'Channel Not Found', '');
             }

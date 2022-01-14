@@ -17,18 +17,10 @@
       </template>
 
       <v-list>
-        <v-list-item
-          v-for="(option, i) in options"
-          :key="i"
-          @click="
-            () => {
-              option.func();
-            }
-          "
-        >
-          <v-list-item-title
-            >{{ option.title }}
-            <v-icon>{{ option.icon }}</v-icon>
+        <v-list-item @click="leave">
+          <v-list-item-title>
+            Leave
+            <v-icon>mdi-logout</v-icon>
           </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -37,18 +29,34 @@
 </template>
 
 <script lang="ts">
-import { channelOptions } from "@/constants";
+import { apiCall } from "@/api";
+import ChannelService from "@/api/service/channel.service";
+import { messages } from "@/constants";
+import { showMessage } from "@/services/message";
 import Vue from "vue";
 export default Vue.extend({
   props: {
-    channel: {},
+    channel: Object,
   },
   data: () => ({
-    options: channelOptions,
+    channelService: new ChannelService(apiCall),
   }),
   methods: {
     back() {
       this.$router.back();
+    },
+    leave() {
+      this.channelService
+        .leave(this.channel.token)
+        .then((res) => {
+          if (res.status) {
+            this.$router.push({name:"Channels"})
+          }
+          showMessage(this, res.title);
+        })
+        .catch((e) => {
+          showMessage(this, messages.netWorkError(e).title);
+        });
     },
   },
 });

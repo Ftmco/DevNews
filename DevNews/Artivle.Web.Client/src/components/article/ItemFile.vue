@@ -1,6 +1,12 @@
 <template>
   <v-col cols="12">
-    <v-img :src="file" :lazy-src="file" />
+    <div v-for="file in files" :key="file.id">
+      <v-img
+        v-if="file.type.indexOf('image') != -1"
+        :src="file.name"
+        :lazy-src="file.name"
+      />
+    </div>
   </v-col>
 </template>
 
@@ -8,10 +14,7 @@
 import Vue from "vue";
 export default Vue.extend({
   props: {
-    file: String,
+    files: Array,
   },
-  data: () => ({
-    mime: "",
-  }),
 });
 </script>

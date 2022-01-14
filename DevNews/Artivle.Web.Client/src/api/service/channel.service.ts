@@ -11,9 +11,27 @@ export default class ChannelService implements IChannelRule {
         this._axios = axios;
     }
 
+    async createArticle(article: any) {
+        try {
+            let request = await this._axios.post("Channel/CreateArticle", article)
+            return await request.data
+        } catch (e: any) {
+            return messages.netWorkError(e.message)
+        }
+    }
+
+    async leave(token: string) {
+        try {
+            let request = await this._axios.get(`Channel/Leave?token=${token}`)
+            return await request.data
+        } catch (e: any) {
+            return messages.netWorkError(e.message)
+        }
+    }
+
     async sendMessage(post: any) {
         try {
-            let request = await this._axios.post("Channel/SendMessage",post)
+            let request = await this._axios.post("Channel/SendMessage", post)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)

@@ -42,7 +42,12 @@
     />
     <app-dialog :title="dTitle" :titleColor="dColor">
       <template v-slot:body>
-        <component :is="component" v-bind="properties" @submit="itemSubmit" />
+        <component
+          :is="component"
+          v-bind="properties"
+          @submit="itemSubmit"
+          @createArticle="createArticle"
+        />
       </template>
     </app-dialog>
   </div>
@@ -55,11 +60,19 @@ import Vue from "vue";
 import ChannelService from "@/api/service/channel.service";
 import ArticleLoading from "@/components/article/ArticleList.vue";
 import { apiCall } from "@/api";
-import { closeDialog, openDialog, showMessage } from "@/services/message";
-import { channelItems, messages } from "@/constants";
+import {
+  closeDialog,
+  loading,
+  openDialog,
+  showMessage,
+} from "@/services/message";
+import { channelItems, channelItemTypes, messages } from "@/constants";
 import BottomSheet from "@/components/core/BottomSheet.vue";
 import AppDialog from "@/components/core/AppDialog.vue";
 import SendFile from "@/components/post/SendFile.vue";
+import UpsertArticle from "@/components/article/UpsertArticle.vue";
+import ArticleService from "@/api/service/article.service";
+import { ArticleOwnerType } from "@/api/models/article.model";
 export default Vue.extend({
   components: {
     Item,
@@ -68,6 +81,7 @@ export default Vue.extend({
     ArticleLoading,
     AppDialog,
     SendFile,
+    UpsertArticle,
   },
   data: () => ({
     channel: {
@@ -96,10 +110,11 @@ export default Vue.extend({
     dTitle: "",
     dColor: "primary",
     channleService: new ChannelService(apiCall),
+    articleService: new ArticleService(apiCall),
   }),
   mounted() {
-    window.scrollTo(0, 99999);
     this.getChannel();
+    window.scrollTo(0, 9999);
   },
   methods: {
     mute() {
@@ -163,24 +178,27 @@ export default Vue.extend({
         });
     },
     eventSheet(env: any) {
-      switch (env.item.id) {
-        case 0:
-          this.dTitle = "Send File";
-          this.dColor = "primary";
-          this.component = SendFile;
-          this.properties = {
-            type: env.item.id,
-          };
-          openDialog(this);
-        case 1:
-          this.dTitle = "Send File";
-          this.dColor = "primary";
-          this.component = SendFile;
-          this.properties = {
-            type: env.item.id,
-          };
-          openDialog(this);
+      switch (env.item.type) {
+        case channelItemTypes.File:
+          this.openDialogApp("primary", "Send File", SendFile, {
+            type: env.item.type,
+          });
+        case channelItemTypes.Image:
+          this.openDialogApp("primary", "Send Image", SendFile, {
+            type: env.item.type,
+          });
+        case channelItemTypes.Article:
+          this.openDialogApp("info", "Create Article", UpsertArticle, {
+            type: env.item.type,
+          });
       }
+    },
+    openDialogApp(color: string, title: string, component: any, props: any) {
+      this.dTitle = title;
+      this.dColor = color;
+      this.component = component;
+      this.properties = props;
+      openDialog(this);
     },
     followChannel() {
       this.channleService
@@ -201,7 +219,7 @@ export default Vue.extend({
         .sendMessage({
           message: model.message,
           token: this.token,
-          file: model.base64,
+          file: model.file,
         })
         .then((res) => {
           if (res.status) {
@@ -211,6 +229,24 @@ export default Vue.extend({
         })
         .catch((e) => {
           showMessage(this, messages.netWorkError(e.message).message);
+        });
+    },
+    createArticle(article: any) {
+      loading(this);
+      this.articleService
+        .createArticle({
+          ...article,
+          channelToken: this.token,
+          ownerType: ArticleOwnerType.Channel,
+        })
+        .then((res) => {
+          if (res.status) {
+            closeDialog(this);
+            this.posts.push(res.result as never);
+          }
+        })
+        .catch((e) => {
+          showMessage(this, messages.netWorkError(e.message).title);
         });
     },
   },

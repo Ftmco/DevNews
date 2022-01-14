@@ -2,7 +2,7 @@
   <v-col cols="12" sm="6" md="4">
     <v-card class="mx-auto rounded-b-0 item">
       <slot name="title"></slot>
-      <ItemFile v-if="item.file != null" :file="item.file" />
+      <ItemFile v-if="item.file != null" :files="item.file" />
 
       <v-card-title v-if="item.type == 0">
         {{ item.title }}

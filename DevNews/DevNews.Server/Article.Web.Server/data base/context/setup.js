@@ -18,8 +18,6 @@ function applyExtraSetup(sequelize) {
     ChannelAdmins.belongsTo(Channel);
     Channel.hasMany(Post);
     Post.belongsTo(Channel);
-    Channel.hasMany(Article);
-    Article.belongsTo(Channel);
 }
 exports.default = applyExtraSetup;
 //# sourceMappingURL=setup.js.map
