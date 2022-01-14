@@ -9,6 +9,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Article.Web.Server", "DevNe
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Artivle.Web.Client", "Artivle.Web.Client\Artivle.Web.Client.njsproj", "{A97FF5DC-7A3F-4A0E-BD44-D44E88D9651D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Web.Server.V2", "Article.Web.Server.V2\Article.Web.Server.V2.csproj", "{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{A97FF5DC-7A3F-4A0E-BD44-D44E88D9651D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A97FF5DC-7A3F-4A0E-BD44-D44E88D9651D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A97FF5DC-7A3F-4A0E-BD44-D44E88D9651D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3D6FECA1-7453-4AA8-952E-434FB23424ED} = {4D5AEA60-C2FD-4CAE-9D9F-31D5BC3ADA17}
 		{A97FF5DC-7A3F-4A0E-BD44-D44E88D9651D} = {4D5AEA60-C2FD-4CAE-9D9F-31D5BC3ADA17}
+		{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A} = {4D5AEA60-C2FD-4CAE-9D9F-31D5BC3ADA17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2FD0411-424E-4E82-AAF5-99FB273F999C}
