@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Entity.Article;
 
-namespace Entity.Article
+public class Category
 {
-    internal class Categories
-    {
-    }
+    [Key]
+    public Guid Id { get; set; }
+
+    public string Title { get; set; }
+
+    public string Name { get; set; }
 }

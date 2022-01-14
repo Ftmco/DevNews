@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Entity.Article;
 
-namespace Entity.Article
+public class Post
 {
-    internal class Post
-    {
-    }
+    [Key]
+    public Guid Id { get; set; }
+
+    public string Message { get; set; }
+
+    public DateTime CreateDate { get; set; }
 }

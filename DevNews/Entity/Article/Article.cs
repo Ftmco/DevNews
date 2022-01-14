@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Entity.Article;
 
-namespace Entity.Article
+public class Article
 {
-    internal class Article
-    {
-    }
+    [Key]
+    public Guid Id { get; set; }
 }

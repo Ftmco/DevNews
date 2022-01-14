@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Entity.Channel;
 
-namespace Entity.Channel
+public class ChannelsAdmins
 {
-    internal class ChannelsAdmins
-    {
-    }
+    [Key]
+    public Guid Id { get; set; }
+
+    public Guid ChannelId { get; set; }
+
+    public Guid UserId { get; set; }
 }

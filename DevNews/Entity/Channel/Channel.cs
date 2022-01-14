@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Entity.Channel;
 
-namespace Entity.Channel
+public class Channel
 {
-    internal class Channel
-    {
-    }
+    [Key]
+    public Guid Id { get; set; }
+
+    public string Name { get; set; }
+
+    public string About { get; set; }
+
+    public string Avatar { get; set; }
+
+    public DateTime CreateDate { get; set; }
+
+    public Guid OwnerId { get; set; }
 }
