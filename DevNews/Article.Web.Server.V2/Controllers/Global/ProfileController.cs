@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Article.Web.Server.V2.Controllers.Global
+namespace Article.Web.Server.V2.Controllers.Global;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ProfileController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProfileController : ControllerBase
-    {
-    }
 }

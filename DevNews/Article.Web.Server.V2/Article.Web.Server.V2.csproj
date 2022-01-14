@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Admin\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
