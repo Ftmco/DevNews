@@ -1,6 +1,11 @@
-﻿namespace Service.Service
+﻿using Service.Rules;
+
+namespace Service.Service;
+
+public class FileServices : IFileRules
 {
-    internal class FileServices
+    public void Dispose()
     {
+        throw new NotImplementedException();
     }
 }

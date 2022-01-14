@@ -1,6 +1,5 @@
-﻿namespace Service.Rules
+﻿namespace Service.Rules;
+
+internal interface IChannelRules : IDisposable
 {
-    internal interface IChannelRules
-    {
-    }
 }

@@ -1,6 +1,11 @@
-﻿namespace Service.Service
+﻿using Service.Rules;
+
+namespace Service.Service;
+
+internal class PostServices : IPostRules
 {
-    internal class PostServices
+    public void Dispose()
     {
+        throw new NotImplementedException();
     }
 }

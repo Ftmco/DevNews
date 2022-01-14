@@ -1,6 +1,6 @@
-﻿namespace Service.Rules
+﻿namespace Service.Rules;
+
+public interface IAccountRules : IDisposable
 {
-    internal interface IAccountRules
-    {
-    }
+
 }

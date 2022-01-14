@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Services.Base;
 
-public class BaseServices<TEntity> : IDisposable, IBaseRules<TEntity> where TEntity : class
+public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where TEntity : class
 {
     #region -- Dependency --
 
@@ -60,9 +60,11 @@ public class BaseServices<TEntity> : IDisposable, IBaseRules<TEntity> where TEnt
     public async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> where)
     => await Task.FromResult(await DeleteAsync(await GetAsync(where)));
 
-    public void Dispose()
+
+    public async ValueTask DisposeAsync()
     {
         GC.SuppressFinalize(this);
+        await _context.DisposeAsync();
     }
 
     public async Task<IEnumerable<TEntity>> GetAsync()

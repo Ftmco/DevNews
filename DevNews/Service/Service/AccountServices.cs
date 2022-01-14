@@ -1,6 +1,11 @@
-﻿namespace Service.Service
+﻿using Service.Rules;
+
+namespace Service.Service;
+
+public class AccountServices : IAccountRules
 {
-    internal class AccountServices
+    public void Dispose()
     {
+        throw new NotImplementedException();
     }
 }

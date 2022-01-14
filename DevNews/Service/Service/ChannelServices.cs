@@ -1,6 +1,11 @@
-﻿namespace Service.Service
+﻿using Service.Rules;
+
+namespace Service.Service;
+
+public class ChannelServices : IChannelRules
 {
-    internal class ChannelServices
+    public void Dispose()
     {
+        throw new NotImplementedException();
     }
 }

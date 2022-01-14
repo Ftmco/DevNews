@@ -1,6 +1,5 @@
-﻿namespace Service.Rules
+﻿namespace Service.Rules;
+
+public interface ICategoryRules : IDisposable
 {
-    internal class ICategoryRules
-    {
-    }
 }

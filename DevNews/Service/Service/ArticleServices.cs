@@ -1,6 +1,11 @@
-﻿namespace Service.Service
+﻿using Service.Rules;
+
+namespace Service.Service;
+
+public class ArticleServices : IArticleRules
 {
-    internal class ArticleServices
+    public void Dispose()
     {
+        throw new NotImplementedException();
     }
 }

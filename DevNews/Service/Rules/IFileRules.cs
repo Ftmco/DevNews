@@ -1,6 +1,5 @@
-﻿namespace Service.Rules
+﻿namespace Service.Rules;
+
+public interface IFileRules : IDisposable
 {
-    internal class IFileRules
-    {
-    }
 }

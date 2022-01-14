@@ -1,6 +1,11 @@
-﻿namespace Service.Service
+﻿using Service.Rules;
+
+namespace Service.Service;
+
+public class CategoryServices : ICategoryRules
 {
-    internal class CategoryServices
+    public void Dispose()
     {
+        throw new NotImplementedException();
     }
 }
