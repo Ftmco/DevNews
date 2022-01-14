@@ -1,4 +1,6 @@
-﻿namespace Entity.User;
+﻿using Entity.Channel;
+
+namespace Entity.User;
 
 public class User
 {
@@ -12,11 +14,21 @@ public class User
 
     public string MobileNo { get; set; }
 
+    [Required]
     public DateTime RegisterDate { get; set; }
 
+    [Required]
     public bool IsActiive { get; set; }
 
+    [Required]
     public string ActiveCode { get; set; }
 
+    [Required]
     public string Password { get; set; }
+
+    public virtual ICollection<Session> Session { get; set; }
+
+    public virtual ICollection<ChannelsUsers> ChannelsUsers { get; set; }
+
+    public virtual ICollection<ChannelsAdmins> ChannelsAdmins { get; set; }
 }
