@@ -1,4 +1,4 @@
-﻿using Entity.Article;
+using Entity.Article;
 
 namespace Entity.Channel;
 
@@ -13,6 +13,15 @@ public class Channel
     public string About { get; set; }
 
     public string Avatar { get; set; }
+    
+    [Required]
+    public string Link {get;set;} 
+    
+    [Required]
+    public string Token {get;set;} 
+    
+    [Required]
+    public short Type {get;set;} 
 
     [Required]
     public DateTime CreateDate { get; set; }
