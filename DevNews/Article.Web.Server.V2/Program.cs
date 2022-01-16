@@ -1,5 +1,6 @@
 using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
+using Service.Injection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ArticleContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Article")));
+builder.Services.AddDependencies();
 
 var app = builder.Build();
 
