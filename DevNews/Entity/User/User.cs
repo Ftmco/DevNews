@@ -2,7 +2,7 @@
 
 namespace Entity.User;
 
-public class User
+public record User
 {
     [Key]
     public Guid Id { get; set; }
