@@ -42,7 +42,8 @@ public static class Injector
         service.AddTransient<ICategoryRules, CategoryServices>();
         service.AddTransient<IChannelRules, ChannelServices>();
         service.AddTransient<IFileRules, FileServices>();
-        service.AddTransient<IPostRules, PostServices>();
+        service.AddTransient<ISessionRules, SessionServices>();
+        service.AddTransient<IUserRules, UserServices>();
         return service;
     }
 
