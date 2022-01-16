@@ -9,17 +9,19 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Article.Web.Server", "DevNe
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Artivle.Web.Client", "Artivle.Web.Client\Artivle.Web.Client.njsproj", "{A97FF5DC-7A3F-4A0E-BD44-D44E88D9651D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Web.Server.V2", "Article.Web.Server.V2\Article.Web.Server.V2.csproj", "{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Article.Web.Server.V2", "Article.Web.Server.V2\Article.Web.Server.V2.csproj", "{125532BA-0C4D-45DC-BDE1-CCD4BA9D666A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server V2", "Server V2", "{A7AFECEF-DE71-4DAD-B3DE-1F71CEC55B2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{DFA9F1B7-8617-4389-A806-6474D97C4982}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{DFA9F1B7-8617-4389-A806-6474D97C4982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{F19E8BAE-19F7-4967-8D91-DC46DD253F41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{F19E8BAE-19F7-4967-8D91-DC46DD253F41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{E40D8BD9-73B1-4CE5-B718-F3EE8F84006A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{E40D8BD9-73B1-4CE5-B718-F3EE8F84006A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{40A7E77F-DCD6-4281-8D0B-CE3A25A0C8E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools", "Tools\Tools.csproj", "{40A7E77F-DCD6-4281-8D0B-CE3A25A0C8E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{F8D51A5D-093C-473C-8F89-3DD2263C55ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{40A7E77F-DCD6-4281-8D0B-CE3A25A0C8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40A7E77F-DCD6-4281-8D0B-CE3A25A0C8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40A7E77F-DCD6-4281-8D0B-CE3A25A0C8E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8D51A5D-093C-473C-8F89-3DD2263C55ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8D51A5D-093C-473C-8F89-3DD2263C55ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8D51A5D-093C-473C-8F89-3DD2263C55ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8D51A5D-093C-473C-8F89-3DD2263C55ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{F19E8BAE-19F7-4967-8D91-DC46DD253F41} = {A7AFECEF-DE71-4DAD-B3DE-1F71CEC55B2F}
 		{E40D8BD9-73B1-4CE5-B718-F3EE8F84006A} = {A7AFECEF-DE71-4DAD-B3DE-1F71CEC55B2F}
 		{40A7E77F-DCD6-4281-8D0B-CE3A25A0C8E8} = {A7AFECEF-DE71-4DAD-B3DE-1F71CEC55B2F}
+		{F8D51A5D-093C-473C-8F89-3DD2263C55ED} = {A7AFECEF-DE71-4DAD-B3DE-1F71CEC55B2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2FD0411-424E-4E82-AAF5-99FB273F999C}
