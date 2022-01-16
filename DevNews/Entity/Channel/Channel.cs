@@ -16,7 +16,7 @@ public class Channel
     
     [Required]
     public string Link {get;set;} 
-    
+        
     [Required]
     public string Token {get;set;} 
     
