@@ -10,6 +10,8 @@ public interface IBaseRules<Tentity> where Tentity : class
 
     Task<Tentity> GetAsync(object id);
 
+    Task<Tentity> FirstOrDefaultAsync(Expression<Func<Tentity, bool>> where);
+
     Task<bool> InsertAsync(Tentity entity);
 
     Task<bool> InsertAsync(IEnumerable<Tentity> tentities);
