@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tools.Email;
 
@@ -20,6 +15,7 @@ public static class EmailExtensions
                 IsBodyHtml = true,
                 Body = body,
             };
+            mailMessage.To.Add(email);
             SmtpClient smtpClient = new()
             {
                 Port = 587,
