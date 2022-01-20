@@ -1,5 +1,9 @@
-﻿namespace Service.Rules;
+﻿using Microsoft.AspNetCore.Http;
+using ViewModel.Channel;
 
-internal interface IChannelRules : IDisposable
+namespace Service.Rules;
+
+public interface IChannelRules : IDisposable
 {
+    Task<GetChannelsResponse> GetChannelsAsync(HttpContext httpContext);
 }
