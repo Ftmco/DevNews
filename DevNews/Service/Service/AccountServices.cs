@@ -1,4 +1,5 @@
 ﻿using Entity.User;
+using Microsoft.AspNetCore.Http;
 using Service.Rules;
 using Services.Base;
 using Tools.Code;
@@ -43,6 +44,13 @@ public class AccountServices : IAccountRules
     {
         GC.SuppressFinalize(this);
     }
+
+    public async Task<User> GetUserBySessionAsync(IHeaderDictionary headers)
+        => await Task.Run(async () =>
+        {
+            Session session = await _session.GetSessionAsync(headers["Token"].ToString());
+            return session != null ? await _userCrud.GetAsync(session.UserId) : null;
+        });
 
     public async Task<LoginResponse> LoginAsync(LoginViewModel login)
         => await Task.Run(async () =>

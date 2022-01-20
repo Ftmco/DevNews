@@ -1,11 +1,6 @@
 ﻿using Entity.User;
 using Service.Rules;
 using Services.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tools.Crypto;
 
 namespace Service.Service;
@@ -38,4 +33,7 @@ public class SessionServices : ISessionRules
     {
         GC.SuppressFinalize(this);
     }
+
+    public Task<Session> GetSessionAsync(string value)
+            => Task.Run(async () => await _sessionCrud.FirstOrDefaultAsync(s => s.Value == value));
 }

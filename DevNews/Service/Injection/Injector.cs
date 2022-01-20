@@ -44,6 +44,7 @@ public static class Injector
         service.AddTransient<IFileRules, FileServices>();
         service.AddTransient<ISessionRules, SessionServices>();
         service.AddTransient<IUserRules, UserServices>();
+        service.AddTransient<IProfileRules, ProfileServices>();
         return service;
     }
 

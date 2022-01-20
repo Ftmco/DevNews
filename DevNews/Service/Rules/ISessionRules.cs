@@ -10,4 +10,6 @@ namespace Service.Rules;
 public interface ISessionRules : IDisposable
 {
     Task<Session> CreatSessionAsync(Guid userId);
+
+    Task<Session> GetSessionAsync(string value);
 }

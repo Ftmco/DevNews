@@ -7,6 +7,8 @@ public record User
     [Key]
     public Guid Id { get; set; }
 
+    public string FullName { get; set; }
+
     [Required]
     public string UserName { get; set; }
 
@@ -25,6 +27,8 @@ public record User
 
     [Required]
     public string Password { get; set; }
+
+    public string Image { get; set; }
 
     public virtual ICollection<Session> Session { get; set; }
 
