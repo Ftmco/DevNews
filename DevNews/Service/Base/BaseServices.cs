@@ -24,6 +24,9 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
         _dbSet = _context.Set<TEntity>();
     }
 
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where)
+        => await Task.FromResult(await _dbSet.AnyAsync(where));
+
     #endregion
 
     public async Task<bool> DeleteAsync(TEntity entity)
