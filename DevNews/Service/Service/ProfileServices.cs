@@ -1,12 +1,6 @@
 ﻿using Entity.User;
 using Microsoft.AspNetCore.Http;
-using Service.Extensions;
 using Service.Rules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViewModel.Profile;
 
 namespace Service.Service;
@@ -22,7 +16,7 @@ public class ProfileServices : IProfileRules
 
     public void Dispose()
     {
-        GC.SuppressFinalize(this);  
+        GC.SuppressFinalize(this);
     }
 
     public async Task<GetProileResponse> GetProfileAsync(IHeaderDictionary headers)
@@ -30,7 +24,12 @@ public class ProfileServices : IProfileRules
         {
             User user = await _account.GetUserBySessionAsync(headers);
             return user != null
-                ? new GetProileResponse(ProfileStatus.Success,await user.CreateProfileViewModelAsync())
+                ? new GetProileResponse(ProfileStatus.Success, await GetProfileViewModelAsync(user))
                 : new GetProileResponse(ProfileStatus.UserNotFound, null);
         });
+
+    public Task<ProfileViewModel> GetProfileViewModelAsync(User user)
+    {
+        throw new NotImplementedException();
+    }
 }
