@@ -4,7 +4,10 @@
       <v-row>
         <v-col cols="12" align="center">
           <v-list-item-avatar size="150" color="grey">
-            <v-img :src="channel.avatar" :lazy-src="channel.avatar" />
+            <v-img
+              :src="channel.avatar.base64"
+              :lazy-src="channel.avatar.base64"
+            />
           </v-list-item-avatar>
           <v-file-input
             @change="avatarSelect"
@@ -60,13 +63,18 @@ import CategoryService from "@/api/service/category.service";
 import { messages, rules } from "@/constants";
 import { convertToBase64File } from "@/services/file";
 import Vue from "vue";
+import { showMessage } from "@/services/message";
 export default Vue.extend({
   data: () => ({
     rules: rules,
     channel: {
       name: "",
       link: "",
-      avatar: "",
+      avatar: {
+        base64: "",
+        type: "",
+        ogName: "",
+      },
       categories: [],
     },
     categories: [],
@@ -82,7 +90,7 @@ export default Vue.extend({
       (this.$root.$refs.loading as any).open();
       if (isValid) {
         this.channelService
-          .creatChannel({
+          .createChannel({
             name: this.channel.name,
             avatar: this.channel.avatar,
             link: this.channel.link,
@@ -94,12 +102,12 @@ export default Vue.extend({
             if (res.status) {
               this.$emit("channelCreated", res.result);
             }
-            this.showMessage(res.title);
+            showMessage(this, res.title);
           })
           .catch((e) => {
-            this.showMessage(messages.netWorkError(e.message).title);
+            showMessage(this, messages.netWorkError(e.message).title);
           });
-      } else this.showMessage(messages.invalidForm);
+      } else showMessage(this, messages.invalidForm);
     },
     getCategories() {
       (this.$root.$refs.loading as any).open();
@@ -109,26 +117,26 @@ export default Vue.extend({
           if (res.status) {
             this.categories = res.result;
           }
-          this.showMessage(res.title);
+          showMessage(this, res.title);
         })
         .catch((e) => {
-          this.showMessage(messages.netWorkError(e).title);
+          showMessage(this, messages.netWorkError(e).title);
         });
     },
     avatarSelect(file: any) {
       convertToBase64File(file)
         .then((res: any) => {
           if (res != null) {
-            this.channel.avatar = res.base64;
+            this.channel.avatar = {
+              base64: res.base64,
+              type: res.type,
+              ogName: res.ogName,
+            };
           }
         })
         .catch((e) => {
-          this.showMessage(e);
+          showMessage(this, e);
         });
-    },
-    showMessage(text: string) {
-      (this.$root.$refs.loading as any).close();
-      (this.$root.$refs.snackbar as any).open(text);
     },
   },
 });

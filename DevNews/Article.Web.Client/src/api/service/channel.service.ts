@@ -10,7 +10,7 @@ export default class ChannelService implements IChannelRule {
     constructor(axios: AxiosInstance) {
         this._axios = axios;
     }
-
+    
     async createArticle(article: any) {
         try {
             let request = await this._axios.post("Channel/CreateArticle", article)
@@ -67,7 +67,7 @@ export default class ChannelService implements IChannelRule {
         }
     }
 
-    async creatChannel(channel: Channel) {
+    async createChannel(channel: Channel) {
         try {
             let request = await this._axios.post("Channel/Create", channel)
             return await request.data

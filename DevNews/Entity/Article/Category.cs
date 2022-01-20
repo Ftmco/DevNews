@@ -11,5 +11,7 @@ public class Category
     [Required]
     public string Name { get; set; }
 
+    public Guid? ParrentId { get; set; }
+
     public virtual ICollection<ArticleCategories> ArticleCategories { get; set; }
 }

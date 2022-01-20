@@ -2,7 +2,7 @@ using Entity.Article;
 
 namespace Entity.Channel;
 
-public class Channel
+public record Channel
 {
     [Key]
     public Guid Id { get; set; }
@@ -11,8 +11,6 @@ public class Channel
     public string Name { get; set; }
 
     public string About { get; set; }
-
-    public string Avatar { get; set; }
     
     [Required]
     public string Link {get;set;} 

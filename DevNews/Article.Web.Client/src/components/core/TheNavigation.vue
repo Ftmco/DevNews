@@ -30,7 +30,9 @@
 
     <template v-slot:append v-if="user.isAuthenticated">
       <div class="pa-2">
-        <v-btn block color="error" elevation="10" @click="logOut"> Logout </v-btn>
+        <v-btn block color="error" class="rounded-xl" elevation="10" @click="logOut">
+          Logout
+        </v-btn>
       </div>
     </template>
   </v-navigation-drawer>
@@ -57,6 +59,7 @@ export default Vue.extend({
     accountServices: new AccountServiec(apiCall),
     profileService: new ProfileService(apiCall),
     theme: "Light",
+    active: 0,
   }),
   created() {
     this.$root.$refs.navigationDrawer = this;

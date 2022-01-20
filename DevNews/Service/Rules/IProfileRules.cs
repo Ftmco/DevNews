@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Entity.User;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,4 +12,6 @@ namespace Service.Rules;
 public interface IProfileRules : IDisposable
 {
     Task<GetProileResponse> GetProfileAsync(IHeaderDictionary headers);
+
+    Task<ProfileViewModel> GetProfileViewModelAsync(User user);
 }
