@@ -11,6 +11,15 @@ export default class ChannelService implements IChannelRule {
         this._axios = axios;
     }
 
+    async getChannelArticles(token: string) {
+        try {
+            let request = await this._axios.get(`Channel/Articles?token=${token}`)
+            return await request.data
+        } catch (e: any) {
+            return messages.netWorkError(e.message)
+        }
+    }
+
     async getMyChannels() {
         try {
             let request = await this._axios.get("Channel/AdminChannels")

@@ -16,4 +16,6 @@ export default interface IChannelRule {
     leave(token: string): any
 
     getMyChannels(): any
+
+    getChannelArticles(token: string): any
 }
