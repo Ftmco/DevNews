@@ -7,7 +7,10 @@
         <v-tab>Articles</v-tab>
 
         <v-tab-item>
-          <channel-posts />
+          <channel-posts :channelToken="channel.token"/>
+        </v-tab-item>
+         <v-tab-item>
+          <channel-articles :channelToken="channel.token"/>
         </v-tab-item>
       </v-tabs>
     </v-col>
