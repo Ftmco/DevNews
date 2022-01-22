@@ -10,7 +10,16 @@ export default class ChannelService implements IChannelRule {
     constructor(axios: AxiosInstance) {
         this._axios = axios;
     }
-    
+
+    async getMyChannels() {
+        try {
+            let request = await this._axios.get("Channel/AdminChannels")
+            return await request.data
+        } catch (e: any) {
+            return messages.netWorkError(e.message)
+        }
+    }
+
     async createArticle(article: any) {
         try {
             let request = await this._axios.post("Channel/CreateArticle", article)

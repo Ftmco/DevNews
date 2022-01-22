@@ -14,4 +14,6 @@ export default interface IChannelRule {
     sendMessage(post: any): any
 
     leave(token: string): any
+
+    getMyChannels(): any
 }
