@@ -60,7 +60,7 @@ public class AccountServices : IAccountRules
             {
                 if (user.IsActiive)
                 {
-                    Session session = await _session.CreatSessionAsync(user.Id);
+                    Session session = await _session.CreatSessionAsync(user.Id,login);
                     return session != null
                         ? new LoginResponse(LoginStatus.Success, new(session.Key, session.Value))
                         : new LoginResponse(LoginStatus.Exception, null);
