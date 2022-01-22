@@ -1,10 +1,15 @@
 <template>
   <div>
-    <channel-bar :channel="channel" />
+    <channel-bar :channel="channel" @avatarClick="avatarClick" />
     <v-col cols="12">
-      <v-row>
-        <item v-for="(post, i) in posts" :key="i" :item="post" />
-      </v-row>
+      <v-tabs fixed-tabs>
+        <v-tab>Posts</v-tab>
+        <v-tab>Articles</v-tab>
+
+        <v-tab-item>
+          <channel-posts />
+        </v-tab-item>
+      </v-tabs>
     </v-col>
     <br />
     <v-footer fixed height="75">
@@ -50,12 +55,6 @@
         />
       </template>
     </app-dialog>
-    <channnel-info
-      color="info"
-      :owner="owner"
-      :channel="channel"
-      :title="channel.name"
-    />
   </div>
 </template>
 
@@ -80,6 +79,8 @@ import UpsertArticle from "@/components/article/UpsertArticle.vue";
 import ArticleService from "@/api/service/article.service";
 import { ArticleOwnerType } from "@/api/models/article.model";
 import ChannnelInfo from "@/components/channel/ChannelInfo.vue";
+import ChannelPosts from "@/components/channel/ChannelPosts.vue";
+import ChannelArticles from "@/components/channel/ChannelArticles.vue";
 
 export default Vue.extend({
   components: {
@@ -91,6 +92,8 @@ export default Vue.extend({
     SendFile,
     UpsertArticle,
     ChannnelInfo,
+    ChannelPosts,
+    ChannelArticles,
   },
   data: () => ({
     channel: {
@@ -188,18 +191,23 @@ export default Vue.extend({
     },
     eventSheet(env: any) {
       switch (env.item.type) {
-        case channelItemTypes.File:
+        case 0:
           this.openDialogApp("primary", "Send File", SendFile, {
             type: env.item.type,
           });
-        case channelItemTypes.Image:
+          break;
+        case 1:
           this.openDialogApp("primary", "Send Image", SendFile, {
             type: env.item.type,
           });
-        case channelItemTypes.Article:
+          break;
+        case 4:
           this.openDialogApp("info", "Create Article", UpsertArticle, {
             type: env.item.type,
           });
+          break;
+        default:
+          break;
       }
     },
     openDialogApp(color: string, title: string, component: any, props: any) {
@@ -257,6 +265,12 @@ export default Vue.extend({
         .catch((e) => {
           showMessage(this, messages.netWorkError(e.message).title);
         });
+    },
+    avatarClick() {
+      this.openDialogApp("info", "Channel Info", ChannnelInfo, {
+        channel: this.channel,
+        owner: this.owner,
+      });
     },
   },
 });
