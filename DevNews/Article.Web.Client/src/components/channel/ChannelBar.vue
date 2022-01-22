@@ -36,7 +36,7 @@ import { apiCall } from "@/api";
 import ChannelService from "@/api/service/channel.service";
 import { messages } from "@/constants";
 import { createFileAddress } from "@/services/file";
-import { openChannelInfo, openLightBox, showMessage } from "@/services/message";
+import { showMessage } from "@/services/message";
 import Vue from "vue";
 export default Vue.extend({
   props: {
@@ -63,9 +63,9 @@ export default Vue.extend({
         });
     },
     avatarClieck() {
-      openChannelInfo(this);
+      this.$emit("avatarClick", {});
     },
-    createFileAddress,
+    createFileAddress
   },
 });
 </script>
