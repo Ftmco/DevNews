@@ -28,8 +28,6 @@ public record User
     [Required]
     public string Password { get; set; }
 
-    public string Image { get; set; }
-
     public virtual ICollection<Session> Session { get; set; }
 
     public virtual ICollection<ChannelsUsers> ChannelsUsers { get; set; }
