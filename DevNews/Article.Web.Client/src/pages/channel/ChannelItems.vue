@@ -50,6 +50,12 @@
         />
       </template>
     </app-dialog>
+    <channnel-info
+      color="info"
+      :owner="owner"
+      :channel="channel"
+      :title="channel.name"
+    />
   </div>
 </template>
 
@@ -73,6 +79,8 @@ import SendFile from "@/components/post/SendFile.vue";
 import UpsertArticle from "@/components/article/UpsertArticle.vue";
 import ArticleService from "@/api/service/article.service";
 import { ArticleOwnerType } from "@/api/models/article.model";
+import ChannnelInfo from "@/components/channel/ChannelInfo.vue";
+
 export default Vue.extend({
   components: {
     Item,
@@ -82,11 +90,12 @@ export default Vue.extend({
     AppDialog,
     SendFile,
     UpsertArticle,
+    ChannnelInfo,
   },
   data: () => ({
     channel: {
       name: "",
-      avatar: "",
+      avatar: [],
       mute: true,
       token: "",
     },
