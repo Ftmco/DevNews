@@ -1,4 +1,4 @@
-import Vue from "vue"
+export const baseUrl = "http://192.168.43.198:2050/"
 
 export const bottomItems = [
     {
