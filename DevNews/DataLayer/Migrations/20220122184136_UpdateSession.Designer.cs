@@ -4,6 +4,7 @@ using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ArticleContext))]
-    partial class ArticleContextModelSnapshot : ModelSnapshot
+    [Migration("20220122184136_UpdateSession")]
+    partial class UpdateSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Article", (string)null);
+                    b.ToTable("Article");
                 });
 
             modelBuilder.Entity("Entity.Article.ArticleCategories", b =>
@@ -72,7 +74,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ArticleCategories", (string)null);
+                    b.ToTable("ArticleCategories");
                 });
 
             modelBuilder.Entity("Entity.Article.Category", b =>
@@ -94,7 +96,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Entity.Article.File", b =>
@@ -133,7 +135,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("File", (string)null);
+                    b.ToTable("File");
                 });
 
             modelBuilder.Entity("Entity.Article.Post", b =>
@@ -157,7 +159,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Post", (string)null);
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Entity.Channel.Channel", b =>
@@ -192,7 +194,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Channel", (string)null);
+                    b.ToTable("Channel");
                 });
 
             modelBuilder.Entity("Entity.Channel.ChannelsAdmins", b =>
@@ -213,7 +215,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChannelsAdmins", (string)null);
+                    b.ToTable("ChannelsAdmins");
                 });
 
             modelBuilder.Entity("Entity.Channel.ChannelsUsers", b =>
@@ -234,7 +236,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChannelsUsers", (string)null);
+                    b.ToTable("ChannelsUsers");
                 });
 
             modelBuilder.Entity("Entity.Comment.Comment", b =>
@@ -248,7 +250,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Comment", (string)null);
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Entity.User.Session", b =>
@@ -286,7 +288,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Session", (string)null);
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("Entity.User.User", b =>
@@ -324,7 +326,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Entity.Article.ArticleCategories", b =>
