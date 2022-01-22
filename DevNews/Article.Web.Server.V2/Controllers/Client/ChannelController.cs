@@ -86,4 +86,17 @@ public class ChannelController : ControllerBase
             _ => Ok(ApiException("Exception,Please Try Again", "")),
         };
     }
+
+    [HttpGet("Posts")]
+    public async Task<IActionResult> Posts(string token)
+    {
+
+    }
+
+
+    [HttpGet("Articles")]
+    public async Task<IActionResult> Articles(string token)
+    {
+
+    }
 }
