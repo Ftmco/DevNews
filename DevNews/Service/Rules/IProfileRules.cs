@@ -11,7 +11,9 @@ namespace Service.Rules;
 
 public interface IProfileRules : IDisposable
 {
-    Task<GetProileResponse> GetProfileAsync(IHeaderDictionary headers);
+    Task<ProfileResponse> GetProfileAsync(IHeaderDictionary headers);
 
     Task<ProfileViewModel> GetProfileViewModelAsync(User user);
+
+    Task<ProfileResponse> UpdateProfileAsync(UpdateProfileViewModel profile,IHeaderDictionary headers);
 }
