@@ -2,6 +2,7 @@
 using Service.Rules;
 using Services.Base;
 using Tools.Crypto;
+using ViewModel.Account;
 
 namespace Service.Service;
 
@@ -14,7 +15,7 @@ public class SessionServices : ISessionRules
         _sessionCrud = sessionCrud;
     }
 
-    public async Task<Session> CreatSessionAsync(Guid userId)
+    public async Task<Session> CreatSessionAsync(Guid userId, LoginViewModel login)
         => await Task.Run(async () =>
         {
             Session session = new()
@@ -24,6 +25,8 @@ public class SessionServices : ISessionRules
                 Key = "Token",
                 UserId = userId,
                 Value = $"{Guid.NewGuid()}".CreateSHA256(),
+                Platform = login.Platform,
+                UserClient = login.UserClient,
             };
             return await _sessionCrud.InsertAsync(session) ?
               session : null;
