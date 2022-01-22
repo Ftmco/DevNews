@@ -66,7 +66,8 @@ const routes: RouteConfig[] = [
                 meta: (route: Route) => ({
                     route: route,
                     title: 'Login',
-                    middleware: guest
+                    middleware: guest,
+                    unShow: true
                 })
             },
             {
@@ -86,10 +87,10 @@ const routes: RouteConfig[] = [
                 meta: (route: Route) => ({
                     route: route,
                     title: 'Forgot Password',
-                    middleware: guest
+                    middleware: guest,
+                    unShow: true
                 })
             },
-
             {
                 path: "/account/signup",
                 name: "SignUp",
@@ -97,10 +98,10 @@ const routes: RouteConfig[] = [
                 meta: (route: Route) => ({
                     route: route,
                     title: 'SignUp',
-                    middleware: guest
+                    middleware: guest,
+                    unShow: true
                 })
             },
-
             {
                 path: "/account/activeAccount",
                 name: "ActiveAccount",
@@ -108,7 +109,8 @@ const routes: RouteConfig[] = [
                 meta: (route: Route) => ({
                     route: route,
                     title: 'Active Account',
-                    middleware: guest
+                    middleware: guest,
+                    unShow: true
                 })
             }
         ]
