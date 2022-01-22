@@ -74,7 +74,6 @@ import AccountServiec from "@/api/service/account.service";
 import { apiCall } from "@/api";
 import AccountBase from "@/components/account/AccountBase.vue";
 import { showMessage } from "@/services/message";
-import { Location } from "vue-router";
 
 export default Vue.extend({
   components: { AccountBase },
