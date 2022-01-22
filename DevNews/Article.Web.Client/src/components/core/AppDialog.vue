@@ -43,6 +43,7 @@
         methods: {
             open() {
                 this.dialog = true;
+                
             },
             close() {
                 this.dialog = false;
