@@ -1,5 +1,7 @@
 {
   "name": "article",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "vue"
 }
