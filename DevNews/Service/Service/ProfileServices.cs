@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Service.Rules;
 using Services.Base;
+using Tools.AppSetting;
+using Tools.FileTools;
+using ViewModel.File;
 using ViewModel.Profile;
 
 namespace Service.Service;
@@ -10,15 +13,19 @@ public class ProfileServices : IProfileRules
 {
     private readonly IAccountRules _account;
 
+    private readonly IUserRules _user;
+
     private readonly IBaseRules<User> _userCrud;
 
     private readonly IBaseRules<Entity.Article.File> _fileCrud;
 
-    public ProfileServices(IAccountRules account, IBaseRules<User> userCrud, IBaseRules<Entity.Article.File> fileCrud)
+    public ProfileServices(IAccountRules account, IBaseRules<User> userCrud,
+        IBaseRules<Entity.Article.File> fileCrud, IUserRules user)
     {
         _account = account;
         _userCrud = userCrud;
         _fileCrud = fileCrud;
+        _user = user;
     }
 
     public void Dispose()
@@ -54,8 +61,26 @@ public class ProfileServices : IProfileRules
             if (user != null)
             {
                 user.FullName = profile.FullName;
-                if (!await _userCrud.AnyAsync(u => u.UserName == profile.UserName.ToLower()))
+                User existUser = await _user.GetUserByUserNameAsync(profile.UserName);
+                if (existUser == null || existUser.Id == user.Id)
                 {
+                    if (profile.Image != null)
+                    {
+                        var directory = await "Directories".GetDataAsync("User");
+                        var save = await new SaveFileViewModel(profile.Image.Base64, directory).SaveFileAsync();
+                        Entity.Article.File profileImage = new()
+                        {
+                            CreateDate = DateTime.Now,
+                            Directory = directory,
+                            Name = save.Name,
+                            ObjectId = user.Id,
+                            OrginalName = profile.Image.OgName,
+                            Size = save.Size,
+                            Type = save.Type,
+                            ObjectType = 0
+                        };
+                        await _fileCrud.InsertAsync(profileImage);
+                    }
                     user.UserName = profile.UserName;
                     return await _userCrud.UpdateAsync(user) ?
                           new ProfileResponse(ProfileStatus.Success, await GetProfileViewModelAsync(user)) :

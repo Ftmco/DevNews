@@ -1,4 +1,6 @@
+import { FileModel } from "./article.model"
+
 export type Profile = {
-    image: string
+    image: FileModel,
     fullName: string
 }

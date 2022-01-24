@@ -34,11 +34,11 @@ public class ProfileController : ControllerBase
         ProfileResponse? update = await _profile.UpdateProfileAsync(profile, Request.Headers);
         return update.Status switch
         {
-            ProfileStatus.Success => throw new NotImplementedException(),
-            ProfileStatus.UserNotFound => throw new NotImplementedException(),
-            ProfileStatus.Exception => throw new NotImplementedException(),
-            ProfileStatus.UserNameExist => throw new NotImplementedException(),
-            _ => throw new NotImplementedException(),
+            ProfileStatus.Success => Ok(Success("Update Profile Successfully", "", update.Profile)),
+            ProfileStatus.UserNotFound => Ok(Faild(403, "User Not Found", "Please Login To Your Account")),
+            ProfileStatus.Exception => Ok(ApiException("Exception", "")),
+            ProfileStatus.UserNameExist => Ok(Faild(403, "User Name Exist", "")),
+            _ => Ok(ApiException("Exception", "")),
         };
     }
 }

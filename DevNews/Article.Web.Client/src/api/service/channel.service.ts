@@ -49,7 +49,7 @@ export default class ChannelService implements IChannelRule {
 
     async sendMessage(post: any) {
         try {
-            let request = await this._axios.post("Channel/SendMessage", post)
+            let request = await this._axios.post("Channel/SendPost", post)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)

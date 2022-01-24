@@ -5,12 +5,11 @@
       <v-tabs fixed-tabs>
         <v-tab>Posts</v-tab>
         <v-tab>Articles</v-tab>
-
         <v-tab-item>
-          <channel-posts :channelToken="channel.token"/>
+          <channel-posts :channelToken="token" />
         </v-tab-item>
-         <v-tab-item>
-          <channel-articles :channelToken="channel.token"/>
+        <v-tab-item>
+          <channel-articles :channelToken="token" />
         </v-tab-item>
       </v-tabs>
     </v-col>
@@ -80,7 +79,6 @@ import AppDialog from "@/components/core/AppDialog.vue";
 import SendFile from "@/components/post/SendFile.vue";
 import UpsertArticle from "@/components/article/UpsertArticle.vue";
 import ArticleService from "@/api/service/article.service";
-import { ArticleOwnerType } from "@/api/models/article.model";
 import ChannnelInfo from "@/components/channel/ChannelInfo.vue";
 import ChannelPosts from "@/components/channel/ChannelPosts.vue";
 import ChannelArticles from "@/components/channel/ChannelArticles.vue";
@@ -112,7 +110,6 @@ export default Vue.extend({
       userName: "",
     },
     channelItems: channelItems,
-    posts: [],
     loadingPost: true,
     isAdmin: false,
     notift: "Mute",
@@ -146,7 +143,6 @@ export default Vue.extend({
             this.owner = res.result.owner;
             this.isAdmin = res.result.isAdmin;
             this.isIn = res.result.isIn;
-            this.getChannelPosts();
           }
           showMessage(this, res.title);
         })
@@ -154,43 +150,8 @@ export default Vue.extend({
           showMessage(this, messages.netWorkError(e.message).title);
         });
     },
-    getChannelPosts() {
-      (this.$root.$refs.loading as any).open();
-      this.channleService
-        .getChannelPosts(this.token)
-        .then((res) => {
-          if (res.status) {
-            res.result.posts.forEach((post: never) => {
-              this.posts.push(post);
-            });
-            res.result.articles.forEach((post: never) => {
-              this.posts.push(post);
-            });
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).message);
-        });
-    },
     more() {
       (this.$root.$refs.bottomSheet as any).open();
-    },
-    sendMessage() {
-      this.channleService
-        .sendMessage({
-          message: this.message,
-          token: this.token,
-          file: null,
-        })
-        .then((res) => {
-          if (res.status) {
-            this.posts.push(res.result as never);
-            this.message = "";
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).message);
-        });
     },
     eventSheet(env: any) {
       switch (env.item.type) {
@@ -229,41 +190,6 @@ export default Vue.extend({
             this.isAdmin = false;
           }
           showMessage(this, res.title);
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).title);
-        });
-    },
-    itemSubmit(model: any) {
-      this.channleService
-        .sendMessage({
-          message: model.message,
-          token: this.token,
-          file: model.file,
-        })
-        .then((res) => {
-          if (res.status) {
-            this.posts.push(res.result as never);
-            closeDialog(this);
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).message);
-        });
-    },
-    createArticle(article: any) {
-      loading(this);
-      this.articleService
-        .createArticle({
-          ...article,
-          channelToken: this.token,
-          ownerType: ArticleOwnerType.Channel,
-        })
-        .then((res) => {
-          if (res.status) {
-            closeDialog(this);
-            this.posts.push(res.result as never);
-          }
         })
         .catch((e) => {
           showMessage(this, messages.netWorkError(e.message).title);

@@ -1,7 +1,6 @@
 ﻿using Entity.User;
 using Microsoft.AspNetCore.Http;
 using Service.Rules;
-using Services.Base;
 using Tools.Code;
 using ViewModel.Account;
 
@@ -60,7 +59,7 @@ public class AccountServices : IAccountRules
             {
                 if (user.IsActiive)
                 {
-                    Session session = await _session.CreatSessionAsync(user.Id,login);
+                    Session session = await _session.CreatSessionAsync(user.Id, login);
                     return session != null
                         ? new LoginResponse(LoginStatus.Success, new(session.Key, session.Value))
                         : new LoginResponse(LoginStatus.Exception, null);
@@ -73,14 +72,15 @@ public class AccountServices : IAccountRules
     public async Task<SignUpStatus> SignUpAsync(SignUpViewModel signUp)
         => await Task.Run(async () =>
         {
-            if (await _user.GetUserByUserNameAsync(signUp.UserName) == null &&
-                await _user.GetUserByUserNameAsync(signUp.Email) == null &&
-                await _user.GetUserByUserNameAsync(signUp.MobileNo) == null)
-            {
-                User newUser = await _user.CreateUserAsync(signUp);
-                return newUser != null ? SignUpStatus.Success : SignUpStatus.Exception;
-            }
-            return SignUpStatus.UserExist;
+            if (await _user.GetUserByUserNameAsync(signUp.UserName) != null)
+                return SignUpStatus.UserExist;
+            if (await _user.GetUserByUserNameAsync(signUp.Email) != null)
+                return SignUpStatus.UserExist;
+            if (await _user.GetUserByUserNameAsync(signUp.MobileNo) != null)
+                return SignUpStatus.UserExist;
+
+            User newUser = await _user.CreateUserAsync(signUp);
+            return newUser != null ? SignUpStatus.Success : SignUpStatus.Exception;
         });
 
 

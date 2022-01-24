@@ -6,7 +6,7 @@ import IProfileRules from "../rules/profile.rules";
 export default class ProfileService implements IProfileRules {
 
     private readonly _axios: AxiosInstance;
-   
+
     constructor(axios: AxiosInstance) {
         this._axios = axios;
     }
@@ -14,7 +14,8 @@ export default class ProfileService implements IProfileRules {
     async getProfile() {
         try {
             let request = await this._axios.get("Profile/Get")
-            return await request.data
+            let response = await request.data
+            return response
         } catch (e: any) {
             return messages.netWorkError(e.message)
         }

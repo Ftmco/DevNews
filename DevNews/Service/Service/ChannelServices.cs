@@ -1,4 +1,5 @@
-﻿using Entity.Channel;
+﻿using Entity.Article;
+using Entity.Channel;
 using Entity.User;
 using Microsoft.AspNetCore.Http;
 using Service.Rules;
@@ -23,11 +24,13 @@ public class ChannelServices : IChannelRules
 
     private readonly IBaseRules<Entity.Article.File> _fileCrud;
 
+    private readonly IPostRules _post;
+
     private readonly IAccountRules _account;
 
     public ChannelServices(IBaseRules<Channel> channelCrud, IAccountRules account,
         IBaseRules<ChannelsUsers> channelsUsersCrud, IBaseRules<Entity.Article.File> fileCrud,
-            IBaseRules<ChannelsAdmins> channelsAdminsCrud, IBaseRules<User> userCrud)
+            IBaseRules<ChannelsAdmins> channelsAdminsCrud, IBaseRules<User> userCrud, IPostRules post)
     {
         _channelCrud = channelCrud;
         _account = account;
@@ -35,6 +38,7 @@ public class ChannelServices : IChannelRules
         _fileCrud = fileCrud;
         _channelsAdminsCrud = channelsAdminsCrud;
         _userCrud = userCrud;
+        _post = post;
     }
 
     public async Task<bool> CheckLinkAsync(string link)
@@ -124,6 +128,19 @@ public class ChannelServices : IChannelRules
     public async Task<Channel> GetChannelByTokenAsync(string token)
         => await Task.FromResult(await _channelCrud.FirstOrDefaultAsync(c => c.Token == token));
 
+    public async Task<GetPostResponse> GetChannelPostsAsync(string token, int index)
+        => await Task.Run(async () =>
+        {
+            Channel channel = await GetChannelByTokenAsync(token);
+            if (channel != null)
+            {
+                IEnumerable<Post> posts = await _post.GetChannelPostsAsync(channel.Id, index);
+                IEnumerable<PostViewModel> postsViewModel = await _post.CreatePostViewModelAsync(posts);
+                return new GetPostResponse(PostStaus.Success, postsViewModel);
+            }
+            return new GetPostResponse(PostStaus.ChannelNotFound, null);
+        });
+
     public async Task<ChannelPreviewViewModel> GetChannelPreviewViewModelAsync(Channel channel)
         => await Task.Run(async () =>
        {
@@ -174,6 +191,32 @@ public class ChannelServices : IChannelRules
            Token: "",
            UserName: user.UserName,
            Avatar: await _fileCrud.GetAsync(uf => uf.ObjectId == user.Id)));
+
+    public async Task<IEnumerable<Channel>> SearchAsync(string q)
+        => await Task.FromResult(await
+                _channelCrud.GetAsync(c =>
+                        c.Link.Contains(q) || c.Name.Contains(q)));
+
+    public async Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers)
+        => await Task.Run(async () =>
+        {
+            User user = await _account.GetUserBySessionAsync(headers);
+            if (user != null)
+            {
+                Channel channel = await GetChannelByTokenAsync(sendPost.Token);
+                if (channel != null)
+                {
+                    if (await _channelsAdminsCrud.AnyAsync(ca => ca.UserId == user.Id && ca.ChannelId == channel.Id) || channel.OwnerId == user.Id)
+                    {
+                        var post = await _post.CreatePostAsync(sendPost, channel.Id, PostOwner.Channel);
+                        return new SendPostResponse(PostStaus.Success, post);
+                    }
+                    return new SendPostResponse(PostStaus.AccessDenied, null);
+                }
+                return new SendPostResponse(PostStaus.ChannelNotFound, null);
+            }
+            return new SendPostResponse(PostStaus.UserNotFound, null);
+        });
 
     public async Task<ChannelsStatus> SubscribeChannelAsync(string token, IHeaderDictionary headers)
         => await Task.Run(async () =>

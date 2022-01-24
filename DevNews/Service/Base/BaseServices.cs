@@ -1,5 +1,6 @@
 ﻿using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Services.Base;
@@ -81,6 +82,36 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
 
     public async Task<TEntity> GetAsync(object id)
         => await Task.FromResult(await _dbSet.FindAsync(id));
+
+    public async Task<IEnumerable<TEntity>> GetAsync<TKey>(Expression<Func<TEntity, TKey>> orderBy, OrderType orderType)
+        => await Task.Run(async () => orderType switch
+        {
+            OrderType.ASE => await _dbSet.OrderBy(orderBy).ToListAsync(),
+            OrderType.DES => await _dbSet.OrderByDescending(orderBy).ToListAsync(),
+            _ => await _dbSet.OrderBy(orderBy).ToListAsync()
+        });
+
+    public async Task<IEnumerable<TEntity>> GetAsync(Range page)
+        => await Task.FromResult(await _dbSet.Take(page).ToListAsync());
+
+    public async Task<IEnumerable<TEntity>> GetAsync<TKey>(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, TKey>> orderBy, OrderType orderType)
+        => await Task.Run(async () => orderType switch
+        {
+            OrderType.ASE => await _dbSet.Where(where).OrderBy(orderBy).ToListAsync(),
+            OrderType.DES => await _dbSet.Where(where).OrderByDescending(orderBy).ToListAsync(),
+            _ => await _dbSet.Where(where).OrderBy(orderBy).ToListAsync()
+        });
+
+    public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where, Range page)
+        => await Task.FromResult(await _dbSet.Where(where).Skip(page.Start.Value).Take(page.End.Value).ToListAsync());
+
+    public async Task<IEnumerable<TEntity>> GetAsync<TKey>(Expression<Func<TEntity, bool>> where, Range page, Expression<Func<TEntity, TKey>> orderBy, OrderType orderType)
+        => await Task.Run(async () => orderType switch
+        {
+            OrderType.ASE => await _dbSet.Where(where).OrderBy(orderBy).Take(page).ToListAsync(),
+            OrderType.DES => await _dbSet.Where(where).OrderByDescending(orderBy).Take(page).ToListAsync(),
+            _ => await _dbSet.Where(where).OrderBy(orderBy).Take(page).ToListAsync(),
+        });
 
     public async Task<bool> InsertAsync(TEntity entity)
         => await Task.Run(async () =>

@@ -4,7 +4,10 @@
       <v-row>
         <v-col cols="12" sm="6">
           <v-list-item-avatar size="150" color="grey">
-            <v-img :src="profile.image" :lazy-src="profile.image" />
+            <v-img
+              :src="profile.image.base64"
+              :lazy-src="profile.image.base64"
+            />
           </v-list-item-avatar>
           <v-file-input
             @change="profileSelect"
@@ -60,17 +63,17 @@
             v-model="profile.email"
             :rules="[rules.require]"
             outlined
-            clearable
+            readonly
             placeholder="Email"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
           <v-text-field
             label="Mobile No"
-            v-model="profile.phoneNumber"
+            v-model="profile.mobileNo"
             :rules="[rules.require]"
             outlined
-            clearable
+            readonly
             placeholder="Mobile No"
           ></v-text-field>
         </v-col>
@@ -116,16 +119,20 @@ import { messages, rules } from "@/constants";
 import ChannelTemprory from "@/components/channel/ChannelTemprory.vue";
 import AppDialog from "@/components/core/AppDialog.vue";
 import NewChannel from "@/components/channel/NewChannel.vue";
-import { convertToBase64File } from "@/services/file";
+import { convertToBase64File, createFileAddress } from "@/services/file";
 import { showMessage } from "@/services/message";
 export default Vue.extend({
   data: () => ({
     profileService: new ProfileService(apiCall),
     profile: {
-      image: "",
+      image: {
+        base64: "",
+        ogName: "",
+        type: "",
+      },
       fullName: "",
       email: "",
-      phoneNumber: "",
+      mobileNo: "",
       userName: "",
     },
     rules: rules,
@@ -144,13 +151,16 @@ export default Vue.extend({
       this.profileService
         .getProfile()
         .then((res) => {
-          if (res.status) this.profile = res.result;
-          showMessage(this,res.title);
+          if (res.status) {
+            this.profile = res.result;
+            this.profile.image.base64 = createFileAddress(res.result.image[0]);
+          }
+          showMessage(this, res.title);
         })
         .catch((e) => {
           console.log(e);
 
-          showMessage(this,messages.netWorkError(e.message).title);
+          showMessage(this, messages.netWorkError(e.message).title);
         });
     },
     changeProfile() {
@@ -159,20 +169,16 @@ export default Vue.extend({
         .updateProfile(this.profile)
         .then((res) => {
           if (res.status) this.profile = res.result;
-          showMessage(this,res.title);
+          showMessage(this, res.title);
         })
         .catch((e) => {
-          showMessage(this,messages.netWorkError(e).title);
+          showMessage(this, messages.netWorkError(e).title);
         });
     },
     profileSelect(file: any) {
-      convertToBase64File(file)
-        .then((res: any) => {
-          this.profile.image = res.base64;
-        })
-        .catch(() => {
-          this.profile.image = "";
-        });
+      convertToBase64File(file).then((res: any) => {
+        this.profile.image = res;
+      });
     },
     newChannel() {
       (this.$root.$refs.dialog as any).open();

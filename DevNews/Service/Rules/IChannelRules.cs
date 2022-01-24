@@ -1,4 +1,5 @@
-﻿using Entity.Channel;
+﻿using Entity.Article;
+using Entity.Channel;
 using Entity.User;
 using Microsoft.AspNetCore.Http;
 using ViewModel.Channel;
@@ -34,4 +35,10 @@ public interface IChannelRules : IDisposable
     Task<ChannelInfoViewModel> GetChannelAsync(string token, IHeaderDictionary headers);
 
     Task<OwnerViewModel> GetOwnerViewModelAsync(User user);
+
+    Task<IEnumerable<Channel>> SearchAsync(string q);
+
+    Task<GetPostResponse> GetChannelPostsAsync(string token,int index);
+
+    Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers);
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Service.Rules;
-using ViewModel.Channel;
+﻿using ViewModel.Channel;
 
 namespace Article.Web.Server.V2.Controllers.Client;
 
@@ -88,15 +85,36 @@ public class ChannelController : ControllerBase
     }
 
     [HttpGet("Posts")]
-    public async Task<IActionResult> Posts(string token)
+    public async Task<IActionResult> Posts(string token, int index)
     {
-
+        GetPostResponse? posts = await _channel.GetChannelPostsAsync(token, index);
+        return posts.Staus switch
+        {
+            PostStaus.Success => Ok(Success("", "Channel Posts", posts.Posts)),
+            PostStaus.UserNotFound => Ok(Faild(403, "User Not Found Plase Login To Your Account", "")),
+            PostStaus.Exception => Ok(ApiException("Exception,Please Try Again", "")),
+            PostStaus.ChannelNotFound => Ok(Faild(404, "Channel Not Found", "")),
+            _ => Ok(ApiException("Exception,Please Try Again", "")),
+        };
     }
-
 
     [HttpGet("Articles")]
     public async Task<IActionResult> Articles(string token)
     {
+        return Ok();
+    }
 
+    [HttpPost("SendPost")]
+    public async Task<IActionResult> SendPost(SendPostViewModel sendPost)
+    {
+        SendPostResponse? post = await _channel.SendPostAsync(sendPost, Request.Headers);
+        return post.Staus switch
+        {
+            PostStaus.Success => Ok(Success("", "Posted Successfully", post.Post)),
+            PostStaus.UserNotFound => Ok(Faild(403, "User Not Found Plase Login To Your Account", "")),
+            PostStaus.Exception => Ok(ApiException("Exception,Please Try Again", "")),
+            PostStaus.ChannelNotFound => Ok(Faild(404, "Channel Not Found", "")),
+            _ => Ok(ApiException("Exception,Please Try Again", "")),
+        };
     }
 }
