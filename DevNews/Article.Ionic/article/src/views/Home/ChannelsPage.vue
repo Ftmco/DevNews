@@ -6,15 +6,18 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-list>
-        <ion-item v-for="channel in channels" :key="channel.id">
+      <ion-list v-if="channels.length > 0">
+        <ion-item
+          @click="toChannel(channel)"
+          v-for="channel in channels"
+          :key="channel.id"
+        >
           <ion-avatar slot="start">
-            <img :src="createFileAddress(channel.avatar[0])" />
+            <img :src="channel.image" />
           </ion-avatar>
           <ion-label>
             <h2>{{ channel.name }}</h2>
-            <h3>I'm a big deal</h3>
-            <p>Listen, I've had a pretty messed up day...</p>
+            <p>{{ channel.name }}</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -29,45 +32,76 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  onIonViewWillEnter,
+  loadingController,
 } from "@ionic/vue";
 import ChannelServices from "@/api/service/channel.service";
 import { apiCall } from "@/api/index";
-import { computed } from "@vue/runtime-core";
 import { createFileAddress } from "@/services/file";
+import { defineComponent } from "vue";
+import { showToast } from "@/services/components/Toast";
+import { messages } from "@/constants";
+import router from "@/router";
 
-export default {
+export default defineComponent({
   components: {
+    IonPage,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-    IonPage,
   },
-  setup(props: any, { emit }: any) {
-    const _channel = new ChannelServices(apiCall);
-    let channels = computed({
-      get: () => [],
-      set: (value) => emit("update:channels", value),
-    });
-
-    const loadChannels = async () => {
-      const result = await _channel.getChannels();
-      if (result.status) {
-        channels = result.result;
-      }
-    };
-
-    onIonViewWillEnter(() => {
-      loadChannels();
-      console.log(channels);
-    });
-
-    return {
-      loadChannels,
-      channels,
-      createFileAddress,
-    };
+  data: () => ({
+    loading: loadingController.create({
+      message: "Plase Wait...",
+    }),
+    channels: [{}],
+    channelService: new ChannelServices(apiCall),
+  }),
+  created() {
+    this.getChannels();
   },
-};
+  methods: {
+    getChannels() {
+      this.openLoading();
+      this.channelService
+        .getChannels()
+        .then((res) => {
+          this.channels = [];
+          if (res.status) {
+            res.result.forEach((channel: any) => {
+              const item = {
+                ...channel,
+                image: createFileAddress(channel.avatar[0]),
+              };
+              this.channels.push(item);
+            });
+          } else {
+            showToast(res.title);
+          }
+          this.closeLoadin();
+        })
+        .catch((e) => {
+          showToast(messages.netWorkError(e.message).message);
+          this.closeLoadin();
+        });
+    },
+    toChannel(channel: any) {
+      router.push({
+        name: "channel",
+        query: {
+          token: channel.token,
+          name: channel.name,
+        },
+      });
+    },
+    async openLoading() {
+      const loading = await this.loading;
+      loading.present();
+    },
+    async closeLoadin() {
+      const loading = await this.loading;
+      loading.dismiss();
+    },
+  },
+});
 </script>

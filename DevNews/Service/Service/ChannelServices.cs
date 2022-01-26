@@ -165,6 +165,12 @@ public class ChannelServices : IChannelRules
                 IEnumerable<ChannelsUsers> userChannels = await _channelsUsersCrud.GetAsync(uc => uc.UserId == user.Id);
                 IEnumerable<Channel> channels = userChannels.Select((uc) => _channelCrud.GetAsync(uc.ChannelId).Result);
                 IEnumerable<ChannelPreviewViewModel> channelsViewModel = await GetChannelPreviewViewModelAsync(channels);
+                GetChannelsResponse adminChannels = await GetAdminChannelsAsync(httpContext);
+                if (adminChannels.Status == ChannelsStatus.Success)
+                {
+                    channelsViewModel = channelsViewModel.Concat(adminChannels.Channels);
+                    channelsViewModel = channelsViewModel.DistinctBy(c => c.Token);
+                }
                 return new GetChannelsResponse(ChannelsStatus.Success, channelsViewModel);
             }
             return new GetChannelsResponse(ChannelsStatus.UserNotFound, null);
