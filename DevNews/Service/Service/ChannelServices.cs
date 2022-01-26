@@ -197,6 +197,25 @@ public class ChannelServices : IChannelRules
                 _channelCrud.GetAsync(c =>
                         c.Link.Contains(q) || c.Name.Contains(q)));
 
+    public async Task<IEnumerable<string>> SearchStringAsync(string q)
+        => await Task.Run(async () =>
+        {
+            IEnumerable<Channel> channels = await SearchAsync(q);
+            IEnumerable<List<string>> items = channels.Select(c =>
+            {
+                List<string> strings = new()
+                {
+                    c.Name,
+                    c.Link
+                };
+                return strings;
+            });
+            List<string> result = new();
+            foreach (List<string> item in items)
+                result.AddRange(item);
+            return result;
+        });
+
     public async Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers)
         => await Task.Run(async () =>
         {
