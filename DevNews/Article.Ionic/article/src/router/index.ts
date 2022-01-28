@@ -3,6 +3,7 @@ import store from '@/store';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import auth from './middleware/auth';
+import guest from './middleware/guest';
 import pipeline from './pipeline';
 
 const routes: Array<RouteRecordRaw> = [
@@ -36,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Home/SettingsPage.vue'),
         meta: {
           middleware: auth,
-          title:'Settings'
+          title: 'Settings'
         }
       },
     ]
@@ -45,7 +46,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'login',
     component: () => import("@/views/Account/AppLogin.vue"),
     meta: {
-      title: 'Login'
+      title: 'Login',
+      middleware: guest
     }
   },
   {
