@@ -31,23 +31,31 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Home/SearchPage.vue')
       },
       {
+        name: 'settings',
         path: 'settings',
         component: () => import('@/views/Home/SettingsPage.vue'),
         meta: {
-          middleware: auth
+          middleware: auth,
+          title:'Settings'
         }
-      },
-      {
-        name: 'channel',
-        path: 'channel',
-        component: () => import("@/views/Channel/AppChannel.vue"),
       },
     ]
   }, {
     path: '/login',
     name: 'login',
-    component: () => import("@/views/Account/AppLogin.vue")
-  }
+    component: () => import("@/views/Account/AppLogin.vue"),
+    meta: {
+      title: 'Login'
+    }
+  },
+  {
+    name: 'channel',
+    path: '/channel',
+    component: () => import("@/views/Channel/AppChannel.vue"),
+    meta: {
+      title: 'Channel'
+    }
+  },
 ]
 
 const router = createRouter({
