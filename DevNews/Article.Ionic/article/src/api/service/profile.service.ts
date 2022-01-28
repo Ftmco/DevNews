@@ -13,8 +13,8 @@ export default class ProfileService implements IProfileRules {
 
     async getProfile() {
         try {
-            let request = await this._axios.get("Profile/Get")
-            let response = await request.data
+            const request = await this._axios.get("Profile/Get")
+            const response = await request.data
             return response
         } catch (e: any) {
             return messages.netWorkError(e.message)
@@ -23,7 +23,7 @@ export default class ProfileService implements IProfileRules {
 
     async updateProfile(profile: Profile) {
         try {
-            let request = await this._axios.post("Profile/Update", profile)
+            const request = await this._axios.post("Profile/Update", profile)
             return await request.data;
         } catch (e: any) {
             return messages.netWorkError(e.message)

@@ -12,7 +12,7 @@ export default class CategoryService implements ICagetoryRule {
 
     async getCategories() {
         try {
-            let request = await this._axois.get("Group/Get")
+            const request = await this._axois.get("Group/Get")
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)
