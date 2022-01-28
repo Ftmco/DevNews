@@ -25,7 +25,7 @@
           <ion-item>
             <ion-label position="floating">Password</ion-label>
             <ion-input
-            v-model="user.password"
+              v-model="user.password"
               type="password"
               required
               clear-input
@@ -34,7 +34,12 @@
             ></ion-input>
           </ion-item>
 
-          <ion-button expand="block" @ionFocus="login">Login</ion-button>
+          <ion-button expand="block" @click="login">Login</ion-button>
+          <ion-button expand="block" fill="outline">Register</ion-button>
+          <ion-button expand="block" fill="outline">Forgot Password</ion-button>
+          <ion-button expand="block" fill="outline"
+            >Activation Account</ion-button
+          >
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -78,23 +83,23 @@ export default defineComponent({
   }),
   methods: {
     async login() {
-      await this.openLoading();
-      this.accountServices
-        .Login(this.user)
-        .then((res) => {
-          if (res.status) {
-            router.push({
-              name: "settings",
-            });
-          }
-          showToast(res.title);
-        })
-        .catch((e) => {
-          showToast(messages.netWorkError(e.message).message);
-        })
-        .finally(async () => {
-          await this.closeLoadin();
-        });
+      if (this.user.userName.trim() != "" && this.user.password.trim() != "") {
+        await this.openLoading();
+        this.accountServices
+          .Login(this.user)
+          .then((res) => {
+            if (res.status) {
+              window.location.reload();
+            }
+            showToast(res.title);
+          })
+          .catch((e) => {
+            showToast(messages.netWorkError(e.message).message);
+          })
+          .finally(async () => {
+            await this.closeLoadin();
+          });
+      } else showToast(messages.invalidForm);
     },
     async openLoading() {
       const loading = await this.loading;
