@@ -6,15 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-list-header>Profile</ion-list-header>
-      <ion-item>
-        <ion-avatar slot="start">
-          <img
-            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-          />
-        </ion-avatar>
-        <ion-label>User Namer</ion-label>
-      </ion-item>
+      <profile />
     </ion-content>
   </ion-page>
 </template>
@@ -27,8 +19,9 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
+import Profile from "@/components/account/UserProfile.vue";
 
 export default {
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, Profile },
 };
 </script>
