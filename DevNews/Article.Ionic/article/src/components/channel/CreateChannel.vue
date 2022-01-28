@@ -59,7 +59,7 @@
         <ion-button expand="block" @click="createChannel">Create</ion-button>
       </ion-card-content>
     </ion-card>
-    <input type="file" hidden id="avatarFile" />
+    <input type="file" hidden id="avatarFile" accept="image/*"/>
   </ion-content>
 </template>
 
