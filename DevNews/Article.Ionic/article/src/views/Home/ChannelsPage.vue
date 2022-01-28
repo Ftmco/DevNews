@@ -5,7 +5,15 @@
         <ion-title>Channels</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content>
+      <ion-refresher slot="fixed" @ionRefresh="reloadChannels">
+        <ion-refresher-content
+          pulling-text="Pull to refresh"
+          refreshing-spinner="circles"
+          refreshing-text="Reloading..."
+        >
+        </ion-refresher-content>
+      </ion-refresher>
       <ion-list v-if="channels.length > 0">
         <ion-item
           @click="toChannel(channel)"
@@ -52,6 +60,8 @@ import {
   IonItem,
   IonList,
   IonIcon,
+  IonRefresher,
+  IonRefresherContent,
 } from "@ionic/vue";
 import { add } from "ionicons/icons";
 
@@ -78,6 +88,8 @@ export default defineComponent({
     IonItem,
     IonList,
     IonIcon,
+    IonRefresher,
+    IonRefresherContent,
   },
   data: () => ({
     loading: loadingController.create({
@@ -114,6 +126,12 @@ export default defineComponent({
           showToast(messages.netWorkError(e.message).message);
           this.closeLoadin();
         });
+    },
+    reloadChannels(e: any) {
+      this.getChannels();
+      setTimeout(() => {
+        e.target.complete();
+      }, 250);
     },
     toChannel(channel: any) {
       router.push({
