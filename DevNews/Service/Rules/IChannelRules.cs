@@ -38,6 +38,8 @@ public interface IChannelRules : IDisposable
 
     Task<IEnumerable<Channel>> SearchAsync(string q);
 
+    Task<IEnumerable<string>> SearchStringAsync(string q);
+
     Task<GetPostResponse> GetChannelPostsAsync(string token,int index);
 
     Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers);

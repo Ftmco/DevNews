@@ -46,6 +46,7 @@ public static class Injector
         service.AddTransient<IUserRules, UserServices>();
         service.AddTransient<IProfileRules, ProfileServices>();
         service.AddTransient<IPostRules, PostServices>();
+        service.AddTransient<ISearchRules, SearchServices>();
         return service;
     }
 

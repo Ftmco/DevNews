@@ -165,6 +165,12 @@ public class ChannelServices : IChannelRules
                 IEnumerable<ChannelsUsers> userChannels = await _channelsUsersCrud.GetAsync(uc => uc.UserId == user.Id);
                 IEnumerable<Channel> channels = userChannels.Select((uc) => _channelCrud.GetAsync(uc.ChannelId).Result);
                 IEnumerable<ChannelPreviewViewModel> channelsViewModel = await GetChannelPreviewViewModelAsync(channels);
+                GetChannelsResponse adminChannels = await GetAdminChannelsAsync(httpContext);
+                if (adminChannels.Status == ChannelsStatus.Success)
+                {
+                    channelsViewModel = channelsViewModel.Concat(adminChannels.Channels);
+                    channelsViewModel = channelsViewModel.DistinctBy(c => c.Token);
+                }
                 return new GetChannelsResponse(ChannelsStatus.Success, channelsViewModel);
             }
             return new GetChannelsResponse(ChannelsStatus.UserNotFound, null);
@@ -196,6 +202,25 @@ public class ChannelServices : IChannelRules
         => await Task.FromResult(await
                 _channelCrud.GetAsync(c =>
                         c.Link.Contains(q) || c.Name.Contains(q)));
+
+    public async Task<IEnumerable<string>> SearchStringAsync(string q)
+        => await Task.Run(async () =>
+        {
+            IEnumerable<Channel> channels = await SearchAsync(q);
+            IEnumerable<List<string>> items = channels.Select(c =>
+            {
+                List<string> strings = new()
+                {
+                    c.Name,
+                    c.Link
+                };
+                return strings;
+            });
+            List<string> result = new();
+            foreach (List<string> item in items)
+                result.AddRange(item);
+            return result;
+        });
 
     public async Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers)
         => await Task.Run(async () =>

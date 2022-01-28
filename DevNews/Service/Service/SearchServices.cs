@@ -18,6 +18,14 @@ public class SearchServices : ISearchRules
         _category = category;
     }
 
+    public async Task<IEnumerable<string>> AutoCompleteAsync(string q)
+        => await Task.Run(async () =>
+        {
+            IEnumerable<string> channels = await _channel.SearchStringAsync(q);
+            return channels;
+
+        });
+
     public void Dispose()
     {
         GC.SuppressFinalize(this);
