@@ -17,19 +17,28 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/tabs/home'
+        redirect: '/tabs/home',
       },
       {
         path: 'home',
         component: () => import('@/views/Home/HomePage.vue'),
+        meta: {
+          title: 'Article News'
+        }
       },
       {
         path: 'channels',
         component: () => import('@/views/Home/ChannelsPage.vue'),
+        meta: {
+          title: 'Channels'
+        }
       },
       {
         path: 'search',
-        component: () => import('@/views/Home/SearchPage.vue')
+        component: () => import('@/views/Home/SearchPage.vue'),
+        meta: {
+          title: 'Search'
+        }
       },
       {
         name: 'settings',
@@ -47,6 +56,24 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/Account/AppLogin.vue"),
     meta: {
       title: 'Login',
+      middleware: guest
+    },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import("@/views/Account/SignUp.vue"),
+    meta: {
+      title: 'Register',
+      middleware: guest
+    }
+  },
+  {
+    path: '/activation',
+    name: 'activation',
+    component: () => import("@/views/Account/ActivationAccount.vue"),
+    meta: {
+      title: 'Activation',
       middleware: guest
     }
   },

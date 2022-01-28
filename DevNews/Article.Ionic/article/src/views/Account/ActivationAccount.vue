@@ -2,15 +2,15 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Register</ion-title>
+        <ion-title>Activation</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content fullscreen>
       <ion-card>
         <ion-card-header>
-          <ion-card-title> Register Account </ion-card-title>
+          <ion-card-title> Account Activation </ion-card-title>
           <br />
-          <img src="../../assets/images/register.png" alt="" />
+          <img src="../../assets/images/not-authorized.png" alt="" />
         </ion-card-header>
         <ion-card-content>
           <ion-item>
@@ -23,47 +23,15 @@
             ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Full Name</ion-label>
+            <ion-label position="floating">Active Code</ion-label>
             <ion-input
-              v-model="user.fullName"
+              v-model="user.activeCode"
               required
               clear-input
-              placeholder="Full Name"
+              placeholder="Active Code"
             ></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label position="floating">E-main</ion-label>
-            <ion-input
-              type="email"
-              v-model="user.email"
-              required
-              clear-input
-              placeholder="E-main"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Mobile No</ion-label>
-            <ion-input
-              type="tel"
-              v-model="user.phoneNumber"
-              required
-              clear-input
-              placeholder="Mobile No"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input
-              v-model="user.password"
-              type="password"
-              required
-              clear-input
-              pattern="password"
-              placeholder="Password"
-            ></ion-input>
-          </ion-item>
-
-          <ion-button expand="block" @click="register">Register</ion-button>
+          <ion-button expand="block" @click="active">Active Account</ion-button>
           <ion-button
             expand="block"
             fill="outline"
@@ -75,14 +43,7 @@
             >Login</ion-button
           >
           <ion-button expand="block" fill="outline">Forgot Password</ion-button>
-          <ion-button
-            expand="block"
-            fill="outline"
-            @click="
-              () => {
-                this.$router.push({ name: 'activation' });
-              }
-            "
+          <ion-button expand="block" fill="outline"
             >Activation Account</ion-button
           >
         </ion-card-content>
@@ -134,22 +95,19 @@ export default defineComponent({
   data: () => ({
     user: {
       userName: "",
-      password: "",
-      email: "",
-      phoneNumber: "",
-      fullName: "",
+      activeCode: "",
     },
     accountServices: new AccountServiec(apiCall),
   }),
   methods: {
-    async register() {
+    async active() {
       const loading = await openLoading();
       this.accountServices
-        .SignUp(this.user)
+        .Acivation(this.user)
         .then((res) => {
           if (res.status) {
             router.push({
-              name: "activation",
+              name: "login",
             });
           }
           showToast(res.title);

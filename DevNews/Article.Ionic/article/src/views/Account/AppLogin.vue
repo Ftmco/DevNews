@@ -9,6 +9,7 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title> Welcome to your account. </ion-card-title>
+          <br />
           <img src="../../assets/images/login.png" alt="" />
         </ion-card-header>
         <ion-card-content>
@@ -35,9 +36,25 @@
           </ion-item>
 
           <ion-button expand="block" @click="login">Login</ion-button>
-          <ion-button expand="block" fill="outline">Register</ion-button>
+          <ion-button
+            expand="block"
+            fill="outline"
+            @click="
+              () => {
+                this.$router.push({ name: 'register' });
+              }
+            "
+            >Register</ion-button
+          >
           <ion-button expand="block" fill="outline">Forgot Password</ion-button>
-          <ion-button expand="block" fill="outline"
+          <ion-button
+            expand="block"
+            fill="outline"
+            @click="
+              () => {
+                this.$router.push({ name: 'activation' });
+              }
+            "
             >Activation Account</ion-button
           >
         </ion-card-content>
@@ -55,6 +72,14 @@ import {
   IonContent,
   IonInput,
   loadingController,
+  IonToolbar,
+  IonCard,
+  IonLabel,
+  IonItem,
+  IonButton,
+  IonCardContent,
+  IonCardTitle,
+  IonCardHeader,
 } from "@ionic/vue";
 import AccountServiec from "@/api/service/account.service";
 import { apiCall } from "@/api";
@@ -69,6 +94,14 @@ export default defineComponent({
     IonTitle,
     IonContent,
     IonInput,
+    IonToolbar,
+    IonCard,
+    IonLabel,
+    IonItem,
+    IonButton,
+    IonCardContent,
+    IonCardTitle,
+    IonCardHeader,
   },
   data: () => ({
     user: {
