@@ -14,8 +14,8 @@
             <ion-fab-button color="warning">
               <ion-icon :icon="pencil"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button>
-              <ion-icon :icon="pencil"></ion-icon>
+            <ion-fab-button color="danger" @click="logout">
+              <ion-icon :icon="exit"></ion-icon>
             </ion-fab-button>
             <ion-fab-button>
               <ion-icon :icon="pencil"></ion-icon>
@@ -67,16 +67,20 @@ import ProfileService from "@/api/service/profile.service";
 import { showToast } from "@/services/components/Toast";
 import { defineComponent } from "vue";
 import { createFileAddress } from "@/services/file";
-import { pencil, arrowBack } from "ionicons/icons";
+import { pencil, arrowBack, exit } from "ionicons/icons";
 import { modalController } from "@ionic/vue";
 import ProfileImages from "@/components/account/ProfileImages.vue";
+import AccountServiec from "@/api/service/account.service";
+import router from "@/router";
 
 export default defineComponent({
   data: () => ({
     profile: {},
     profleServices: new ProfileService(apiCall),
+    accountServices: new AccountServiec(apiCall),
     pencil,
     arrowBack,
+    exit,
   }),
   beforeMount() {
     this.getProfile();
@@ -98,6 +102,11 @@ export default defineComponent({
         .catch((e) => {
           showToast(e.message);
         });
+    },
+    logout() {
+      this.accountServices.LogOut().then(() => {
+        window.location.reload();
+      });
     },
   },
 });
