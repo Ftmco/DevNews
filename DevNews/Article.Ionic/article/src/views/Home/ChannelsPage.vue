@@ -21,6 +21,17 @@
           </ion-label>
         </ion-item>
       </ion-list>
+
+      <ion-fab
+        vertical="bottom"
+        horizontal="end"
+        @click="newChannel"
+        slot="fixed"
+      >
+        <ion-fab-button>
+          <ion-icon :icon="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
@@ -33,7 +44,17 @@ import {
   IonTitle,
   IonContent,
   loadingController,
+  modalController,
+  IonFab,
+  IonFabButton,
+  IonAvatar,
+  IonLabel,
+  IonItem,
+  IonList,
+  IonIcon,
 } from "@ionic/vue";
+import { add } from "ionicons/icons";
+
 import ChannelServices from "@/api/service/channel.service";
 import { apiCall } from "@/api/index";
 import { createFileAddress } from "@/services/file";
@@ -41,6 +62,7 @@ import { defineComponent } from "vue";
 import { showToast } from "@/services/components/Toast";
 import { messages } from "@/constants";
 import router from "@/router";
+import CreateChannel from "@/components/channel/CreateChannel.vue";
 
 export default defineComponent({
   components: {
@@ -49,6 +71,13 @@ export default defineComponent({
     IonToolbar,
     IonTitle,
     IonContent,
+    IonFab,
+    IonFabButton,
+    IonAvatar,
+    IonLabel,
+    IonItem,
+    IonList,
+    IonIcon,
   },
   data: () => ({
     loading: loadingController.create({
@@ -56,6 +85,7 @@ export default defineComponent({
     }),
     channels: [{}],
     channelService: new ChannelServices(apiCall),
+    add,
   }),
   created() {
     this.getChannels();
@@ -93,6 +123,23 @@ export default defineComponent({
           name: channel.name,
         },
       });
+    },
+    async newChannel() {
+      const sheetModal = await modalController.create({
+        swipeToClose: true,
+        breakpoints: [0.1, 0.5, 1],
+        initialBreakpoint: 0.9,
+        component: CreateChannel,
+        backdropDismiss: true,
+      });
+      sheetModal.present();
+
+      const modalResponse = await sheetModal.onDidDismiss();
+      const result = modalResponse.data;
+      if (result.status) {
+        this.getChannels();
+      }
+      showToast(result.title);
     },
     async openLoading() {
       const loading = await this.loading;
