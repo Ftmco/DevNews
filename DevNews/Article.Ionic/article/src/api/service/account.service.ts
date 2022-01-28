@@ -15,7 +15,7 @@ export default class AccountServiec implements IAccountRule {
 
     async Acivation(active: Activation) {
         try {
-            let request = await this._axios.post("/Account/Activation", active)
+            const request = await this._axios.post("/Account/Activation", active)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)
@@ -24,7 +24,7 @@ export default class AccountServiec implements IAccountRule {
 
     async SignUp(signUp: SignUp) {
         try {
-            let request = await this._axios.post("Account/SignUp", signUp)
+            const request = await this._axios.post("Account/SignUp", signUp)
             return await request.data;
         } catch (e: any) {
             return messages.netWorkError(e.message);
@@ -33,12 +33,12 @@ export default class AccountServiec implements IAccountRule {
 
     async Login(login: Login) {
         try {
-            let request = await this._axios.post("Account/Login", {
+            const request = await this._axios.post("Account/Login", {
                 ...login,
                 platform: navigator.platform.toString(),
                 userClient: navigator.userAgent
             })
-            let response = await request.data
+            const response = await request.data
             if (response.status) {
                 localStorage.setItem(response.result.key, response.result.value)
                 changeConfigHeader(response.result.key, response.result.value)
@@ -52,8 +52,8 @@ export default class AccountServiec implements IAccountRule {
 
     async LogOut() {
         try {
-            let request = await this._axios.get("Account/Logout")
-            let response = await request.data
+            const request = await this._axios.get("Account/Logout")
+            const response = await request.data
             return response
         } catch (e: any) {
             return messages.netWorkError(e.message);
