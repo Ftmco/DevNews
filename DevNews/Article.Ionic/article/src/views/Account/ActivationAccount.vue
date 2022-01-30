@@ -101,7 +101,7 @@ export default defineComponent({
   }),
   methods: {
     async active() {
-      const loading = await openLoading();
+      const loading = openLoading();
       this.accountServices
         .Acivation(this.user)
         .then((res) => {
@@ -113,7 +113,7 @@ export default defineComponent({
           showToast(res.title);
         })
         .finally(() => {
-          closeLoading(loading);
+          loading.then((res) => res.dismiss());
         });
     },
   },

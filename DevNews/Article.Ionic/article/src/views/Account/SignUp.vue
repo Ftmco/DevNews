@@ -110,7 +110,6 @@ import {
 } from "@ionic/vue";
 import AccountServiec from "@/api/service/account.service";
 import { apiCall } from "@/api";
-import { SignUp } from "@/api/models/account.model";
 import { showToast } from "@/services/components/Toast";
 import router from "@/router";
 import { closeLoading, openLoading } from "@/services/components/Core";
@@ -143,7 +142,7 @@ export default defineComponent({
   }),
   methods: {
     async register() {
-      const loading = await openLoading();
+      const loading = openLoading();
       this.accountServices
         .SignUp(this.user)
         .then((res) => {
@@ -155,7 +154,7 @@ export default defineComponent({
           showToast(res.title);
         })
         .finally(() => {
-          closeLoading(loading);
+          loading.then((res) => res.dismiss());
         });
     },
   },
