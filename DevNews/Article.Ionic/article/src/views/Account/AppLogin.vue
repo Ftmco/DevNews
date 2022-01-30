@@ -71,7 +71,6 @@ import {
   IonTitle,
   IonContent,
   IonInput,
-  loadingController,
   IonToolbar,
   IonCard,
   IonLabel,
@@ -85,7 +84,7 @@ import AccountServiec from "@/api/service/account.service";
 import { apiCall } from "@/api";
 import { showToast } from "@/services/components/Toast";
 import { messages } from "@/constants";
-import router from "@/router";
+import { openLoading } from "@/services/components/Core";
 
 export default defineComponent({
   components: {
@@ -108,16 +107,12 @@ export default defineComponent({
       userName: "",
       password: "",
     },
-    loading: loadingController.create({
-      message: "Please Wait...",
-      spinner: "bubbles",
-    }),
     accountServices: new AccountServiec(apiCall),
   }),
   methods: {
     async login() {
       if (this.user.userName.trim() != "" && this.user.password.trim() != "") {
-        await this.openLoading();
+        openLoading();
         this.accountServices
           .Login(this.user)
           .then((res) => {
@@ -128,19 +123,8 @@ export default defineComponent({
           })
           .catch((e) => {
             showToast(messages.netWorkError(e.message).message);
-          })
-          .finally(async () => {
-            await this.closeLoadin();
           });
       } else showToast(messages.invalidForm);
-    },
-    async openLoading() {
-      const loading = await this.loading;
-      loading.present();
-    },
-    async closeLoadin() {
-      const loading = await this.loading;
-      loading.dismiss();
     },
   },
 });
