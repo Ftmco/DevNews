@@ -1,7 +1,7 @@
 <template>
   <ion-header>
     <ion-toolbar>
-      <ion-title>Send File : {{ mimeName }}</ion-title>
+      <ion-title>Send : {{ mimeName }}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content fullscreen>
@@ -11,7 +11,7 @@
 
       <ion-item>
         <ion-label position="floating">Message</ion-label>
-        <ion-textarea placeholder="Message" auto-grow></ion-textarea>
+        <ion-textarea v-model="message" placeholder="Message" auto-grow></ion-textarea>
       </ion-item>
       <ion-button v-if="mimeName != 'Post'" fill="clear" @click="choseFile"
         >Select {{ mimeName }}</ion-button
