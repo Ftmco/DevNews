@@ -12,7 +12,7 @@ export default class SearchService implements ISearchRule {
 
     async search(q: string) {
         try {
-            const request = await this._axios.get(`Search/Get?q=${q}`)
+            const request = await this._axios.get(`Search/Search?q=${q}`)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)
