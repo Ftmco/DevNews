@@ -68,12 +68,42 @@ import { showToast } from "@/services/components/Toast";
 import { defineComponent } from "vue";
 import { createFileAddress } from "@/services/file";
 import { pencil, arrowBack, exit } from "ionicons/icons";
-import { modalController } from "@ionic/vue";
-import ProfileImages from "@/components/account/ProfileImages.vue";
 import AccountServiec from "@/api/service/account.service";
-import router from "@/router";
+
+import {
+  IonFab,
+  IonItem,
+  IonInput,
+  IonLabel,
+  IonAvatar,
+  IonIcon,
+  IonFabButton,
+  IonFabList,
+  IonListHeader,
+  IonImg,
+  IonRow,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+} from "@ionic/vue";
 
 export default defineComponent({
+  components: {
+    IonFab,
+    IonItem,
+    IonInput,
+    IonLabel,
+    IonAvatar,
+    IonIcon,
+    IonFabButton,
+    IonFabList,
+    IonListHeader,
+    IonImg,
+    IonRow,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+  },
   data: () => ({
     profile: {},
     profleServices: new ProfileService(apiCall),
@@ -95,7 +125,6 @@ export default defineComponent({
               ...res.result,
               avatar: createFileAddress(res.result.image[0]),
             };
-            console.log(this.profile);
           }
           showToast(res.title);
         })
