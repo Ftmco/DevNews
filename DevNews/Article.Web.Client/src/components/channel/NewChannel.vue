@@ -43,7 +43,7 @@
             item-value="id"
             chips
             outlined
-            label="Chips"
+            label="Channel Categories"
             multiple
           ></v-select>
         </v-col>

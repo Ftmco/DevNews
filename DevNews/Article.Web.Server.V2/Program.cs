@@ -15,12 +15,9 @@ builder.Services.AddDependencies();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors(c =>
 {
     c.AllowAnyHeader()
@@ -30,7 +27,7 @@ app.UseCors(c =>
 
 app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

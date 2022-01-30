@@ -51,4 +51,8 @@ public class CategoryServices : ICategoryRules
                 return new GetCategoriesResponse(CategoryStatus.Exception, null);
             }
         });
+
+    public async Task<IEnumerable<Category>> SearchAsync(string q)
+        => await Task.FromResult(await _categoryCrud.GetAsync(c =>
+                c.Name.Contains(q) || c.Title.Contains(q)));
 }

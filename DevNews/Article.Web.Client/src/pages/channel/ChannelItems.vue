@@ -1,10 +1,17 @@
 <template>
   <div>
-    <channel-bar :channel="channel" />
+    <channel-bar :channel="channel" @avatarClick="avatarClick" />
     <v-col cols="12">
-      <v-row>
-        <item v-for="(post, i) in posts" :key="i" :item="post" />
-      </v-row>
+      <v-tabs fixed-tabs>
+        <v-tab>Posts</v-tab>
+        <v-tab>Articles</v-tab>
+        <v-tab-item>
+          <channel-posts :channelToken="token" />
+        </v-tab-item>
+        <v-tab-item>
+          <channel-articles :channelToken="token" />
+        </v-tab-item>
+      </v-tabs>
     </v-col>
     <br />
     <v-footer fixed height="75">
@@ -72,7 +79,10 @@ import AppDialog from "@/components/core/AppDialog.vue";
 import SendFile from "@/components/post/SendFile.vue";
 import UpsertArticle from "@/components/article/UpsertArticle.vue";
 import ArticleService from "@/api/service/article.service";
-import { ArticleOwnerType } from "@/api/models/article.model";
+import ChannnelInfo from "@/components/channel/ChannelInfo.vue";
+import ChannelPosts from "@/components/channel/ChannelPosts.vue";
+import ChannelArticles from "@/components/channel/ChannelArticles.vue";
+
 export default Vue.extend({
   components: {
     Item,
@@ -82,11 +92,14 @@ export default Vue.extend({
     AppDialog,
     SendFile,
     UpsertArticle,
+    ChannnelInfo,
+    ChannelPosts,
+    ChannelArticles,
   },
   data: () => ({
     channel: {
       name: "",
-      avatar: "",
+      avatar: [],
       mute: true,
       token: "",
     },
@@ -97,7 +110,6 @@ export default Vue.extend({
       userName: "",
     },
     channelItems: channelItems,
-    posts: [],
     loadingPost: true,
     isAdmin: false,
     notift: "Mute",
@@ -131,7 +143,6 @@ export default Vue.extend({
             this.owner = res.result.owner;
             this.isAdmin = res.result.isAdmin;
             this.isIn = res.result.isIn;
-            this.getChannelPosts();
           }
           showMessage(this, res.title);
         })
@@ -139,58 +150,28 @@ export default Vue.extend({
           showMessage(this, messages.netWorkError(e.message).title);
         });
     },
-    getChannelPosts() {
-      (this.$root.$refs.loading as any).open();
-      this.channleService
-        .getChannelPosts(this.token)
-        .then((res) => {
-          if (res.status) {
-            res.result.posts.forEach((post: never) => {
-              this.posts.push(post);
-            });
-            res.result.articles.forEach((post: never) => {
-              this.posts.push(post);
-            });
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).message);
-        });
-    },
     more() {
       (this.$root.$refs.bottomSheet as any).open();
     },
-    sendMessage() {
-      this.channleService
-        .sendMessage({
-          message: this.message,
-          token: this.token,
-          file: null,
-        })
-        .then((res) => {
-          if (res.status) {
-            this.posts.push(res.result as never);
-            this.message = "";
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).message);
-        });
-    },
     eventSheet(env: any) {
       switch (env.item.type) {
-        case channelItemTypes.File:
+        case 0:
           this.openDialogApp("primary", "Send File", SendFile, {
             type: env.item.type,
           });
-        case channelItemTypes.Image:
+          break;
+        case 1:
           this.openDialogApp("primary", "Send Image", SendFile, {
             type: env.item.type,
           });
-        case channelItemTypes.Article:
+          break;
+        case 4:
           this.openDialogApp("info", "Create Article", UpsertArticle, {
             type: env.item.type,
           });
+          break;
+        default:
+          break;
       }
     },
     openDialogApp(color: string, title: string, component: any, props: any) {
@@ -214,40 +195,11 @@ export default Vue.extend({
           showMessage(this, messages.netWorkError(e.message).title);
         });
     },
-    itemSubmit(model: any) {
-      this.channleService
-        .sendMessage({
-          message: model.message,
-          token: this.token,
-          file: model.file,
-        })
-        .then((res) => {
-          if (res.status) {
-            this.posts.push(res.result as never);
-            closeDialog(this);
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).message);
-        });
-    },
-    createArticle(article: any) {
-      loading(this);
-      this.articleService
-        .createArticle({
-          ...article,
-          channelToken: this.token,
-          ownerType: ArticleOwnerType.Channel,
-        })
-        .then((res) => {
-          if (res.status) {
-            closeDialog(this);
-            this.posts.push(res.result as never);
-          }
-        })
-        .catch((e) => {
-          showMessage(this, messages.netWorkError(e.message).title);
-        });
+    avatarClick() {
+      this.openDialogApp("info", "Channel Info", ChannnelInfo, {
+        channel: this.channel,
+        owner: this.owner,
+      });
     },
   },
 });

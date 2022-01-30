@@ -10,7 +10,25 @@ export default class ChannelService implements IChannelRule {
     constructor(axios: AxiosInstance) {
         this._axios = axios;
     }
-    
+
+    async getChannelArticles(token: string) {
+        try {
+            let request = await this._axios.get(`Channel/Articles?token=${token}`)
+            return await request.data
+        } catch (e: any) {
+            return messages.netWorkError(e.message)
+        }
+    }
+
+    async getMyChannels() {
+        try {
+            let request = await this._axios.get("Channel/AdminChannels")
+            return await request.data
+        } catch (e: any) {
+            return messages.netWorkError(e.message)
+        }
+    }
+
     async createArticle(article: any) {
         try {
             let request = await this._axios.post("Channel/CreateArticle", article)
@@ -31,7 +49,7 @@ export default class ChannelService implements IChannelRule {
 
     async sendMessage(post: any) {
         try {
-            let request = await this._axios.post("Channel/SendMessage", post)
+            let request = await this._axios.post("Channel/SendPost", post)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)

@@ -18,3 +18,19 @@ export const openDialog = (vue: Vue) => {
 export const closeDialog = (vue: Vue) => {
     (vue.$root.$refs.dialog as any).close()
 }
+
+export const openLightBox = (vue: Vue) => {
+    (vue.$root.$refs.lightBox as any).open()
+}
+
+export const closeLightBox = (vue: Vue) => {
+    (vue.$root.$refs.lightBox as any).close()
+}
+
+export const openChannelInfo = (vue: Vue) => {
+    (vue.$root.$refs.channelInfo as any).open()
+}
+
+export const closeChannelInfo = (vue: Vue) => {
+    (vue.$root.$refs.channelInfo as any).close()
+}

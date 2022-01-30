@@ -3,11 +3,6 @@
     <v-card>
       <ChannelTemprory />
     </v-card>
-    <!-- <v-col cols="12">
-      <v-row>
-        <home-items v-for="i in 25" :key="i" />
-      </v-row>
-    </v-col> -->
   </div>
 </template>
 
@@ -20,4 +15,4 @@ export default Vue.extend({
   components: { ChannelTemprory, HomeItems },
 });
 </script>,
-    HomeItems
+    

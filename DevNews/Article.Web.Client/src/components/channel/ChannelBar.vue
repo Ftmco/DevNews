@@ -1,13 +1,16 @@
 <template>
-  <v-app-bar app dense color="primary" dark>
+  <v-app-bar app color="primary" dark>
     <v-btn icon @click="back">
       <v-icon>mdi-backburger</v-icon>
     </v-btn>
-    <v-list-item-avatar>
-      <v-img :src="channel.avatar" :lazy-src="channel.avatar" />
+    <v-list-item-avatar @click="avatarClieck">
+      <v-img
+        :src="createFileAddress(channel.avatar[0])"
+        :lazy-src="createFileAddress(channel.avatar[0])"
+      />
     </v-list-item-avatar>
     <v-spacer></v-spacer>
-    <v-toolbar-title>{{ channel.name }}</v-toolbar-title>
+    <v-toolbar-title @click="avatarClieck">{{ channel.name }}</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-menu left bottom>
       <template v-slot:activator="{ on, attrs }">
@@ -32,6 +35,7 @@
 import { apiCall } from "@/api";
 import ChannelService from "@/api/service/channel.service";
 import { messages } from "@/constants";
+import { createFileAddress } from "@/services/file";
 import { showMessage } from "@/services/message";
 import Vue from "vue";
 export default Vue.extend({
@@ -50,7 +54,7 @@ export default Vue.extend({
         .leave(this.channel.token)
         .then((res) => {
           if (res.status) {
-            this.$router.push({name:"Channels"})
+            this.$router.push({ name: "Channels" });
           }
           showMessage(this, res.title);
         })
@@ -58,6 +62,10 @@ export default Vue.extend({
           showMessage(this, messages.netWorkError(e).title);
         });
     },
+    avatarClieck() {
+      this.$emit("avatarClick", {});
+    },
+    createFileAddress
   },
 });
 </script>

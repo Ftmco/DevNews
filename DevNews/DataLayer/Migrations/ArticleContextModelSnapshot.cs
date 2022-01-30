@@ -51,7 +51,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Article");
+                    b.ToTable("Article", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Article.ArticleCategories", b =>
@@ -72,7 +72,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ArticleCategories");
+                    b.ToTable("ArticleCategories", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Article.Category", b =>
@@ -94,7 +94,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Article.File", b =>
@@ -133,7 +133,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("File");
+                    b.ToTable("File", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Article.Post", b =>
@@ -157,7 +157,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Post");
+                    b.ToTable("Post", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Channel.Channel", b =>
@@ -192,7 +192,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Channel");
+                    b.ToTable("Channel", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Channel.ChannelsAdmins", b =>
@@ -213,7 +213,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChannelsAdmins");
+                    b.ToTable("ChannelsAdmins", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Channel.ChannelsUsers", b =>
@@ -234,7 +234,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ChannelsUsers");
+                    b.ToTable("ChannelsUsers", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Comment.Comment", b =>
@@ -248,7 +248,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("Entity.User.Session", b =>
@@ -267,6 +267,14 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Platform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserClient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -278,7 +286,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Session");
+                    b.ToTable("Session", (string)null);
                 });
 
             modelBuilder.Entity("Entity.User.User", b =>
@@ -295,9 +303,6 @@ namespace DataLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActiive")
@@ -319,7 +324,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Article.ArticleCategories", b =>

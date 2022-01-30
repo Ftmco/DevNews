@@ -8,7 +8,10 @@
         <v-list-item :to="{ name: 'Profile' }" v-if="user.isAuthenticated">
           <v-col align="center">
             <v-list-item-avatar size="100" color="grey">
-              <v-img :src="user.profile.image" :lazy-src="user.profile.image" />
+              <v-img
+                :src="createFileAddress(user.profile.image[0])"
+                :lazy-src="createFileAddress(user.profile.image[0])"
+              />
             </v-list-item-avatar>
           </v-col>
         </v-list-item>
@@ -30,7 +33,13 @@
 
     <template v-slot:append v-if="user.isAuthenticated">
       <div class="pa-2">
-        <v-btn block color="error" class="rounded-xl" elevation="10" @click="logOut">
+        <v-btn
+          block
+          color="error"
+          class="rounded-xl"
+          elevation="10"
+          @click="logOut"
+        >
           Logout
         </v-btn>
       </div>
@@ -46,6 +55,7 @@ import Account from "@/services/account";
 import AccountServiec from "@/api/service/account.service";
 import { apiCall } from "@/api";
 import ProfileService from "@/api/service/profile.service";
+import { createFileAddress } from "@/services/file";
 
 export default Vue.extend({
   data: () => ({
@@ -89,6 +99,7 @@ export default Vue.extend({
         (window.location as any) = "/account/login";
       });
     },
+    createFileAddress,
   },
 });
 </script>

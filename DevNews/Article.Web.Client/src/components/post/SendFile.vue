@@ -3,6 +3,7 @@
     <v-card elevation="5">
       <v-col align="center" v-if="type == 1">
         <v-img
+        v-if="file.base64 != ''"
           width="300"
           height="300"
           class="rounded-xl"

@@ -18,6 +18,12 @@ public class Session
     public string Value { get; set; }
 
     [Required]
+    public string Platform { get; set; }
+
+    [Required]
+    public string UserClient { get; set; }
+
+    [Required]
     public Guid UserId { get; set; }
 
     public virtual User User { get; set; }
