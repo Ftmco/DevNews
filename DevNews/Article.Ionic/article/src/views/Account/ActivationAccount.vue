@@ -2,15 +2,15 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Login</ion-title>
+        <ion-title>Activation</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content fullscreen>
       <ion-card>
         <ion-card-header>
-          <ion-card-title> Welcome to your account. </ion-card-title>
+          <ion-card-title> Account Activation </ion-card-title>
           <br />
-          <img src="../../assets/images/login.png" alt="" />
+          <img src="../../assets/images/not-authorized.png" alt="" />
         </ion-card-header>
         <ion-card-content>
           <ion-item>
@@ -22,39 +22,28 @@
               placeholder="User Name"
             ></ion-input>
           </ion-item>
-
           <ion-item>
-            <ion-label position="floating">Password</ion-label>
+            <ion-label position="floating">Active Code</ion-label>
             <ion-input
-              v-model="user.password"
-              type="password"
+              v-model="user.activeCode"
               required
               clear-input
-              pattern="password"
-              placeholder="Password"
+              placeholder="Active Code"
             ></ion-input>
           </ion-item>
-
-          <ion-button expand="block" @click="login">Login</ion-button>
+          <ion-button expand="block" @click="active">Active Account</ion-button>
           <ion-button
             expand="block"
             fill="outline"
             @click="
               () => {
-                this.$router.push({ name: 'register' });
+                this.$router.push({ name: 'login' });
               }
             "
-            >Register</ion-button
+            >Login</ion-button
           >
           <ion-button expand="block" fill="outline">Forgot Password</ion-button>
-          <ion-button
-            expand="block"
-            fill="outline"
-            @click="
-              () => {
-                this.$router.push({ name: 'activation' });
-              }
-            "
+          <ion-button expand="block" fill="outline"
             >Activation Account</ion-button
           >
         </ion-card-content>
@@ -68,63 +57,64 @@ import { defineComponent } from "vue";
 import {
   IonPage,
   IonHeader,
+  IonToolbar,
   IonTitle,
   IonContent,
-  IonInput,
-  IonToolbar,
   IonCard,
-  IonLabel,
-  IonItem,
-  IonButton,
-  IonCardContent,
-  IonCardTitle,
   IonCardHeader,
+  IonCardContent,
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonCardTitle,
+  IonInput,
 } from "@ionic/vue";
 import AccountServiec from "@/api/service/account.service";
 import { apiCall } from "@/api";
+import { SignUp } from "@/api/models/account.model";
 import { showToast } from "@/services/components/Toast";
-import { messages } from "@/constants";
-import { openLoading } from "@/services/components/Core";
+import router from "@/router";
+import { closeLoading, openLoading } from "@/services/components/Core";
 
 export default defineComponent({
   components: {
     IonPage,
     IonHeader,
+    IonToolbar,
     IonTitle,
     IonContent,
-    IonInput,
-    IonToolbar,
     IonCard,
-    IonLabel,
-    IonItem,
-    IonButton,
-    IonCardContent,
-    IonCardTitle,
     IonCardHeader,
+    IonCardContent,
+    IonButton,
+    IonItem,
+    IonLabel,
+    IonCardTitle,
+    IonInput,
   },
   data: () => ({
     user: {
       userName: "",
-      password: "",
+      activeCode: "",
     },
     accountServices: new AccountServiec(apiCall),
   }),
   methods: {
-    async login() {
-      if (this.user.userName.trim() != "" && this.user.password.trim() != "") {
-        openLoading();
-        this.accountServices
-          .Login(this.user)
-          .then((res) => {
-            if (res.status) {
-              window.location.reload();
-            }
-            showToast(res.title);
-          })
-          .catch((e) => {
-            showToast(messages.netWorkError(e.message).message);
-          });
-      } else showToast(messages.invalidForm);
+    async active() {
+      const loading = await openLoading();
+      this.accountServices
+        .Acivation(this.user)
+        .then((res) => {
+          if (res.status) {
+            router.push({
+              name: "login",
+            });
+          }
+          showToast(res.title);
+        })
+        .finally(() => {
+          closeLoading(loading);
+        });
     },
   },
 });

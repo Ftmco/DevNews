@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tools.Code;
 using Tools.Crypto;
+using Tools.Email;
 using ViewModel.Account;
 
 namespace Service.Service;
@@ -34,8 +35,12 @@ public class UserServices : IUserRules
                 RegisterDate = DateTime.Now,
                 UserName = signUp.UserName
             };
-            return await _userCrud.InsertAsync(newUser) ?
-               newUser : null;
+            if (await _userCrud.InsertAsync(newUser))
+            {
+                await new List<string> { newUser.Email }.SendEmailAsync("Active Code", newUser.ActiveCode);
+                return newUser;
+            }
+            return null;
         });
 
     public void Dispose()
