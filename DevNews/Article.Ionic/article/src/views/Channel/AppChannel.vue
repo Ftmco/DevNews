@@ -21,7 +21,21 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true"> </ion-content>
+    <ion-content :fullscreen="true">
+      <post-item v-for="post in posts" :key="post.id" :post="post" />
+      <ion-infinite-scroll
+        @ionInfinite="loadData"
+        threshold="100px"
+        id="infinite-scroll"
+        :disabled="isDisabled"
+      >
+        <ion-infinite-scroll-content
+          loading-spinner="bubbles"
+          loading-text="Loading more posts..."
+        >
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-content>
     <ion-fab
       v-if="isAdmin == true"
       vertical="bottom"
@@ -36,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import {
   IonPage,
   IonHeader,
@@ -45,6 +59,15 @@ import {
   IonContent,
   IonButtons,
   modalController,
+  IonImg,
+  IonAvatar,
+  IonItem,
+  IonIcon,
+  IonButton,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonFabButton,
+  IonFab,
 } from "@ionic/vue";
 
 import { arrowBack, add } from "ionicons/icons";
@@ -54,6 +77,7 @@ import { showToast } from "@/services/components/Toast";
 import { createFileAddress } from "@/services/file";
 import CreateItems from "@/components/channel/CreateItems.vue";
 import SendFile from "@/components/channel/SendFile.vue";
+import PostItem from "@/components/channel/PostItem.vue";
 
 export default defineComponent({
   components: {
@@ -63,6 +87,16 @@ export default defineComponent({
     IonTitle,
     IonContent,
     IonButtons,
+    PostItem,
+    IonImg,
+    IonAvatar,
+    IonItem,
+    IonIcon,
+    IonButton,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+    IonFabButton,
+    IonFab,
   },
   data: () => ({
     channelName: "",
@@ -72,6 +106,8 @@ export default defineComponent({
     arrowBack,
     add,
     channelServices: new ChannelService(apiCall),
+    posts: [],
+    isDisabled: false,
   }),
   created() {
     this.channelName = this.$route.query.name?.toString() as string;
@@ -87,6 +123,15 @@ export default defineComponent({
             avatar: createFileAddress(res.result.channel.avatar[0]),
           };
           this.isAdmin = res.result.isAdmin;
+          this.getPosts(this.token);
+        }
+        showToast(res.title);
+      });
+    },
+    getPosts(token: string) {
+      this.channelServices.getChannelPosts(token).then((res) => {
+        if (res.status) {
+          this.posts = res.result;
         }
         showToast(res.title);
       });
@@ -168,7 +213,17 @@ export default defineComponent({
       });
     },
     postSent(e: any) {
+      const data = e.data;
+      if (data.status) {
+        this.posts.push(data.result as never);
+      }
+    },
+    loadData(e: any) {
       console.log(e);
+      setTimeout(() => {
+        e.target.complete();
+        this.isDisabled = true;
+      }, 1000);
     },
   },
 });
