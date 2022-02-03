@@ -149,6 +149,7 @@ export default defineComponent({
         initialBreakpoint: 0.9,
         component: CreateChannel,
         backdropDismiss: true,
+        mode:'ios'
       });
       sheetModal.present();
 
