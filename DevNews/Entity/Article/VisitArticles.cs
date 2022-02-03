@@ -16,4 +16,5 @@ public record VisitArticles
 
     [Required]
     public Guid UserId { get; set; }
+
 }
