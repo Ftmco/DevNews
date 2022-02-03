@@ -4,6 +4,7 @@ using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ArticleContext))]
-    partial class ArticleContextModelSnapshot : ModelSnapshot
+    [Migration("20220203181648_UserLogs2")]
+    partial class UserLogs2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,6 +176,10 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("VisitArticles");
                 });
 
@@ -266,23 +272,6 @@ namespace DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("Entity.Explore.Explore", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Explore");
                 });
 
             modelBuilder.Entity("Entity.User.Session", b =>
@@ -380,6 +369,25 @@ namespace DataLayer.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Entity.Article.VisitArticles", b =>
+                {
+                    b.HasOne("Entity.Article.Article", "Article")
+                        .WithMany("VisitArticles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.User.User", "User")
+                        .WithMany("VisitArticles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Entity.Channel.ChannelsAdmins", b =>
                 {
                     b.HasOne("Entity.Channel.Channel", "Channel")
@@ -432,6 +440,8 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("Entity.Article.Article", b =>
                 {
                     b.Navigation("ArticleCategories");
+
+                    b.Navigation("VisitArticles");
                 });
 
             modelBuilder.Entity("Entity.Article.Category", b =>
@@ -453,6 +463,8 @@ namespace DataLayer.Migrations
                     b.Navigation("ChannelsUsers");
 
                     b.Navigation("Session");
+
+                    b.Navigation("VisitArticles");
                 });
 #pragma warning restore 612, 618
         }
