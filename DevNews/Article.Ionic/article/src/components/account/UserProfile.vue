@@ -1,6 +1,10 @@
 <template>
-  <ion-list-header>Profile</ion-list-header>
   <ion-card>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Profile</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-card-header>
       <ion-row>
         <ion-avatar>
@@ -79,12 +83,14 @@ import {
   IonIcon,
   IonFabButton,
   IonFabList,
-  IonListHeader,
   IonImg,
   IonRow,
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
 } from "@ionic/vue";
 
 export default defineComponent({
@@ -97,12 +103,14 @@ export default defineComponent({
     IonIcon,
     IonFabButton,
     IonFabList,
-    IonListHeader,
     IonImg,
     IonRow,
     IonCard,
     IonCardContent,
     IonCardHeader,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
   },
   data: () => ({
     profile: {},
