@@ -3,4 +3,4 @@ using ViewModel.Channel;
 
 namespace ViewModel.Search;
 
-public record SearchResponse(IEnumerable<ChannelPreviewViewModel> Channels,IEnumerable<CategoryViewModel> Categories);
+public record SearchResponse(IEnumerable<ChannelPreviewViewModel> Channels, IEnumerable<CategoryViewModel> Categories);

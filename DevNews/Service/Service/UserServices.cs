@@ -1,11 +1,5 @@
 ﻿using Entity.User;
 using Service.Rules;
-using Services.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tools.Code;
 using Tools.Crypto;
 using Tools.Email;
@@ -37,7 +31,7 @@ public class UserServices : IUserRules
             };
             if (await _userCrud.InsertAsync(newUser))
             {
-                await new List<string> { newUser.Email }.SendEmailAsync("Active Code", newUser.ActiveCode);
+                await new List<string> { newUser.Email }.SendEmailAsync("Active Code", $"Article News : Account Active Code <h1>{newUser.ActiveCode}</h1>");
                 return newUser;
             }
             return null;

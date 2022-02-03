@@ -1,5 +1,4 @@
 ﻿using Entity.Article;
-using ViewModel.Category;
 
 namespace Service.Rules;
 

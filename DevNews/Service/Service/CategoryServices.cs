@@ -1,7 +1,5 @@
 ﻿using Entity.Article;
 using Service.Rules;
-using Services.Base;
-using ViewModel.Category;
 
 namespace Service.Service;
 

@@ -1,8 +1,6 @@
-﻿using Entity.Article;
-using Entity.Channel;
+﻿using Entity.Channel;
 using Entity.User;
 using Microsoft.AspNetCore.Http;
-using ViewModel.Channel;
 
 namespace Service.Rules;
 
@@ -40,7 +38,7 @@ public interface IChannelRules : IDisposable
 
     Task<IEnumerable<string>> SearchStringAsync(string q);
 
-    Task<GetPostResponse> GetChannelPostsAsync(string token,int index);
+    Task<GetPostResponse> GetChannelPostsAsync(string token, int index);
 
     Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers);
 }

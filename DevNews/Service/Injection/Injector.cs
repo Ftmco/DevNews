@@ -5,7 +5,6 @@ using Entity.User;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Rules;
 using Service.Service;
-using Services.Base;
 
 namespace Service.Injection;
 

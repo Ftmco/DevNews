@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModel.File;
+﻿namespace ViewModel.File;
 
 public record UploadFileViewModel(string Base64, string Type, string OgName);
 
