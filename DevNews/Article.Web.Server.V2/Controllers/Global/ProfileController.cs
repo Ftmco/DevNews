@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Service.Rules;
-using ViewModel.Profile;
+﻿using ViewModel.Profile;
 
 namespace Article.Web.Server.V2.Controllers.Global;
 

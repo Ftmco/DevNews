@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Article.Web.Server.V2.Controllers.Client;
+﻿namespace Article.Web.Server.V2.Controllers.Client;
 
 [Route("api/[controller]")]
 [ApiController]

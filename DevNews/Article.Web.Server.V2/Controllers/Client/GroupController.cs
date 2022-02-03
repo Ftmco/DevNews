@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Service.Rules;
-using ViewModel.Category;
+﻿using ViewModel.Category;
 
 namespace Article.Web.Server.V2.Controllers.Client;
 
