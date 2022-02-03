@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Trainer.Data\Trainer.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Rules\" />
+  </ItemGroup>
+
 </Project>
