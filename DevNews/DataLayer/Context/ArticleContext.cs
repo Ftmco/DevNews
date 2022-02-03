@@ -3,6 +3,7 @@ using Entity.Channel;
 using Entity.Comment;
 using Entity.User;
 using Microsoft.EntityFrameworkCore;
+using Tools.AppSetting;
 
 namespace DataLayer.Context;
 
@@ -11,6 +12,20 @@ public class ArticleContext : DbContext
     public ArticleContext(DbContextOptions<ArticleContext> options) : base(options)
     {
 
+    }
+
+    public ArticleContext()
+    {
+
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            string cnn = "ConnectionStrings".GetDataAsync("Article").Result;
+            optionsBuilder.UseSqlServer(cnn);
+        }
     }
 
     public virtual DbSet<Article> Article { get; set; }
@@ -34,4 +49,6 @@ public class ArticleContext : DbContext
     public virtual DbSet<Session> Session { get; set; }
 
     public virtual DbSet<User> User { get; set; }
+
+    public virtual VisitArticles VisitArticles { get; set; }
 }
