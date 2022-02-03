@@ -19,4 +19,8 @@ public class SearchController : ControllerBase
     [HttpGet("AutoComplete")]
     public async Task<IActionResult> AutoComplete(string q)
         => Ok(Success("", $"Auto Complete Items With {q}", await _search.AutoCompleteAsync(q)));
+
+    [HttpGet("Explore")]
+    public async Task<IActionResult> Explore()
+        => Ok(Success("", "Explore Items", await _search.ExploreAsync(Request.Headers)));
 }
