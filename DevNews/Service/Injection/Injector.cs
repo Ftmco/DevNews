@@ -1,6 +1,7 @@
 ﻿using Entity.Article;
 using Entity.Channel;
 using Entity.Comment;
+using Entity.Explore;
 using Entity.User;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Rules;
@@ -31,6 +32,8 @@ public static class Injector
         service.AddScoped<IBaseRules<Comment>, BaseServices<Comment>>();
         service.AddScoped<IBaseRules<Session>, BaseServices<Session>>();
         service.AddScoped<IBaseRules<User>, BaseServices<User>>();
+        service.AddScoped<IBaseRules<Explore>, BaseServices<Explore>>();
+        service.AddScoped<IBaseRules<VisitArticles>, BaseServices<VisitArticles>>();
 
         return service;
     }
