@@ -10,7 +10,7 @@
           <ion-chip v-if="file.name != ''">
             {{ file.orginalName }} - {{ file.size / 1000 / 1000 }} MB
 
-            <ion-icon :icon="download"></ion-icon>
+            <ion-icon :icon="download" @click="downloadFile(file)"></ion-icon>
           </ion-chip>
         </ion-item>
       </ion-card>
@@ -44,6 +44,7 @@ import {
   IonItem,
   IonFabButton,
   IonIcon,
+  IonChip,
 } from "@ionic/vue";
 
 import {
@@ -63,6 +64,7 @@ export default defineComponent({
     IonItem,
     IonFabButton,
     IonIcon,
+    IonChip,
   },
   props: {
     post: Object,
@@ -81,6 +83,9 @@ export default defineComponent({
     setMainFile() {
       const files = (this.post as any).files;
       this.mainFile = files[0];
+    },
+    downloadFile(file: any) {
+      console.log(file);
     },
     createFileAddress,
   },
