@@ -31,6 +31,7 @@ public static class Injector
         service.AddScoped<IBaseRules<Comment>, BaseServices<Comment>>();
         service.AddScoped<IBaseRules<Session>, BaseServices<Session>>();
         service.AddScoped<IBaseRules<User>, BaseServices<User>>();
+
         return service;
     }
 
