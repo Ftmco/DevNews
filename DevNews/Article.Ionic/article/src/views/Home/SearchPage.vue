@@ -20,7 +20,21 @@
 
       <ion-list v-if="searchResult.channels.length > 0">
         <ion-list-header>Channels</ion-list-header>
-        <ion-item v-for="channel in searchResult.channels" :key="channel.id">
+        <ion-item
+          v-for="channel in searchResult.channels"
+          :key="channel.id"
+          @click="
+            () => {
+              $router.push({
+                name: 'channel',
+                query: {
+                  token: channel.token,
+                  name: channel.name,
+                },
+              });
+            }
+          "
+        >
           <ion-avatar slot="start">
             <img :src="createFileAddress(channel.avatar[0])" />
           </ion-avatar>
