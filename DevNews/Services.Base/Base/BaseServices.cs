@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Services.Base;
@@ -23,14 +24,22 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
         _dbSet = _context.Set<TEntity>();
     }
 
+    public BaseServices(ArticleContext context)
+    {
+        _context = context;
+        _dbSet = _context.Set<TEntity>();
+    }
+
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where)
         => await Task.FromResult(await _dbSet.AnyAsync(where));
 
     #endregion
 
-    public async Task<bool> DeleteAsync(TEntity entity)
+    public async Task<bool> DeleteAsync(TEntity? entity)
     => await Task.Run(async () =>
     {
+        if (entity == null)
+            return true;
         try
         {
             _dbSet.Remove(entity);
@@ -69,7 +78,7 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
         await _context.DisposeAsync();
     }
 
-    public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where)
+    public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where)
         => await Task.FromResult(await _dbSet.FirstOrDefaultAsync(where));
 
     public async Task<IEnumerable<TEntity>> GetAsync()
@@ -78,7 +87,7 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
     public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where)
         => await Task.FromResult(await _dbSet.Where(where).ToListAsync());
 
-    public async Task<TEntity> GetAsync(object id)
+    public async Task<TEntity?> GetAsync(object id)
         => await Task.FromResult(await _dbSet.FindAsync(id));
 
     public async Task<IEnumerable<TEntity>> GetAsync<TKey>(Expression<Func<TEntity, TKey>> orderBy, OrderType orderType)
