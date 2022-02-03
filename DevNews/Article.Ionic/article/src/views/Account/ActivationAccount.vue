@@ -108,6 +108,9 @@ export default defineComponent({
           if (res.status) {
             router.push({
               name: "login",
+              query: {
+                userName: this.user.userName,
+              },
             });
           }
           showToast(res.title);
