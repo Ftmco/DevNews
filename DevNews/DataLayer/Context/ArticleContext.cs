@@ -2,6 +2,7 @@
 using Entity.Channel;
 using Entity.Comment;
 using Entity.Explore;
+using Entity.Page;
 using Entity.User;
 using Microsoft.EntityFrameworkCore;
 using Tools.AppSetting;
@@ -54,4 +55,6 @@ public class ArticleContext : DbContext
     public virtual DbSet<VisitArticles> VisitArticles { get; set; }
 
     public virtual DbSet<Explore> Explore { get; set; }
+
+    public virtual DbSet<Page> Page { get; set; }
 }
