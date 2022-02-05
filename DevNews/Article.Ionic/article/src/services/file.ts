@@ -7,8 +7,6 @@ export const convertToBase64File = (file: any) => {
                 const fileReader = new FileReader()
                 fileReader.readAsDataURL(file)
                 fileReader.onload = () => {
-                    console.log(fileReader.result);
-
                     resolve({
                         base64: fileReader.result?.toString(),
                         type: file.type,
