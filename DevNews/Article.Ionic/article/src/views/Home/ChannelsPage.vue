@@ -94,6 +94,7 @@ export default defineComponent({
   data: () => ({
     loading: loadingController.create({
       message: "Plase Wait...",
+      spinner:'bubbles'
     }),
     channels: [{}],
     channelService: new ChannelServices(apiCall),
