@@ -121,6 +121,8 @@ import CategoryService from "@/api/service/category.service";
 import { apiCall } from "@/api";
 import { convertToBase64File } from "@/services/file";
 import { FileModel } from "@/api/models/article.model";
+import ArticleService from "@/api/service/article.service";
+import { showToast } from "@/services/components/Toast";
 
 export default defineComponent({
   components: {
@@ -144,6 +146,7 @@ export default defineComponent({
   },
   data: () => ({
     article: {
+      id: undefined,
       text: "",
       shortDescription: "",
       title: "",
@@ -173,6 +176,7 @@ export default defineComponent({
       ["clean"], // remove formatting button
     ],
     image,
+    articleService: new ArticleService(apiCall),
   }),
   created() {
     this.getCategories();
@@ -212,7 +216,9 @@ export default defineComponent({
       }
     },
     createArticle() {
-      console.log(this.article);
+      this.articleService.createArticle(this.article).then((res) => {
+        showToast(res.title);
+      });
     },
   },
 });

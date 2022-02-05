@@ -77,7 +77,7 @@ public class ArticleServices : IArticleRules
                 Text = create.Text,
                 Tags = create.Tags,
                 ShortDescription = create.ShortDescription,
-                OwnerId = owner.Id
+                OwnerId = owner.Id,
             };
 
             if (await _articleCrud.InsertAsync(newArticle))

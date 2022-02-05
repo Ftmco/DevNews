@@ -5,7 +5,7 @@ namespace ViewModel.Article;
 
 public record UpsertArticleViewModel(Guid? Id, string Title, string Text, string ShortDescription,
                 UploadFileViewModel Image, IEnumerable<UploadFileViewModel> AttechmentFiles,
-                IEnumerable<Guid> Categories, string Tags, ArticleOwner Owner, string OwnerToken);
+                IEnumerable<Guid> Categories, string Tags, ArticleOwner Owner, string OwnerToken, bool IsActive);
 
 public record ArticleViewModel(Guid Id, string Title, string ShortDescription, string Text, string Tags, object Owner, IEnumerable<CategoryViewModel> Categories);
 
