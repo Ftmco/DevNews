@@ -2,6 +2,7 @@
 using Entity.Channel;
 using Entity.Comment;
 using Entity.Explore;
+using Entity.Page;
 using Entity.User;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Rules;
@@ -34,6 +35,7 @@ public static class Injector
         service.AddScoped<IBaseRules<User>, BaseServices<User>>();
         service.AddScoped<IBaseRules<Explore>, BaseServices<Explore>>();
         service.AddScoped<IBaseRules<VisitArticles>, BaseServices<VisitArticles>>();
+        service.AddScoped<IBaseRules<Page>, BaseServices<Page>>();
 
         return service;
     }
@@ -50,6 +52,7 @@ public static class Injector
         service.AddTransient<IProfileRules, ProfileServices>();
         service.AddTransient<IPostRules, PostServices>();
         service.AddTransient<ISearchRules, SearchServices>();
+        service.AddTransient<IPageRules, PageServices>();
         return service;
     }
 
