@@ -12,7 +12,7 @@
         </ion-avatar>
         <ion-fab horizontal="end">
           <ion-fab-button>
-            <ion-icon :icon="arrowBack"></ion-icon>
+            <ion-icon :icon="settings"></ion-icon>
           </ion-fab-button>
           <ion-fab-list side="start">
             <ion-fab-button color="warning">
@@ -71,7 +71,7 @@ import ProfileService from "@/api/service/profile.service";
 import { showToast } from "@/services/components/Toast";
 import { defineComponent } from "vue";
 import { createFileAddress } from "@/services/file";
-import { pencil, arrowBack, exit } from "ionicons/icons";
+import { pencil, exit, settings } from "ionicons/icons";
 import AccountServiec from "@/api/service/account.service";
 
 import {
@@ -117,8 +117,8 @@ export default defineComponent({
     profleServices: new ProfileService(apiCall),
     accountServices: new AccountServiec(apiCall),
     pencil,
-    arrowBack,
     exit,
+    settings,
   }),
   beforeMount() {
     this.getProfile();
