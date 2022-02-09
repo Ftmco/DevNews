@@ -8,7 +8,7 @@
             <ion-img :src="channel.avatar"></ion-img>
           </ion-avatar>
         </ion-item>
-        <ion-buttons slot="start">
+        <ion-buttons  slot="start">
           <ion-button
             @click="
               () => {
