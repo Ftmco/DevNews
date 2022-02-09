@@ -10,13 +10,18 @@ namespace Service.Service;
 
 public class PageServices : IPageRules
 {
-    public void Dispose()
+    private readonly IBaseRules<Page> _pageCrud;
+
+    public PageServices(IBaseRules<Page> pageCrud)
     {
-       GC.SuppressFinalize(this);
+        _pageCrud = pageCrud;
     }
 
-    public Task<Page> GetPageByTokenAsync(string token)
+    public void Dispose()
     {
-        throw new NotImplementedException();
+        GC.SuppressFinalize(this);
     }
+
+    public async Task<Page> GetPageByTokenAsync(string token)
+        => await Task.Run(async () => await _pageCrud.FirstOrDefaultAsync(p => p.Token == token));
 }
