@@ -1,6 +1,10 @@
-﻿namespace ViewModel.Api;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ViewModel.Api;
 
 public record ApiModel(int Code, bool Status, string Title, string Message, object Result);
+
+public record ApiRequest(string Data);
 
 public static class ApiResponse
 {
