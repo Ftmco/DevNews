@@ -13,7 +13,7 @@
           <img src="../../assets/images/login.png" alt="" />
         </ion-card-header>
         <ion-card-content>
-          <ion-item>
+          <ion-item >
             <ion-label position="floating">User Name</ion-label>
             <ion-input
               v-model="user.userName"
