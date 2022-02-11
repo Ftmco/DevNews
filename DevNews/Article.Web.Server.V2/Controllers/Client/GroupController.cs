@@ -28,12 +28,12 @@ public class GroupController : ControllerBase
     [HttpGet("GetEnc")]
     public async Task<IActionResult> GetEnc()
     {
-        GetCategoriesResponse? categories = await _category.GetCategoriesAsync(HttpContext);
+        GetCategoriesResponse? categories = await _category.GetCategoriesAsync();
         return categories.Status switch
         {
-            CategoryStatus.Success => Ok(Success("", "Categories", categories.Categories)),
-            CategoryStatus.Exception => Ok(ApiException("Exception", "")),
-            _ => Ok(ApiException("Exception", "")),
+            CategoryStatus.Success => Ok(await Success("", "Categories", categories.Categories).SendResponseAsync(HttpContext)),
+            CategoryStatus.Exception => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
         };
     }
 }

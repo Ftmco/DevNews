@@ -91,8 +91,10 @@ public class ProfileServices : IProfileRules
             return new ProfileResponse(ProfileStatus.UserNotFound, null);
         });
 
-    public Task<ProfileResponse> UpdateProfileAsync(ApiRequest reqeust, HttpContext httpContext)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<ProfileResponse> UpdateProfileAsync(ApiRequest reqeust, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            UpdateProfileViewModel update = await reqeust.ReadRequestDataAsync<UpdateProfileViewModel>(httpContext);
+            return await UpdateProfileAsync(update, httpContext.Request.Headers);
+        });
 }
