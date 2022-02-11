@@ -41,4 +41,6 @@ public interface IChannelRules : IDisposable
     Task<GetPostResponse> GetChannelPostsAsync(string token, int index);
 
     Task<SendPostResponse> SendPostAsync(SendPostViewModel sendPost, IHeaderDictionary headers);
+    Task<UpsertChannelResponse> CreateAsync(ApiRequest request, HttpContext httpContext);
+    Task<SendPostResponse> SendPostAsync(ApiRequest request, HttpContext httpContext);
 }

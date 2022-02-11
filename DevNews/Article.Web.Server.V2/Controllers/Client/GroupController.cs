@@ -24,4 +24,16 @@ public class GroupController : ControllerBase
             _ => Ok(ApiException("Exception", "")),
         };
     }
+
+    [HttpGet("GetEnc")]
+    public async Task<IActionResult> GetEnc()
+    {
+        GetCategoriesResponse? categories = await _category.GetCategoriesAsync(HttpContext);
+        return categories.Status switch
+        {
+            CategoryStatus.Success => Ok(Success("", "Categories", categories.Categories)),
+            CategoryStatus.Exception => Ok(ApiException("Exception", "")),
+            _ => Ok(ApiException("Exception", "")),
+        };
+    }
 }

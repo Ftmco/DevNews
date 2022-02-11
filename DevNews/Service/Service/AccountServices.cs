@@ -41,6 +41,13 @@ public class AccountServices : IAccountRules
            return ActivationStatus.UserNotFound;
        });
 
+    public async Task<ActivationStatus> ActivationAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            ActivationViewModel activation = await request.ReadRequestDataAsync<ActivationViewModel>(httpContext);
+            return await ActivationAsync(activation);
+        });
+
     public void Dispose()
     {
         GC.SuppressFinalize(this);
@@ -92,5 +99,10 @@ public class AccountServices : IAccountRules
             return newUser != null ? SignUpStatus.Success : SignUpStatus.Exception;
         });
 
-
+    public async Task<SignUpStatus> SignUpAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            SignUpViewModel signUp = await request.ReadRequestDataAsync<SignUpViewModel>(httpContext);
+            return await SignUpAsync(signUp);
+        });
 }

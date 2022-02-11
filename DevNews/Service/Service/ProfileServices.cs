@@ -90,4 +90,9 @@ public class ProfileServices : IProfileRules
             }
             return new ProfileResponse(ProfileStatus.UserNotFound, null);
         });
+
+    public Task<ProfileResponse> UpdateProfileAsync(ApiRequest reqeust, HttpContext httpContext)
+    {
+        throw new NotImplementedException();
+    }
 }

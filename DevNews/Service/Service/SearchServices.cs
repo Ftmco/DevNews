@@ -37,6 +37,11 @@ public class SearchServices : ISearchRules
         throw new NotImplementedException();
     }
 
+    public Task<object> ExploreAsync(HttpContext httpContext)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<SearchResponse> SearchAsync(string q)
         => await Task.Run(async () =>
         {
@@ -47,4 +52,9 @@ public class SearchServices : ISearchRules
 
             return new SearchResponse(channelsViewModel, categoriesViewModel);
         });
+
+    public Task<object> SearchAsync(string q, HttpContext httpContext)
+    {
+        throw new NotImplementedException();
+    }
 }

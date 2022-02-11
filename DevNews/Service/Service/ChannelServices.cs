@@ -81,6 +81,13 @@ public class ChannelServices : IChannelRules
             return new UpsertChannelResponse(ChannelsStatus.Exception, null);
         });
 
+    public async Task<UpsertChannelResponse> CreateAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            UpsertChannelViewModel upsert = await request.ReadRequestDataAsync<UpsertChannelViewModel>(httpContext);
+            return await CreateAsync(upsert, httpContext.Request.Headers);
+        });
+
     public void Dispose()
     {
         GC.SuppressFinalize(this);
@@ -238,6 +245,13 @@ public class ChannelServices : IChannelRules
                 return new SendPostResponse(PostStaus.ChannelNotFound, null);
             }
             return new SendPostResponse(PostStaus.UserNotFound, null);
+        });
+
+    public async Task<SendPostResponse> SendPostAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            SendPostViewModel post = await request.ReadRequestDataAsync<SendPostViewModel>(httpContext);
+            return await SendPostAsync(post, httpContext.Request.Headers);
         });
 
     public async Task<ChannelsStatus> SubscribeChannelAsync(string token, IHeaderDictionary headers)

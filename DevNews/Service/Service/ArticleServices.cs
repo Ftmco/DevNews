@@ -1,4 +1,5 @@
 ﻿using Entity.Article;
+using Microsoft.AspNetCore.Http;
 using Service.Rules;
 using Tools.AppSetting;
 using Tools.FileTools;
@@ -130,6 +131,13 @@ public class ArticleServices : IArticleRules
     {
         throw new NotImplementedException();
     }
+
+    public async Task<UpsertArticleResponse> UpsertAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            UpsertArticleViewModel upsert = await request.ReadRequestDataAsync<UpsertArticleViewModel>(httpContext);
+            return await UpsertAsync(upsert);
+        });
 
     public async Task<UpsertArticleResponse> UpsertAsync(UpsertArticleViewModel upsert)
         => await Task.Run(async () =>

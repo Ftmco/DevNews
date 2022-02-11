@@ -16,11 +16,15 @@ public class SearchController : ControllerBase
     public async Task<IActionResult> Search(string q)
         => Ok(Success("", "Search Items Result", await _search.SearchAsync(q)));
 
-    [HttpGet("AutoComplete")]
-    public async Task<IActionResult> AutoComplete(string q)
-        => Ok(Success("", $"Auto Complete Items With {q}", await _search.AutoCompleteAsync(q)));
-
     [HttpGet("Explore")]
     public async Task<IActionResult> Explore()
         => Ok(Success("", "Explore Items", await _search.ExploreAsync(Request.Headers)));
+
+    [HttpGet("SearchEnc")]
+    public async Task<IActionResult> SearchEnc(string q)
+        => Ok(await Success("", "Search Items Result", await _search.SearchAsync(q)).SendResponseAsync(HttpContext));
+
+    [HttpGet("ExploreEnc")]
+    public async Task<IActionResult> ExploreEnc()
+        => Ok(await Success("", "Explore Items", await _search.ExploreAsync(Request.Headers)).SendResponseAsync(HttpContext));
 }

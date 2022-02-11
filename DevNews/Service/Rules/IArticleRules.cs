@@ -1,4 +1,5 @@
 ﻿using Entity.Article;
+using Microsoft.AspNetCore.Http;
 using ViewModel.Article;
 using ViewModel.File;
 
@@ -17,4 +18,6 @@ public interface IArticleRules : IDisposable
     Task<ArticleViewModel> CreateArticleViewModelAsync(Article article);
 
     Task<bool> SaveArticleFileAsync(UploadFileViewModel uploadFile,Guid articleId);
+
+    Task<UpsertArticleResponse> UpsertAsync(ApiRequest request, HttpContext httpContext);
 }

@@ -13,7 +13,11 @@ public interface IAccountRules : IDisposable
 
     Task<SignUpStatus> SignUpAsync(SignUpViewModel signUp);
 
+    Task<SignUpStatus> SignUpAsync(ApiRequest request, HttpContext httpContext);
+
     Task<ActivationStatus> ActivationAsync(ActivationViewModel activation);
+
+    Task<ActivationStatus> ActivationAsync(ApiRequest request, HttpContext httpContext);
 
     Task<User> GetUserBySessionAsync(IHeaderDictionary headers);
 }

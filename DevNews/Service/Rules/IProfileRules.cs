@@ -11,4 +11,6 @@ public interface IProfileRules : IDisposable
     Task<ProfileViewModel> GetProfileViewModelAsync(User user);
 
     Task<ProfileResponse> UpdateProfileAsync(UpdateProfileViewModel profile, IHeaderDictionary headers);
+
+    Task<ProfileResponse> UpdateProfileAsync(ApiRequest reqeust, HttpContext httpContext);
 }
