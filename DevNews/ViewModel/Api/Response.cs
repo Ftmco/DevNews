@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace ViewModel.Api;
+﻿namespace ViewModel.Api;
 
 public record ApiModel(int Code, bool Status, string Title, string Message, object Result);
 

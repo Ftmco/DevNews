@@ -1,5 +1,9 @@
+import Crypto from 'crypto-js'
+
 export const keyMaker = (requestUrl: string) => {
-    const enc = new TextEncoder()
-    const utf8 = enc.encode(requestUrl)
-    return utf8;
+    const utf8 = Crypto.enc.Utf8.parse(requestUrl)
+    const base64 = Crypto.enc.Base64.stringify(utf8)
+    console.log(base64);
+    return base64
+
 }

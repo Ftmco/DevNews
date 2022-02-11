@@ -7,12 +7,13 @@ namespace Tools.Api;
 
 public static class ApiHelper
 {
-    public static async Task<string> SendResponseAsync(this ApiModel api, HttpContext httpContext)
+    public static async Task<ApiRequest> SendResponseAsync(this ApiModel api, HttpContext httpContext)
         => await Task.Run(() =>
         {
             string? key = httpContext.KeyMaker();
-            string? encodeData = api.ToString().Encrypt(key);
-            return encodeData;
+            string json = JsonConvert.SerializeObject(api);
+            string? encodeData = json.Encrypt(key);
+            return new ApiRequest(encodeData);
         });
 
     public static async Task<TRequest?> ReadRequestDataAsync<TRequest>(this ApiRequest request, HttpContext httpContext)

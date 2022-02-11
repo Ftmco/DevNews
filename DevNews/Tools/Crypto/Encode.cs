@@ -8,9 +8,8 @@ public static class Encode
     public static string Encrypt(this string text, string key, bool revert = false)
     {
         string newString = "";
-
         for (int i = 0; i < text.Length; i++)
-            newString += (char)(i + (revert ? (Math.Abs(key.Length - i) % key.Length) : (i % key.Length)));
+            newString += (char)(text[i] + (revert ? key[(Math.Abs(key.Length - i) % key.Length)] : key[(i % key.Length)]));
 
         return newString;
     }
@@ -20,7 +19,10 @@ public static class Encode
         string newString = "";
 
         for (int i = 0; i < text.Length; i++)
-            newString += (char)(i - (revert ? (Math.Abs(key.Length - i) % key.Length) : (i % key.Length)));
+        {
+            int code = (text[i] - (revert ? key[(Math.Abs(key.Length - i) % key.Length)] : key[(i % key.Length)]));
+            newString += (char)code;
+        }
 
         return newString;
     }

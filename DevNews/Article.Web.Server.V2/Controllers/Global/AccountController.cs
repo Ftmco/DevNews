@@ -1,4 +1,6 @@
-﻿using ViewModel.Account;
+﻿using Tools.Api;
+using ViewModel.Account;
+using ViewModel.Api;
 
 namespace Article.Web.Server.V2.Controllers.Global;
 
@@ -24,6 +26,20 @@ public class AccountController : ControllerBase
             LoginStatus.Exception => Ok(ApiException("Exception to Login", "")),
             LoginStatus.UserNotActive => Ok(Faild(403, "User Not Actived", "Please Active Yout Account And Try Again")),
             _ => Ok(ApiException("Exception to Login", "")),
+        };
+    }
+
+    [HttpPost("LoginEnc")]
+    public async Task<IActionResult> Login(ApiRequest request)
+    {
+        LoginResponse? loginUser = await _account.LoginAsync(request, HttpContext);
+        return loginUser.Status switch
+        {
+            LoginStatus.Success => Ok(await Success("Success To Login", "", loginUser.Session).SendResponseAsync(HttpContext)),
+            LoginStatus.UserNotFound => Ok(await Faild(404, "User Not found", "").SendResponseAsync(HttpContext)),
+            LoginStatus.Exception => Ok(await ApiException("Exception to Login", "").SendResponseAsync(HttpContext)),
+            LoginStatus.UserNotActive => Ok(await Faild(403, "User Not Actived", "Please Active Yout Account And Try Again").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception to Login", "").SendResponseAsync(HttpContext)),
         };
     }
 

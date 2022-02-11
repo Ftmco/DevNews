@@ -1,8 +1,10 @@
 ﻿using Entity.User;
 using Microsoft.AspNetCore.Http;
 using Service.Rules;
+using Tools.Api;
 using Tools.Code;
 using ViewModel.Account;
+using ViewModel.Api;
 
 namespace Service.Service;
 
@@ -67,6 +69,13 @@ public class AccountServices : IAccountRules
                 return new LoginResponse(LoginStatus.UserNotActive, null);
             }
             return new LoginResponse(LoginStatus.UserNotFound, null);
+        });
+
+    public async Task<LoginResponse> LoginAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            LoginViewModel login = await request.ReadRequestDataAsync<LoginViewModel>(httpContext);
+            return await LoginAsync(login);
         });
 
     public async Task<SignUpStatus> SignUpAsync(SignUpViewModel signUp)
