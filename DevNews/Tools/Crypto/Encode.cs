@@ -29,7 +29,8 @@ public static class Encode
 
     public static string KeyMaker(this HttpContext httpContext)
     {
-        byte[]? bytes = Encoding.UTF8.GetBytes(httpContext.Request.Path.ToString());
+        string path = httpContext.Request.Path.ToString();
+        byte[]? bytes = Encoding.UTF8.GetBytes(path);
         string? base64 = Convert.ToBase64String(bytes);
         return base64.ToString();
     }

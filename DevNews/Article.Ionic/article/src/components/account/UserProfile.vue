@@ -33,7 +33,7 @@
         <ion-label position="floating">Full Name</ion-label>
         <ion-input
           readonly
-          :value="profile.fullName"
+          :value="profile.FullName"
           placeholder="Full Name"
         ></ion-input>
       </ion-item>
@@ -41,7 +41,7 @@
         <ion-label position="floating">User Name</ion-label>
         <ion-input
           readonly
-          :value="profile.userName"
+          :value="profile.UserName"
           placeholder="User Name"
         ></ion-input>
       </ion-item>
@@ -49,7 +49,7 @@
         <ion-label position="floating">MobileNo</ion-label>
         <ion-input
           readonly
-          readonly:value="profile.mobileno"
+          readonly:value="profile.Mobileno"
           placeholder="Mobileno"
         ></ion-input>
       </ion-item>
@@ -57,7 +57,7 @@
         <ion-label position="floating">E-mail</ion-label>
         <ion-input
           readonly
-          :value="profile.email"
+          :value="profile.Email"
           placeholder="E-mail"
         ></ion-input>
       </ion-item>
@@ -128,13 +128,15 @@ export default defineComponent({
       this.profleServices
         .getProfile()
         .then((res) => {
-          if (res.status) {
+          console.log(res);
+
+          if (res.Status) {
             this.profile = {
-              ...res.result,
-              avatar: createFileAddress(res.result.image[0]),
+              ...res.Result,
+              avatar: createFileAddress(res.Result.Image[0]),
             };
           }
-          showToast(res.title);
+          showToast(res.Title);
         })
         .catch((e) => {
           showToast(e.message);

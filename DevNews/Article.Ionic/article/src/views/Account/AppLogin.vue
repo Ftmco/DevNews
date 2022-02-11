@@ -121,7 +121,7 @@ export default defineComponent({
             showToast(res.Title);
           })
           .catch((e) => {
-            showToast(messages.netWorkError(e.message).message);
+            showToast(messages.netWorkError(e.message).Message);
           });
       } else showToast(messages.invalidForm);
     },

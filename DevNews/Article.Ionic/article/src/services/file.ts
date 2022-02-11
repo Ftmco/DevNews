@@ -24,10 +24,10 @@ export const convertToBase64File = (file: any) => {
 
 export const createFileAddress = (file: fileModel): string => {
     file = { ...file }
-    return `${baseUrl}${file.directory}/${file.name}`
+    return `${baseUrl}${file.Directory}/${file.Name}`
 }
 
 export type fileModel = {
-    directory: string;
-    name: string;
+    Directory: string;
+    Name: string;
 }

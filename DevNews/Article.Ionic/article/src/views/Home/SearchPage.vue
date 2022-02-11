@@ -18,42 +18,42 @@
         </ion-item>
       </ion-toolbar>
 
-      <ion-list v-if="searchResult.channels.length > 0">
+      <ion-list v-if="searchResult.Channels.length > 0">
         <ion-list-header>Channels</ion-list-header>
         <ion-item
-          v-for="channel in searchResult.channels"
-          :key="channel.id"
+          v-for="channel in searchResult.Channels"
+          :key="channel.Id"
           @click="
             () => {
               $router.push({
                 name: 'channel',
                 query: {
-                  token: channel.token,
-                  name: channel.name,
+                  token: channel.Token,
+                  name: channel.Name,
                 },
               });
             }
           "
         >
           <ion-avatar slot="start">
-            <img :src="createFileAddress(channel.avatar[0])" />
+            <img :src="createFileAddress(channel.Avatar[0])" />
           </ion-avatar>
           <ion-label>
-            <h2>{{ channel.name }}</h2>
-            <p>{{ channel.name }}</p>
+            <h2>{{ channel.Name }}</h2>
+            <p>{{ channel.Name }}</p>
           </ion-label>
         </ion-item>
       </ion-list>
 
-      <ion-list v-if="searchResult.categories.length > 0">
+      <ion-list v-if="searchResult.Categories.length > 0">
         <ion-list-header>Categories</ion-list-header>
         <ion-item
-          v-for="category in searchResult.categories"
-          :key="category.id"
+          v-for="category in searchResult.Categories"
+          :key="category.Id"
         >
           <ion-label>
-            <h2>{{ category.name }}</h2>
-            <p>{{ category.title }}</p>
+            <h2>{{ category.Name }}</h2>
+            <p>{{ category.Title }}</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -98,8 +98,8 @@ export default defineComponent({
   data: () => ({
     searchValue: "",
     searchResult: {
-      categories: [],
-      channels: [],
+      Categories: [],
+      Channels: [],
     },
     searchServices: new SearchService(apiCall),
     createFileAddress,
@@ -110,15 +110,15 @@ export default defineComponent({
       const value = target.value;
       if (value.trim() != "") {
         this.searchServices.search(value).then((res: any) => {
-          if (res.status) {
-            this.searchResult = res.result;
+          if (res.Status) {
+            this.searchResult = res.Result;
           }
-          showToast(res.title);
+          showToast(res.Title);
         });
       } else
         this.searchResult = {
-          categories: [],
-          channels: [],
+          Categories: [],
+          Channels: [],
         };
     },
   },

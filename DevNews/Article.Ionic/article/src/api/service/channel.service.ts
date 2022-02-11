@@ -1,4 +1,6 @@
 import { messages } from "@/constants";
+import { decrypt, encrypt } from "@/services/api/enc";
+import { keyMaker } from "@/services/api/keyMaker";
 import { AxiosInstance } from "axios";
 import { Channel } from "../models/channel.model";
 import IChannelRule from "../rules/channel.rule";
@@ -87,8 +89,18 @@ export default class ChannelService implements IChannelRule {
 
     async createChannel(channel: Channel) {
         try {
-            const request = await this._axios.post("Channel/Create", channel)
-            return await request.data
+            const key = keyMaker("/api/Channel/CreateEnc")
+            const encData = encrypt({
+                text:JSON.stringify(channel),
+                key:key
+            })
+            const request = await this._axios.post("Channel/CreateEnc", {data:encData})
+            const encResponse = await request.data
+            const response = JSON.parse(decrypt({
+                text:encResponse.data,
+                key:key
+            }))
+            return response
         }
         catch (e: any) {
             return messages.netWorkError(e.message)
@@ -97,8 +109,16 @@ export default class ChannelService implements IChannelRule {
 
     async getChannels() {
         try {
-            const request = await this._axios.get("Channel/Get")
-            return await request.data
+            const key = keyMaker("/api/Channel/GetEnc")
+            const request = await this._axios.get("Channel/GetEnc")
+            const encResponse = await request.data
+            const response = JSON.parse(
+                decrypt({
+                    text: encResponse.data,
+                    key: key
+                })
+            )
+            return response
         } catch (e: any) {
             return messages.netWorkError(e.message)
         }
