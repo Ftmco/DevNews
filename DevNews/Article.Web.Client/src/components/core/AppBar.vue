@@ -1,6 +1,6 @@
 <template>
   <div v-if="!unShow">
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app  >
       <div class="d-flex align-center">
         <v-app-bar-nav-icon @click="drawer"></v-app-bar-nav-icon>
 
@@ -55,6 +55,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-</style>

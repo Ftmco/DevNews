@@ -10,18 +10,18 @@ export const bottomItems = [
         id: 1,
         title: 'Channels',
         icon: 'mdi-newspaper-variant-multiple',
-        to: '/channels'
+        to: '/tabs/channels'
     },
     {
         id: 2,
         title: 'Search',
         icon: 'mdi-magnify',
-        to: '/search'
+        to: '/tabs/search'
     }, {
         id: 3,
-        title: 'Profile',
-        icon: 'mdi-account',
-        to: '/account/profile'
+        title: 'Settings',
+        icon: 'mdi-cog',
+        to: '/tabs/settings'
     }
 ]
 
