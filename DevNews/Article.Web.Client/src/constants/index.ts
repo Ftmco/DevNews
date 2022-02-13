@@ -36,7 +36,7 @@ export const navigationItems = [
         id: 1,
         title: 'Channels',
         icon: 'mdi-newspaper-variant-multiple',
-        to: '/channels'
+        to: '/tabs/channels'
     },
     {
         id: 2,
@@ -48,19 +48,13 @@ export const navigationItems = [
         id: 3,
         title: 'Search',
         icon: 'mdi-magnify',
-        to: '/search'
+        to: '/tabs/search'
     },
     {
         id: 4,
-        title: 'Profile',
-        icon: 'mdi-account',
-        to: '/account/profile'
-    },
-    {
-        id: 5,
         title: 'Settings',
         icon: 'mdi-wrench',
-        to: '/setting'
+        to: '/tabs/settings'
     }
 ]
 

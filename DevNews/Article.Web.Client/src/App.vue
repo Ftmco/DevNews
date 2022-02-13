@@ -1,6 +1,6 @@
 <template>
   <v-app>
-      <router-view />
+    <router-view />
   </v-app>
 </template>
 
@@ -12,5 +12,9 @@ import TheBottomNavigation from "./components/core/TheBottomNavigation.vue";
 export default Vue.extend({
   components: { TheBottomNavigation, AppBar },
   name: "App",
+  mounted() {
+    const theme = localStorage.getItem("theme");
+    this.$vuetify.theme.dark = theme == "Dark";
+  },
 });
 </script>

@@ -3,7 +3,7 @@
     <v-list nav dense>
       <v-list-item-group
         v-model="group"
-        active-class="deep-purple--text text--accent-4"
+        active-class="text--accent-4"
       >
         <v-list-item :to="{ name: 'Profile' }" v-if="user.isAuthenticated">
           <v-col align="center">
@@ -93,6 +93,7 @@ export default Vue.extend({
     changeTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       this.theme = this.$vuetify.theme.dark ? "Dark" : "Light";
+      localStorage.setItem("theme", this.theme);
     },
     logOut() {
       this.accountServices.LogOut().then(() => {

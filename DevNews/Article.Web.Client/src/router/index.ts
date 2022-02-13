@@ -13,26 +13,67 @@ const routes: RouteConfig[] = [
     {
         path: '/',
         redirect: '/tabs/home'
-    }, {
+    },
+    {
+        path: '/account/',
+        redirect: '/account/login'
+    },
+    {
         path: '/tabs/',
         component: () => import("@/pages/home/TabsPage.vue"),
         children: [
             {
                 path: 'home',
-                component: () => import("@/pages/home/HomePage.vue")
+                component: () => import("@/pages/home/HomePage.vue"),
+                meta: (route: Route) => ({
+                    title: 'Home',
+                    route
+                })
             },
             {
-                path:'channels',
-                component:()=>import("@/pages/home/ChannelsPage.vue")
+                path: 'channels',
+                component: () => import("@/pages/home/ChannelsPage.vue"),
+                meta: (route: Route) => ({
+                    title: 'Channels',
+                    middleware: auth,
+                    route
+                })
             },
             {
                 path: 'search',
-                component: () => import("@/pages/home/SearchPage.vue")
+                component: () => import("@/pages/home/SearchPage.vue"),
+                meta: (route: Route) => ({
+                    title: 'Search',
+                    middleware: auth,
+                    route
+                })
+
             },
             {
-                path:'settings',
-                component:()=>import("@/pages/home/SettingsPage.vue")
+                path: 'settings',
+                name: 'Settings',
+                component: () => import("@/pages/home/SettingsPage.vue"),
+                meta: (route: Route) => ({
+                    title: 'Settings',
+                    middleware: auth,
+                    route
+                })
             },
+        ]
+    }, {
+        path: '/account/',
+        component: () => import("@/pages/account/AccountPage.vue"),
+        children: [
+            {
+                path: 'login',
+                name: 'Login',
+                component: () => import("@/pages/account/LoginPage.vue"),
+                meta: (route: Route) => ({
+                    title: 'Login',
+                    middleware: guest,
+                    route
+                })
+            }
         ]
     }
 ];
@@ -42,27 +83,27 @@ const router = new VueRouter({
     mode: 'history',
 })
 
-// router.beforeEach((to: any, from: Route, next: NavigationGuardNext<Vue>) => {
+router.beforeEach((to: any, from: Route, next: NavigationGuardNext<Vue>) => {
 
-//     let meta = to.meta(to)
-//     changeTitle(meta.title)
-//     if (!meta.middleware) {
-//         return next()
-//     }
+    let meta = to.meta(to)
+    changeTitle(meta.title)
+    if (!meta.middleware) {
+        return next()
+    }
 
-//     const middleware = meta.middleware
-//     const context = {
-//         to,
-//         from,
-//         next,
-//         store
-//     }
+    const middleware = meta.middleware
+    const context = {
+        to,
+        from,
+        next,
+        store
+    }
 
-//     return middleware({
-//         ...context,
-//         next: pipeline(context, middleware, 1)
-//     })
+    return middleware({
+        ...context,
+        next: pipeline(context, middleware, 1)
+    })
 
-// })
+})
 
 export default router;
