@@ -1,11 +1,8 @@
 <template>
   <v-navigation-drawer v-model="drawer" fixed temporary>
     <v-list nav dense>
-      <v-list-item-group
-        v-model="group"
-        active-class="text--accent-4"
-      >
-        <v-list-item :to="{ name: 'Profile' }" v-if="user.isAuthenticated">
+      <v-list-item-group v-model="group" active-class="text--accent-4">
+        <v-list-item :to="{ name: 'Settings' }" v-if="user.isAuthenticated">
           <v-col align="center">
             <v-list-item-avatar size="100" color="grey">
               <v-img
@@ -13,6 +10,14 @@
                 :lazy-src="createFileAddress(user.profile.image[0])"
               />
             </v-list-item-avatar>
+            <v-list-item-link>
+              <v-list-item-content>
+                <v-list-item-title class="text-h6">
+                  {{user.profile.fullName}}
+                </v-list-item-title>
+                <v-list-item-subtitle>{{user.profile.email || user.profile.mobileNo}}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item-link>
           </v-col>
         </v-list-item>
 

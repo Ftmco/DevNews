@@ -1,20 +1,20 @@
 <template>
-  <v-list three-line expand nav>
+  <v-list>
     <v-list-item
+      v-for="item in channels"
       :to="{
         name: 'Channel',
-        query: { token: channel.token, name: channel.name },
+        query: { token: item.token, name: item.name },
       }"
-      v-for="channel in channels"
-      :key="channel.token"
+      :key="item.token"
     >
-      <v-list-item-avatar>
-        <v-img :src="createFileAddress(channel.avatar[0])"></v-img>
+      <v-list-item-avatar size="55">
+        <v-img :src="createFileAddress(item.avatar[0])"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content>
-        <v-list-item-title v-html="channel.name"></v-list-item-title>
-        <v-list-item-subtitle v-html="channel.name"></v-list-item-subtitle>
+        <v-list-item-title v-html="item.name"></v-list-item-title>
+        <v-list-item-subtitle v-html="item.name"></v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -28,5 +28,8 @@ export default Vue.extend({
   methods: {
     createFileAddress,
   },
+  data: () => ({
+    benched: 0,
+  }),
 });
 </script>

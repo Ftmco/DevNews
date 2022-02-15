@@ -5,7 +5,7 @@ export const bottomItems = [
         id: 0,
         title: 'Home',
         icon: 'mdi-home',
-        to: '/'
+        to: '/tabs/home'
     }, {
         id: 1,
         title: 'Channels',
@@ -30,7 +30,7 @@ export const navigationItems = [
         id: 0,
         title: 'Home',
         icon: 'mdi-home',
-        to: '/'
+        to: '/tabs/home'
     },
     {
         id: 1,

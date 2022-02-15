@@ -75,6 +75,20 @@ const routes: RouteConfig[] = [
                 })
             }
         ]
+    }, {
+        path: '/channel/',
+        name: 'Channel',
+        component: () => import("@/pages/channel/Channel.vue"),
+        meta: (route: Route) => ({
+            title: `${route.query.name}`,
+            middleware: auth
+        }),
+        children: [
+            {
+                path: 'info',
+                name: 'ChannelInfo'
+            }
+        ]
     }
 ];
 

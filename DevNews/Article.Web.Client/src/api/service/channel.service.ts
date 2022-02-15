@@ -67,9 +67,7 @@ export default class ChannelService implements IChannelRule {
 
     async followChannel(token: string) {
         try {
-            let request = await this._axios.post("Channel/Follow", {
-                token: token
-            })
+            let request = await this._axios.get(`Channel/Subscribe?token=${token}`)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)

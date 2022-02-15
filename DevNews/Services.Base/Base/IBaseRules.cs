@@ -18,9 +18,9 @@ public interface IBaseRules<Tentity> where Tentity : class
 
     Task<IEnumerable<Tentity>> GetAsync<TKey>(Expression<Func<Tentity, bool>> where, Range page, Expression<Func<Tentity, TKey>> orderBy, OrderType orderType);
 
-    Task<Tentity> GetAsync(object id);
+    Task<Tentity?> GetAsync(object id);
 
-    Task<Tentity> FirstOrDefaultAsync(Expression<Func<Tentity, bool>> where);
+    Task<Tentity?> FirstOrDefaultAsync(Expression<Func<Tentity, bool>> where);
 
     Task<bool> InsertAsync(Tentity entity);
 

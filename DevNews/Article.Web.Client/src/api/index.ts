@@ -5,11 +5,11 @@ import Account from '@/services/account'
 const _headers: AxiosRequestHeaders = {
     "Content-Type": "application/json",
     "Token": Account.authenticationToken(),
+    "Connection": "keep-alive"
 }
 
 const _confing: AxiosRequestConfig = {
     baseURL: "http://192.168.43.198:2050/api/",
-    timeout: 60 * 1000,
     headers: _headers
 
 }

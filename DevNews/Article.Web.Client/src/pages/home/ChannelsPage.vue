@@ -1,6 +1,7 @@
 <template>
   <v-card elevation="4" height="100%">
     <channels-list :channels="channels" />
+    <br /><br /><br />
   </v-card>
 </template>
 

@@ -1,6 +1,8 @@
 ﻿using Entity.Article;
 using Entity.Channel;
+using Entity.Class;
 using Entity.Comment;
+using Entity.Course;
 using Entity.Explore;
 using Entity.Page;
 using Entity.User;
@@ -57,4 +59,8 @@ public class ArticleContext : DbContext
     public virtual DbSet<Explore> Explore { get; set; }
 
     public virtual DbSet<Page> Page { get; set; }
+
+    public virtual DbSet<Cource> Course { get; set; }
+
+    public virtual DbSet<Class> Class { get; set; }
 }
