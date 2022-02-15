@@ -2,7 +2,7 @@
   <v-card elevation="5">
     <v-col cols="12">
       <v-card-title>Profile</v-card-title>
-      <v-list-item>
+      <v-list-item v-if="prfile != null">
         <v-col align="left">
           <v-list-item-avatar size="100" color="grey">
             <v-img
