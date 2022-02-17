@@ -1,11 +1,12 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app @click="channelInfo">
     <div class="d-flex align-center">
       <v-btn icon @click="back">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-list-item-avatar size="45" color="grey">
         <v-img
+          v-if="avatar != null"
           :src="createFileAddress(avatar[0])"
           :lazy-src="createFileAddress(avatar[0])"
         />
@@ -26,6 +27,9 @@ export default Vue.extend({
     createFileAddress,
     back() {
       this.$router.back();
+    },
+    channelInfo() {
+      this.$router.push({ name: "ChannelInfo", query: this.$route.query });
     },
   },
 });

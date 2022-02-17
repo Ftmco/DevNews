@@ -4,6 +4,7 @@ import { Login, SignUp, Activation } from "../models/account.model";
 import IAccountRule from "../rules/account.rule";
 import { changeConfigHeader } from "..";
 import { message } from "ant-design-vue";
+import { clearCache, removeCache } from "@/cache/CacheService";
 
 export default class AccountServiec implements IAccountRule {
 
@@ -60,7 +61,7 @@ export default class AccountServiec implements IAccountRule {
             return messages.netWorkError(e.message);
         }
         finally {
-            localStorage.removeItem('Token')
+            clearCache()
         }
     }
 }

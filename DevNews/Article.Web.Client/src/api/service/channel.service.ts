@@ -1,3 +1,4 @@
+import { cacheData, getCache } from "@/cache/CacheService";
 import { messages } from "@/constants";
 import { AxiosInstance } from "axios";
 import { Channel } from "../models/channel.model";
@@ -22,8 +23,12 @@ export default class ChannelService implements IChannelRule {
 
     async getMyChannels() {
         try {
-            let request = await this._axios.get("Channel/AdminChannels")
-            return await request.data
+            let cachedData = getCache("MyChannels")
+            if (cachedData == null) {
+                const request = await this._axios.get("Channel/AdminChannels")
+                cachedData = cacheData("MyChannels", await request.data)
+            }
+            return cachedData
         } catch (e: any) {
             return messages.netWorkError(e.message)
         }
@@ -95,8 +100,12 @@ export default class ChannelService implements IChannelRule {
 
     async getChannels() {
         try {
-            let request = await this._axios.get("Channel/Get")
-            return await request.data
+            let cachedData = getCache("Channels")
+            if (cachedData == null) {
+                const request = await this._axios.get("Channel/Get")
+                cachedData = cacheData("Channels", await request.data)
+            }
+            return cachedData
         } catch (e: any) {
             return messages.netWorkError(e.message)
         }

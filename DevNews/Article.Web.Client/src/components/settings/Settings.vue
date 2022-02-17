@@ -36,12 +36,17 @@ export default Vue.extend({
   }),
   created() {
     this.theme = localStorage.getItem("theme") ?? "";
+    this.lang = localStorage.getItem("lang") ?? "En-UK";
   },
   methods: {
     changeTheme(e: any) {
       this.theme = e;
       localStorage.setItem("theme", e);
       this.$vuetify.theme.dark = this.theme == "Dark";
+    },
+    changeLang(e: any) {
+      this.lang = e;
+      localStorage.setItem("lang", this.lang);
     },
   },
 });

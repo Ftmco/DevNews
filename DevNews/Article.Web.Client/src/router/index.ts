@@ -61,20 +61,32 @@ const routes: RouteConfig[] = [
             },
         ]
     }, {
-        path: '/account/',
-        component: () => import("@/pages/account/AccountPage.vue"),
-        children: [
-            {
-                path: 'login',
-                name: 'Login',
-                component: () => import("@/pages/account/LoginPage.vue"),
-                meta: (route: Route) => ({
-                    title: 'Login',
-                    middleware: guest,
-                    route
-                })
-            }
-        ]
+        path: '/account/login',
+        name: 'Login',
+        component: () => import("@/pages/account/LoginPage.vue"),
+        meta: (route: Route) => ({
+            title: 'Login',
+            middleware: guest,
+            route
+        })
+    }, {
+        path: '/account/register',
+        name: 'SignUp',
+        component: () => import("@/pages/account/SignUp.vue"),
+        meta: (route: Route) => ({
+            title: 'SignUp',
+            middleware: guest,
+            route
+        })
+    }, {
+        path: '/account/activation',
+        name: 'ActiveAccount',
+        component: () => import("@/pages/account/AccountActivation.vue"),
+        meta: (route: Route) => ({
+            title: 'Account Activation',
+            middleware: guest,
+            route
+        })
     }, {
         path: '/channel/',
         name: 'Channel',
@@ -83,12 +95,13 @@ const routes: RouteConfig[] = [
             title: `${route.query.name}`,
             middleware: auth
         }),
-        children: [
-            {
-                path: 'info',
-                name: 'ChannelInfo'
-            }
-        ]
+    },{
+        path: '/channel/info',
+        name: 'ChannelInfo',
+        component: () => import("@/pages/channel/ChannelInfo.vue"),
+        meta: (route: Route) => ({
+            title: `${route.query.name}-Info`
+        })
     }
 ];
 

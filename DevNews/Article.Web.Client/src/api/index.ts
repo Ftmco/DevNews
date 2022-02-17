@@ -9,7 +9,7 @@ const _headers: AxiosRequestHeaders = {
 }
 
 const _confing: AxiosRequestConfig = {
-    baseURL: "https://localhost:7131/api/",
+    baseURL: "http://192.168.43.198:2050/api/",
     headers: _headers
 
 }

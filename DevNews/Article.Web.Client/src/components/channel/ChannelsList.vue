@@ -1,15 +1,18 @@
 <template>
   <v-list>
     <v-list-item
-      v-for="item in channels"
+      v-for="(item, i) in channels"
       :to="{
         name: 'Channel',
         query: { token: item.token, name: item.name },
       }"
-      :key="item.token"
+      :key="i"
     >
       <v-list-item-avatar size="55">
-        <v-img :src="createFileAddress(item.avatar[0])"></v-img>
+        <v-img
+          v-if="item.avatar != null"
+          :src="createFileAddress(item.avatar[0])"
+        ></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content>
