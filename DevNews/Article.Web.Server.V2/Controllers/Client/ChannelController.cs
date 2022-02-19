@@ -142,7 +142,7 @@ public class ChannelController : ControllerBase
         GetPostResponse? posts = await _channel.GetChannelPostsAsync(token, index);
         return posts.Staus switch
         {
-            PostStaus.Success => Ok(Success("", "Channel Posts", posts.Posts)),
+            PostStaus.Success => Ok(Success("", "Channel Posts", new { posts.Posts, posts.TotalCount })),
             PostStaus.UserNotFound => Ok(Faild(403, "User Not Found Plase Login To Your Account", "")),
             PostStaus.Exception => Ok(ApiException("Exception,Please Try Again", "")),
             PostStaus.ChannelNotFound => Ok(Faild(404, "Channel Not Found", "")),
@@ -156,7 +156,7 @@ public class ChannelController : ControllerBase
         GetPostResponse? posts = await _channel.GetChannelPostsAsync(token, index);
         return posts.Staus switch
         {
-            PostStaus.Success => Ok(await Success("", "Channel Posts", posts.Posts).SendResponseAsync(HttpContext)),
+            PostStaus.Success => Ok(await Success("", "Channel Posts", new { posts.Posts, posts.TotalCount }).SendResponseAsync(HttpContext)),
             PostStaus.UserNotFound => Ok(await Faild(403, "User Not Found Plase Login To Your Account", "").SendResponseAsync(HttpContext)),
             PostStaus.Exception => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
             PostStaus.ChannelNotFound => Ok(await Faild(404, "Channel Not Found", "").SendResponseAsync(HttpContext)),

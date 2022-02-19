@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12">
     <channel-bar :title="name" :avatar="channel.avatar" />
-
+    <channel-posts />
     <v-footer app>
       <v-col cols="12" v-if="isIn">
         <v-col v-if="file.base64 != ''" cols="12">
@@ -100,11 +100,12 @@ import { apiCall } from "@/api";
 import { FileModel } from "@/api/models/article.model";
 import ChannelService from "@/api/service/channel.service";
 import ChannelBar from "@/components/channel/ChannelBar.vue";
+import ChannelPosts from "@/components/channel/ChannelPosts.vue";
 import { convertToBase64File } from "@/services/file";
 import { loading, showMessage } from "@/services/message";
 import Vue from "vue";
 export default Vue.extend({
-  components: { ChannelBar },
+  components: { ChannelBar, ChannelPosts },
   data: () => ({
     sheet: false,
     overlay: false,
@@ -207,6 +208,7 @@ export default Vue.extend({
         .then((res) => {
           if (res.status) {
             this.clearMessage();
+            (this.$root.$refs as any).addPost([res.result]);
           }
           showMessage(this, res.title);
         })

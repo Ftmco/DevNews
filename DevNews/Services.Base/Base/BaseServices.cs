@@ -1,5 +1,6 @@
 ﻿using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
+using Service.Static;
 using System.Linq.Expressions;
 
 namespace Services.Base;
@@ -32,6 +33,12 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
 
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> where)
         => await Task.FromResult(await _dbSet.AnyAsync(where));
+
+    public async Task<int> CountAsync()
+        => await Task.FromResult(await _dbSet.CountAsync());
+
+    public async Task<int> CountAsync(Expression<Func<TEntity, bool>> count)
+        => await Task.FromResult(await _dbSet.CountAsync(count));
 
     #endregion
 
@@ -112,12 +119,12 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
     public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where, Range page)
         => await Task.FromResult(await _dbSet.Where(where).Skip(page.Start.Value).Take(page.End.Value).ToListAsync());
 
-    public async Task<IEnumerable<TEntity>> GetAsync<TKey>(Expression<Func<TEntity, bool>> where, Range page, Expression<Func<TEntity, TKey>> orderBy, OrderType orderType)
-        => await Task.Run(async () => orderType switch
+    public async Task<IEnumerable<TEntity>> GetAsync<TKey>(Expression<Func<TEntity, bool>> where, int page, int count, Expression<Func<TEntity, TKey>> orderBy, OrderType orderType)
+        => await Task.Run(() => orderType switch
         {
-            OrderType.ASE => await _dbSet.Where(where).OrderBy(orderBy).Take(page).ToListAsync(),
-            OrderType.DES => await _dbSet.Where(where).OrderByDescending(orderBy).Take(page).ToListAsync(),
-            _ => await _dbSet.Where(where).OrderBy(orderBy).Take(page).ToListAsync(),
+            OrderType.ASE => _dbSet.Where(where).OrderBy(orderBy).ToList().Skip(page * count).Take(count).ToList(),
+            OrderType.DES => _dbSet.Where(where).OrderByDescending(orderBy).ToList().Skip(page * count).Take(count).ToList(),
+            _ => _dbSet.Where(where).OrderBy(orderBy).ToList().Skip(page * count).Take(count).ToList(),
         });
 
     public async Task<bool> InsertAsync(TEntity entity)
@@ -147,6 +154,13 @@ public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where
              return false;
          }
      });
+
+    public async Task<IEnumerable<T>> RunSpListAsync<T>(string spName)
+        => await Task.Run(async () =>
+        {
+            Query.ConnectionString = _context.Database.GetConnectionString();
+            return await Query.RunQueryAsync<T>(spName);
+        });
 
     public async Task<bool> SaveAsync()
         => await Task.Run(async () =>

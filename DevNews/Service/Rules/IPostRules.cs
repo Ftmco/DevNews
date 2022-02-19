@@ -4,7 +4,7 @@ namespace Service.Rules;
 
 public interface IPostRules : IDisposable
 {
-    Task<IEnumerable<Post>> GetChannelPostsAsync(Guid channelId, int index);
+    Task<GetPosts> GetChannelPostsAsync(Guid channelId, int index);
 
     Task<PostViewModel> CreatePostViewModelAsync(Post post);
 

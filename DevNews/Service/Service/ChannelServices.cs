@@ -138,11 +138,11 @@ public class ChannelServices : IChannelRules
             Channel channel = await GetChannelByTokenAsync(token);
             if (channel != null)
             {
-                IEnumerable<Post> posts = await _post.GetChannelPostsAsync(channel.Id, index);
-                IEnumerable<PostViewModel> postsViewModel = await _post.CreatePostViewModelAsync(posts);
-                return new GetPostResponse(PostStaus.Success, postsViewModel);
+                GetPosts getPosts = await _post.GetChannelPostsAsync(channel.Id, index);
+                IEnumerable<PostViewModel> postsViewModel = await _post.CreatePostViewModelAsync(getPosts.Posts);
+                return new GetPostResponse(PostStaus.Success, postsViewModel, getPosts.TotalCount);
             }
-            return new GetPostResponse(PostStaus.ChannelNotFound, null);
+            return new GetPostResponse(PostStaus.ChannelNotFound, null, 0);
         });
 
     public async Task<ChannelPreviewViewModel> GetChannelPreviewViewModelAsync(Channel channel)

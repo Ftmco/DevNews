@@ -68,11 +68,10 @@ public class PostServices : IPostRules
         GC.SuppressFinalize(this);
     }
 
-    public async Task<IEnumerable<Post>> GetChannelPostsAsync(Guid channelId, int index)
+    public async Task<GetPosts> GetChannelPostsAsync(Guid channelId, int index)
         => await Task.Run(async () =>
         {
-            int count = index * 15;
-            IEnumerable<Post> posts = await _postCrud.GetAsync(cp => cp.OwnerId == channelId);
-            return posts;
+            IEnumerable<Post> posts = await _postCrud.RunSpListAsync<Post>($"GetChannelPosts {index},{10},'{channelId}'");
+            return new GetPosts(await _postCrud.CountAsync(), posts);
         });
 }

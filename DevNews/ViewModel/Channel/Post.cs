@@ -1,8 +1,12 @@
-﻿namespace ViewModel.Channel;
+﻿using Entity.Article;
+
+namespace ViewModel.Channel;
 
 public record PostViewModel(string Message, string CreateDate, Guid OwnerId, short OwnerType, IEnumerable<Entity.Article.File> Files);
 
-public record GetPostResponse(PostStaus Staus, IEnumerable<PostViewModel> Posts);
+public record GetPostResponse(PostStaus Staus, IEnumerable<PostViewModel> Posts,int TotalCount);
+
+public record GetPosts(int TotalCount,IEnumerable<Post> Posts);
 
 public record SendPostViewModel(string Message, string Token, File.UploadFileViewModel? File);
 

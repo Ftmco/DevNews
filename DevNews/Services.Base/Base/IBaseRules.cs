@@ -16,7 +16,11 @@ public interface IBaseRules<Tentity> where Tentity : class
 
     Task<IEnumerable<Tentity>> GetAsync(Expression<Func<Tentity, bool>> where, Range page);
 
-    Task<IEnumerable<Tentity>> GetAsync<TKey>(Expression<Func<Tentity, bool>> where, Range page, Expression<Func<Tentity, TKey>> orderBy, OrderType orderType);
+    Task<IEnumerable<Tentity>> GetAsync<TKey>(Expression<Func<Tentity, bool>> where, int page, int count, Expression<Func<Tentity, TKey>> orderBy, OrderType orderType);
+
+    Task<int> CountAsync();
+
+    Task<int> CountAsync(Expression<Func<Tentity,bool>> count);
 
     Task<Tentity?> GetAsync(object id);
 
@@ -39,6 +43,8 @@ public interface IBaseRules<Tentity> where Tentity : class
     Task<bool> DeleteAsync(Expression<Func<Tentity, bool>> where);
 
     Task<bool> AnyAsync(Expression<Func<Tentity, bool>> where);
+
+    Task<IEnumerable<T>> RunSpListAsync<T>(string spName);
 
     Task<bool> SaveAsync();
 
