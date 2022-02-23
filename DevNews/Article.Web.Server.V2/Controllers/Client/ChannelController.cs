@@ -191,4 +191,10 @@ public class ChannelController : ControllerBase
             _ => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
         };
     }
+
+    [HttpGet("GetChannelMeida")]
+    public async Task<IActionResult> GetChannelMedia(string token)
+    {
+        return Ok();
+    }
 }
