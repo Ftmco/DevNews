@@ -9,8 +9,8 @@
             <v-col cols="12" md="8">
               <v-img
                 v-if="file.type.indexOf('image') > -1"
-                width="50"
-                height="50"
+                width="100%"
+                height="200"
                 :src="file.base64"
               />
               <video
