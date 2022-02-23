@@ -1,6 +1,6 @@
 namespace Entity.Article;
 
-public class File
+public record TFile
 {
     [Key]
     public Guid Id
