@@ -18,6 +18,8 @@
         outlined
         v-model="lang"
         :items="langs"
+        item-text="name"
+        item-value="id"
       >
       </v-select>
     </v-col>
@@ -26,17 +28,20 @@
 
 
 <script lang="ts">
+import { apiCall } from "@/api";
+import ApplicationService from "@/api/service/application.service";
 import Vue from "vue";
 export default Vue.extend({
   data: () => ({
     themes: ["Dark", "Light"],
     theme: "Light",
-    langs: ["En-UK", "Fa-IR"],
-    lang: "En-UK",
+    langs: [{}],
+    lang: "",
+    applicationService: new ApplicationService(apiCall),
   }),
   created() {
-    this.theme = localStorage.getItem("theme") ?? "";
-    this.lang = localStorage.getItem("lang") ?? "En-UK";
+    this.getLangs();
+    this.setSettings();
   },
   methods: {
     changeTheme(e: any) {
@@ -46,7 +51,22 @@ export default Vue.extend({
     },
     changeLang(e: any) {
       this.lang = e;
-      localStorage.setItem("lang", this.lang);
+      const selectedLang = this.langs.find((l: any) => l.id == e) as any;
+      localStorage.setItem("lang", JSON.stringify(selectedLang));
+    },
+    setSettings() {
+      this.theme = localStorage.getItem("theme") ?? "";
+      const currentLang = JSON.parse(
+        localStorage.getItem("lang")?.toString() ?? ""
+      );
+      this.lang = currentLang.id;
+    },
+    getLangs() {
+      this.applicationService.getLanguages().then((res) => {
+        if (res.status) {
+          this.langs = res.result;
+        }
+      });
     },
   },
 });
