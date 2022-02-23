@@ -65,7 +65,7 @@ export default Vue.extend({
         });
     },
     newPost(post: any) {
-      this.posts = this.createList(this.posts, post);
+      this.posts = this.posts.concat(post);
       window.scrollTo({ top: document.body.clientHeight });
     },
     createList(current: never[], newlist: []) {
