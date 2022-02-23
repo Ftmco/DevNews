@@ -86,12 +86,17 @@
           <v-list-item-avatar @click="sendFile('/*')" size="70" color="warning">
             <v-icon>mdi-file</v-icon>
           </v-list-item-avatar>
-          <v-list-item-avatar size="70" color="grey">
+          <v-list-item-avatar @click="createArticle" size="70" color="grey">
             <v-icon>mdi-newspaper</v-icon>
           </v-list-item-avatar>
         </v-col>
       </v-sheet>
     </v-bottom-sheet>
+    <app-dialog :title="dialogTitle" :titleColor="dialogColor">
+      <template v-slot:body>
+        <upsert-articel />
+      </template>
+    </app-dialog>
   </v-col>
 </template>
 
@@ -99,14 +104,18 @@
 import { apiCall } from "@/api";
 import { FileModel } from "@/api/models/article.model";
 import ChannelService from "@/api/service/channel.service";
+import UpsertArticel from "@/components/article/UpsertArticel.vue";
 import ChannelBar from "@/components/channel/ChannelBar.vue";
 import ChannelPosts from "@/components/channel/ChannelPosts.vue";
+import AppDialog from "@/components/core/AppDialog.vue";
 import { convertToBase64File } from "@/services/file";
-import { loading, showMessage } from "@/services/message";
+import { loading, openDialog, showMessage } from "@/services/message";
 import Vue from "vue";
 export default Vue.extend({
-  components: { ChannelBar, ChannelPosts },
+  components: { ChannelBar, ChannelPosts, AppDialog, UpsertArticel },
   data: () => ({
+    dialogTitle: "",
+    dialogColor: "primary",
     sheet: false,
     overlay: false,
     token: "",
@@ -215,6 +224,10 @@ export default Vue.extend({
         .catch((e) => {
           showMessage(this, e.message);
         });
+    },
+    createArticle() {
+      this.dialogTitle = "Create New Article"
+      openDialog(this);
     },
   },
 });
