@@ -1,7 +1,6 @@
 ﻿using Entity.Article;
 using Service.Rules;
 using Tools.AppSetting;
-using Tools.Crypto;
 using Tools.FileTools;
 using ViewModel.File;
 
@@ -11,9 +10,9 @@ public class PostServices : IPostRules
 {
     private readonly IBaseRules<Post> _postCrud;
 
-    private readonly IBaseRules<Entity.Article.File> _fileCrud;
+    private readonly IBaseRules<Entity.Article.TFile> _fileCrud;
 
-    public PostServices(IBaseRules<Post> postCrud, IBaseRules<Entity.Article.File> fileCrud)
+    public PostServices(IBaseRules<Post> postCrud, IBaseRules<Entity.Article.TFile> fileCrud)
     {
         _postCrud = postCrud;
         _fileCrud = fileCrud;
@@ -35,7 +34,7 @@ public class PostServices : IPostRules
                 {
                     var directory = await "Directories".GetDataAsync("Post");
                     var save = await new SaveFileViewModel(sendPost.File.Base64, directory).SaveFileAsync();
-                    Entity.Article.File postFile = new()
+                    Entity.Article.TFile postFile = new()
                     {
                         CreateDate = DateTime.Now,
                         Directory = directory,
@@ -69,11 +68,10 @@ public class PostServices : IPostRules
         GC.SuppressFinalize(this);
     }
 
-    public async Task<IEnumerable<Post>> GetChannelPostsAsync(Guid channelId, int index)
+    public async Task<GetPosts> GetChannelPostsAsync(Guid channelId, int index)
         => await Task.Run(async () =>
         {
-            int count = index * 15;
-            IEnumerable<Post> posts = await _postCrud.GetAsync(cp => cp.OwnerId == channelId);
-            return posts;
+            IEnumerable<Post> posts = await _postCrud.RunSpListAsync<Post>($"GetChannelPosts {index},{10},'{channelId}'");
+            return new GetPosts(await _postCrud.CountAsync(), posts);
         });
 }

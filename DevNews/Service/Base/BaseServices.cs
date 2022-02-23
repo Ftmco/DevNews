@@ -1,6 +1,5 @@
 ﻿using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Services.Base;

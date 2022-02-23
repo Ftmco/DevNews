@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModel.Account;
+﻿namespace ViewModel.Account;
 
 public record LoginViewModel(string UserName, string Password, string Platform, string UserClient);
 

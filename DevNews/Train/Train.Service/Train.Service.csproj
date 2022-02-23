@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Base\**" />
+    <EmbeddedResource Remove="Base\**" />
+    <None Remove="Base\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services.Base\Services.Base.csproj" />
     <ProjectReference Include="..\Trainer.Data\Trainer.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Rules\" />
   </ItemGroup>
 
 </Project>

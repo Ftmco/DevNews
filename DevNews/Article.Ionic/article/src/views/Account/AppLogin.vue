@@ -112,17 +112,16 @@ export default defineComponent({
   methods: {
     async login() {
       if (this.user.userName.trim() != "" && this.user.password.trim() != "") {
-        openLoading();
         this.accountServices
           .Login(this.user)
           .then((res) => {
-            if (res.status) {
+            if (res.Status) {
               window.location.reload();
             }
-            showToast(res.title);
+            showToast(res.Title);
           })
           .catch((e) => {
-            showToast(messages.netWorkError(e.message).message);
+            showToast(messages.netWorkError(e.message).Message);
           });
       } else showToast(messages.invalidForm);
     },

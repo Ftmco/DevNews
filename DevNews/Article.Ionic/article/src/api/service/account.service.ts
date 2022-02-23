@@ -3,6 +3,10 @@ import { messages } from "@/constants";
 import { Login, SignUp, Activation } from "../models/account.model";
 import IAccountRule from "../rules/account.rule";
 import { changeConfigHeader } from "..";
+import { keyMaker } from "@/services/api/keyMaker";
+import { decrypt, encrypt } from "@/services/api/enc";
+import { getOs } from "@/services/browser";
+import { ApiModel } from "../models/api.response";
 
 export default class AccountServiec implements IAccountRule {
 
@@ -33,19 +37,30 @@ export default class AccountServiec implements IAccountRule {
 
     async Login(login: Login) {
         try {
-            const request = await this._axios.post("Account/Login", {
-                ...login,
-                platform: navigator.platform.toString(),
-                userClient: navigator.userAgent
+            const key = keyMaker("/api/Account/LoginEnc")
+            const data = encrypt({
+                text: JSON.stringify({
+                    ...login,
+                    platform: getOs(),
+                    userClient: navigator.userAgent
+                }),
+                key: key
             })
-            const response = await request.data
-            if (response.status) {
-                localStorage.setItem(response.result.key, response.result.value)
-                changeConfigHeader(response.result.key, response.result.value)
+            const request = await this._axios.post("Account/LoginEnc", { data: data })
+            const dataResponse = await request.data
+            const response = JSON.parse(decrypt({
+                text: dataResponse.data,
+                key: key
+            }))
+            if (response.Status) {
+                localStorage.setItem(response.Result.Key, response.Result.Value)
+                changeConfigHeader(response.Result.Key, response.Result.Value)
             }
             return response
         }
         catch (e: any) {
+            console.log(e);
+
             return messages.netWorkError(e.message);
         }
     }

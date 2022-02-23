@@ -12,7 +12,7 @@ export default class ArticleService implements IArticleRule {
 
     async createArticle(article: UpsertArticle) {
         try {
-            let request = await this._axios.post("Article/Create", article)
+            const request = await this._axios.post("Article/UpsertArticle", article)
             return await request.data
         } catch (e: any) {
             return messages.netWorkError(e.message)

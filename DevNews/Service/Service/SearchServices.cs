@@ -1,5 +1,6 @@
 ﻿using Entity.Article;
 using Entity.Channel;
+using Microsoft.AspNetCore.Http;
 using Service.Rules;
 using ViewModel.Search;
 
@@ -29,6 +30,11 @@ public class SearchServices : ISearchRules
     public void Dispose()
     {
         GC.SuppressFinalize(this);
+    }
+
+    public Task<object> ExploreAsync(IHeaderDictionary headers)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<SearchResponse> SearchAsync(string q)

@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!unShow">
-    <v-app-bar app color="primary" dark>
+  <div>
+    <v-app-bar app>
       <div class="d-flex align-center">
         <v-app-bar-nav-icon @click="drawer"></v-app-bar-nav-icon>
 
@@ -25,7 +25,6 @@ export default Vue.extend({
   data: () => ({
     title: "Home",
     hasBack: false,
-    unShow: false,
   }),
   components: {
     TheNavigation,
@@ -45,8 +44,6 @@ export default Vue.extend({
     setData() {
       let meta = (this.$route as any).meta(this.$route);
       this.title = meta.title;
-      this.hasBack = meta.hasBack;
-      this.unShow = meta.unShow;
     },
 
     back() {
@@ -55,6 +52,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-</style>

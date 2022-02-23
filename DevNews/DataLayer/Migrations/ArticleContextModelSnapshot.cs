@@ -22,6 +22,66 @@ namespace DataLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Entity.Application.AppItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LangId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("AppItems");
+                });
+
+            modelBuilder.Entity("Entity.Application.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Language");
+                });
+
             modelBuilder.Entity("Entity.Article.Article", b =>
                 {
                     b.Property<Guid>("Id")
@@ -51,7 +111,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Article", (string)null);
+                    b.ToTable("Article");
                 });
 
             modelBuilder.Entity("Entity.Article.ArticleCategories", b =>
@@ -72,7 +132,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ArticleCategories", (string)null);
+                    b.ToTable("ArticleCategories");
                 });
 
             modelBuilder.Entity("Entity.Article.Category", b =>
@@ -80,6 +140,9 @@ namespace DataLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -94,10 +157,34 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Entity.Article.File", b =>
+            modelBuilder.Entity("Entity.Article.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<short>("OwnerType")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("Entity.Article.TFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,19 +220,161 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("File", (string)null);
+                    b.ToTable("File");
                 });
 
-            modelBuilder.Entity("Entity.Article.Post", b =>
+            modelBuilder.Entity("Entity.Article.VisitArticles", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ArticleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VisitArticles");
+                });
+
+            modelBuilder.Entity("Entity.Channel.Channel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Message")
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<short>("Type")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Channel");
+                });
+
+            modelBuilder.Entity("Entity.Channel.ChannelsAdmins", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChannelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChannelsAdmins");
+                });
+
+            modelBuilder.Entity("Entity.Channel.ChannelsUsers", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChannelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChannelsUsers");
+                });
+
+            modelBuilder.Entity("Entity.Class.Class", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("Entity.Comment.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Entity.Course.Cource", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Banner")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -155,12 +384,36 @@ namespace DataLayer.Migrations
                     b.Property<short>("OwnerType")
                         .HasColumnType("smallint");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<short>("Type")
+                        .HasColumnType("smallint");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Post", (string)null);
+                    b.ToTable("Course");
                 });
 
-            modelBuilder.Entity("Entity.Channel.Channel", b =>
+            modelBuilder.Entity("Entity.Explore.Explore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ArticleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Explore");
+                });
+
+            modelBuilder.Entity("Entity.Page.Page", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,63 +445,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Channel", (string)null);
-                });
-
-            modelBuilder.Entity("Entity.Channel.ChannelsAdmins", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChannelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChannelId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChannelsAdmins", (string)null);
-                });
-
-            modelBuilder.Entity("Entity.Channel.ChannelsUsers", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChannelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChannelId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChannelsUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Entity.Comment.Comment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Comment", (string)null);
+                    b.ToTable("Page");
                 });
 
             modelBuilder.Entity("Entity.User.Session", b =>
@@ -286,7 +483,30 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Session", (string)null);
+                    b.ToTable("Session");
+                });
+
+            modelBuilder.Entity("Entity.User.Settings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Lang")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Entity.User.User", b =>
@@ -324,7 +544,16 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Entity.Application.AppItems", b =>
+                {
+                    b.HasOne("Entity.Application.Language", "Language")
+                        .WithMany("AppItems")
+                        .HasForeignKey("LanguageId");
+
+                    b.Navigation("Language");
                 });
 
             modelBuilder.Entity("Entity.Article.ArticleCategories", b =>
@@ -393,6 +622,11 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Entity.Application.Language", b =>
+                {
+                    b.Navigation("AppItems");
                 });
 
             modelBuilder.Entity("Entity.Article.Article", b =>

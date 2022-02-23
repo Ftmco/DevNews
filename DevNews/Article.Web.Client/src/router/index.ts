@@ -11,109 +11,97 @@ Vue.use(VueRouter)
 
 const routes: RouteConfig[] = [
     {
-        path: "/",
-        component: () => import("@/layouts/homeLayout.vue"),
-        meta: (route: Route) => ({
-            route: route,
-            title: 'Home'
-        }),
+        path: '/',
+        redirect: '/tabs/home'
+    },
+    {
+        path: '/account/',
+        redirect: '/account/login'
+    },
+    {
+        path: '/tabs/',
+        component: () => import("@/pages/home/TabsPage.vue"),
         children: [
             {
-                path: "",
-                name: "Home",
-                component: () => import("@/pages/home/index.vue"),
+                path: 'home',
+                component: () => import("@/pages/home/HomePage.vue"),
                 meta: (route: Route) => ({
-                    route: route,
-                    title: 'Dev News'
+                    title: 'Home',
+                    route
                 })
             },
             {
-                path: "/channels",
-                name: "Channels",
-                component: () => import("@/pages/channel/Channels.vue"),
+                path: 'channels',
+                component: () => import("@/pages/home/ChannelsPage.vue"),
                 meta: (route: Route) => ({
-                    route: route,
                     title: 'Channels',
-                    hasBack: true
+                    middleware: auth,
+                    route
                 })
             },
             {
-                path: "/search",
-                name: "Search",
-                component: () => import("@/pages/search/Search.vue"),
+                path: 'search',
+                component: () => import("@/pages/home/SearchPage.vue"),
                 meta: (route: Route) => ({
-                    route: route,
                     title: 'Search',
-                    hasBack: true
+                    middleware: auth,
+                    route
                 })
+
             },
             {
-                path: "/channel",
-                name: "Channel",
-                component: () => import("@/pages/channel/ChannelItems.vue"),
+                path: 'settings',
+                name: 'Settings',
+                component: () => import("@/pages/home/SettingsPage.vue"),
                 meta: (route: Route) => ({
-                    route: route,
-                    title: `${route.query.name}`,
-                    noBottomNavigation: true,
-                    hasBack: true,
-                    unShow: true
+                    title: 'Settings',
+                    middleware: auth,
+                    route
                 })
             },
-            {
-                path: "/account/login",
-                name: "Login",
-                component: () => import("@/pages/account/Login.vue"),
-                meta: (route: Route) => ({
-                    route: route,
-                    title: 'Login',
-                    middleware: guest,
-                    unShow: true
-                })
-            },
-            {
-                path: "/account/profile",
-                name: "Profile",
-                component: () => import("@/pages/account/Profile.vue"),
-                meta: (route: Route) => ({
-                    route: route,
-                    title: 'Profile',
-                    middleware: auth
-                })
-            },
-            {
-                path: "/account/forgotPassword",
-                name: "ForgotPassword",
-                component: () => import("@/pages/account/ForgotPassword.vue"),
-                meta: (route: Route) => ({
-                    route: route,
-                    title: 'Forgot Password',
-                    middleware: guest,
-                    unShow: true
-                })
-            },
-            {
-                path: "/account/signup",
-                name: "SignUp",
-                component: () => import("@/pages/account/SignUp.vue"),
-                meta: (route: Route) => ({
-                    route: route,
-                    title: 'SignUp',
-                    middleware: guest,
-                    unShow: true
-                })
-            },
-            {
-                path: "/account/activeAccount",
-                name: "ActiveAccount",
-                component: () => import("@/pages/account/ActiveAccount.vue"),
-                meta: (route: Route) => ({
-                    route: route,
-                    title: 'Active Account',
-                    middleware: guest,
-                    unShow: true
-                })
-            }
         ]
+    }, {
+        path: '/account/login',
+        name: 'Login',
+        component: () => import("@/pages/account/LoginPage.vue"),
+        meta: (route: Route) => ({
+            title: 'Login',
+            middleware: guest,
+            route
+        })
+    }, {
+        path: '/account/register',
+        name: 'SignUp',
+        component: () => import("@/pages/account/SignUp.vue"),
+        meta: (route: Route) => ({
+            title: 'SignUp',
+            middleware: guest,
+            route
+        })
+    }, {
+        path: '/account/activation',
+        name: 'ActiveAccount',
+        component: () => import("@/pages/account/AccountActivation.vue"),
+        meta: (route: Route) => ({
+            title: 'Account Activation',
+            middleware: guest,
+            route
+        })
+    }, {
+        path: '/channel/',
+        name: 'Channel',
+        component: () => import("@/pages/channel/Channel.vue"),
+        meta: (route: Route) => ({
+            title: `${route.query.name}`,
+            middleware: auth
+        }),
+    },{
+        path: '/channel/info',
+        name: 'ChannelInfo',
+        component: () => import("@/pages/channel/ChannelInfo.vue"),
+        meta: (route: Route) => ({
+            title: `${route.query.name}-Info`
+        })
     }
 ];
 

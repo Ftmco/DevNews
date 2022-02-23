@@ -7,8 +7,6 @@ export const convertToBase64File = (file: any) => {
                 const fileReader = new FileReader()
                 fileReader.readAsDataURL(file)
                 fileReader.onload = () => {
-                    console.log(fileReader.result);
-
                     resolve({
                         base64: fileReader.result?.toString(),
                         type: file.type,
@@ -26,10 +24,10 @@ export const convertToBase64File = (file: any) => {
 
 export const createFileAddress = (file: fileModel): string => {
     file = { ...file }
-    return `${baseUrl}${file.directory}/${file.name}`
+    return `${baseUrl}${file.Directory}/${file.Name}`
 }
 
 export type fileModel = {
-    directory: string;
-    name: string;
+    Directory: string;
+    Name: string;
 }

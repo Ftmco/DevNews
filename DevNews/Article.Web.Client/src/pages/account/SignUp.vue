@@ -1,7 +1,7 @@
 <template>
   <AccountBase
     title="Signup"
-    subTitle="Create Account In Identity"
+    subTitle="Create Account In Article News"
     formHeight="100%"
   >
     <template v-slot:image>

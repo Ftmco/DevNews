@@ -4,7 +4,7 @@ public class ArticleCategories
 {
     [Key]
     public Guid Id { get; set; }
-   
+
     [Required]
     public Guid ArticleId { get; set; }
 

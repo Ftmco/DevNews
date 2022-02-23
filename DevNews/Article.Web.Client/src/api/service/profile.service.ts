@@ -1,3 +1,4 @@
+import { cacheData, getCache } from "@/cache/CacheService";
 import { messages } from "@/constants";
 import { AxiosInstance } from "axios";
 import { Profile } from "../models/profile.model";
@@ -13,10 +14,16 @@ export default class ProfileService implements IProfileRules {
 
     async getProfile() {
         try {
-            let request = await this._axios.get("Profile/Get")
-            let response = await request.data
-            return response
+            let cached = getCache('profile')
+            if (cached == null) {
+                let request = await this._axios.get("Profile/Get")
+                let response = await request.data
+                cached = cacheData('profile', response)
+            }
+            return cached as any
         } catch (e: any) {
+            console.log(e);
+            
             return messages.netWorkError(e.message)
         }
     }

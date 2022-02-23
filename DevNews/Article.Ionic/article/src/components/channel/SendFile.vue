@@ -5,7 +5,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content fullscreen>
-    <ion-card>
+    <ion-card mode="ios">
       <input type="file" :accept="mime" hidden id="fileInput" />
       <img v-if="mimeName == 'Image'" :src="fileData.base64" alt="" />
 

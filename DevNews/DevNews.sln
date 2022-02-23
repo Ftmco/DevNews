@@ -25,13 +25,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\View
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Train", "Train", "{C9DE77C2-EAEA-4171-B49C-F2D296572E48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer", "Train\Trainer\Trainer.csproj", "{CBA469AF-39E5-4E9B-A621-297C5BA0ECE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainer", "Train\Trainer\Trainer.csproj", "{CBA469AF-39E5-4E9B-A621-297C5BA0ECE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer.Data", "Train\Trainer.Data\Trainer.Data.csproj", "{F7F377B0-9EC6-4112-B94E-F7129273A18A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainer.Data", "Train\Trainer.Data\Trainer.Data.csproj", "{F7F377B0-9EC6-4112-B94E-F7129273A18A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainer.Entity", "Train\Trainer.Entity\Trainer.Entity.csproj", "{42566C28-759C-415F-AB6A-975F3FE3A23E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainer.Entity", "Train\Trainer.Entity\Trainer.Entity.csproj", "{42566C28-759C-415F-AB6A-975F3FE3A23E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Train.Service", "Train\Train.Service\Train.Service.csproj", "{61A0EED4-C974-4F2D-AF21-0BF5F71E0FDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Train.Service", "Train\Train.Service\Train.Service.csproj", "{61A0EED4-C974-4F2D-AF21-0BF5F71E0FDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shread", "Shread", "{39B58AC2-4868-47FE-B3BA-10095C20D7FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Base", "Services.Base\Services.Base.csproj", "{72AACE37-CBA1-4566-B4D9-3F5E4F8B099C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +91,10 @@ Global
 		{61A0EED4-C974-4F2D-AF21-0BF5F71E0FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61A0EED4-C974-4F2D-AF21-0BF5F71E0FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61A0EED4-C974-4F2D-AF21-0BF5F71E0FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AACE37-CBA1-4566-B4D9-3F5E4F8B099C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AACE37-CBA1-4566-B4D9-3F5E4F8B099C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AACE37-CBA1-4566-B4D9-3F5E4F8B099C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AACE37-CBA1-4566-B4D9-3F5E4F8B099C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +114,8 @@ Global
 		{F7F377B0-9EC6-4112-B94E-F7129273A18A} = {C9DE77C2-EAEA-4171-B49C-F2D296572E48}
 		{42566C28-759C-415F-AB6A-975F3FE3A23E} = {C9DE77C2-EAEA-4171-B49C-F2D296572E48}
 		{61A0EED4-C974-4F2D-AF21-0BF5F71E0FDA} = {C9DE77C2-EAEA-4171-B49C-F2D296572E48}
+		{39B58AC2-4868-47FE-B3BA-10095C20D7FC} = {A7AFECEF-DE71-4DAD-B3DE-1F71CEC55B2F}
+		{72AACE37-CBA1-4566-B4D9-3F5E4F8B099C} = {39B58AC2-4868-47FE-B3BA-10095C20D7FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2FD0411-424E-4E82-AAF5-99FB273F999C}

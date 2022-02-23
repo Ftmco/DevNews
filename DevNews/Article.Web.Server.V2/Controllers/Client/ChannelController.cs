@@ -26,6 +26,19 @@ public class ChannelController : ControllerBase
         };
     }
 
+    [HttpGet("GetEnc")]
+    public async Task<IActionResult> GetEnc()
+    {
+        GetChannelsResponse? channels = await _channel.GetChannelsAsync(HttpContext);
+        return channels.Status switch
+        {
+            ChannelsStatus.Success => Ok(await Success("", "User Channels", channels.Channels).SendResponseAsync(HttpContext)),
+            ChannelsStatus.UserNotFound => Ok(await Faild(403, "User Not Found", "Please Login To Your Account").SendResponseAsync(HttpContext)),
+            ChannelsStatus.Exception => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+        };
+    }
+
     [HttpGet("AdminChannels")]
     public async Task<IActionResult> GetAdminChannels()
     {
@@ -39,6 +52,19 @@ public class ChannelController : ControllerBase
         };
     }
 
+    [HttpGet("AdminChannelsEnc")]
+    public async Task<IActionResult> AdminChannelsEnc()
+    {
+        GetChannelsResponse? channels = await _channel.GetAdminChannelsAsync(HttpContext);
+        return channels.Status switch
+        {
+            ChannelsStatus.Success => Ok(await Success("", "User Channels", channels.Channels).SendResponseAsync(HttpContext)),
+            ChannelsStatus.UserNotFound => Ok(await Faild(403, "User Not Found", "Please Login To Your Account").SendResponseAsync(HttpContext)),
+            ChannelsStatus.Exception => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+        };
+    }
+
     [HttpPost("Create")]
     public async Task<IActionResult> Create(UpsertChannelViewModel insert)
     {
@@ -49,6 +75,19 @@ public class ChannelController : ControllerBase
             ChannelsStatus.UserNotFound => Ok(Faild(403, "User Not Found", "Please Login To Your Account")),
             ChannelsStatus.Exception => Ok(ApiException("Exception", "")),
             _ => Ok(ApiException("Exception", "")),
+        };
+    }
+
+    [HttpPost("CreateEnc")]
+    public async Task<IActionResult> Create(ApiRequest request)
+    {
+        UpsertChannelResponse? create = await _channel.CreateAsync(request, HttpContext);
+        return create.Status switch
+        {
+            ChannelsStatus.Success => Ok(await Success("Channel Created Successfully", "", create.Channel).SendResponseAsync(HttpContext)),
+            ChannelsStatus.UserNotFound => Ok(await Faild(403, "User Not Found", "Please Login To Your Account").SendResponseAsync(HttpContext)),
+            ChannelsStatus.Exception => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
         };
     }
 
@@ -84,13 +123,26 @@ public class ChannelController : ControllerBase
         };
     }
 
+    [HttpGet("ChannelEnc")]
+    public async Task<IActionResult> ChannelEnc(string token)
+    {
+        ChannelInfoViewModel? channel = await _channel.GetChannelAsync(token, Request.Headers);
+        return channel.Status switch
+        {
+            ChannelsStatus.Success => Ok(await Success("", $"Channel '{channel.Channel.Name}' Info", channel).SendResponseAsync(HttpContext)),
+            ChannelsStatus.UserNotFound => Ok(await Faild(403, "User Not Found Please Login to your Account", "").SendResponseAsync(HttpContext)),
+            ChannelsStatus.Exception => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
+        };
+    }
+
     [HttpGet("Posts")]
     public async Task<IActionResult> Posts(string token, int index)
     {
         GetPostResponse? posts = await _channel.GetChannelPostsAsync(token, index);
         return posts.Staus switch
         {
-            PostStaus.Success => Ok(Success("", "Channel Posts", posts.Posts)),
+            PostStaus.Success => Ok(Success("", "Channel Posts", new { posts.Posts, posts.TotalCount })),
             PostStaus.UserNotFound => Ok(Faild(403, "User Not Found Plase Login To Your Account", "")),
             PostStaus.Exception => Ok(ApiException("Exception,Please Try Again", "")),
             PostStaus.ChannelNotFound => Ok(Faild(404, "Channel Not Found", "")),
@@ -98,10 +150,18 @@ public class ChannelController : ControllerBase
         };
     }
 
-    [HttpGet("Articles")]
-    public async Task<IActionResult> Articles(string token)
+    [HttpGet("PostsEnc")]
+    public async Task<IActionResult> PostsEnc(string token, int index)
     {
-        return Ok();
+        GetPostResponse? posts = await _channel.GetChannelPostsAsync(token, index);
+        return posts.Staus switch
+        {
+            PostStaus.Success => Ok(await Success("", "Channel Posts", new { posts.Posts, posts.TotalCount }).SendResponseAsync(HttpContext)),
+            PostStaus.UserNotFound => Ok(await Faild(403, "User Not Found Plase Login To Your Account", "").SendResponseAsync(HttpContext)),
+            PostStaus.Exception => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
+            PostStaus.ChannelNotFound => Ok(await Faild(404, "Channel Not Found", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
+        };
     }
 
     [HttpPost("SendPost")]
@@ -116,5 +176,25 @@ public class ChannelController : ControllerBase
             PostStaus.ChannelNotFound => Ok(Faild(404, "Channel Not Found", "")),
             _ => Ok(ApiException("Exception,Please Try Again", "")),
         };
+    }
+
+    [HttpPost("SendPostEnc")]
+    public async Task<IActionResult> SendPost(ApiRequest request)
+    {
+        SendPostResponse? post = await _channel.SendPostAsync(request, HttpContext);
+        return post.Staus switch
+        {
+            PostStaus.Success => Ok(await Success("", "Posted Successfully", post.Post).SendResponseAsync(HttpContext)),
+            PostStaus.UserNotFound => Ok(await Faild(403, "User Not Found Plase Login To Your Account", "").SendResponseAsync(HttpContext)),
+            PostStaus.Exception => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
+            PostStaus.ChannelNotFound => Ok(await Faild(404, "Channel Not Found", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception,Please Try Again", "").SendResponseAsync(HttpContext)),
+        };
+    }
+
+    [HttpGet("GetChannelMeida")]
+    public async Task<IActionResult> GetChannelMedia(string token)
+    {
+        return Ok();
     }
 }

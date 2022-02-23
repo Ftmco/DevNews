@@ -1,13 +1,18 @@
 <template>
-  <div v-if="show">
-    <v-bottom-navigation v-model="page" shift fixed grow color="primary">
-      <v-btn v-for="item in items" :key="item.id" :to="item.to">
-        <span>{{ item.title }}</span>
+  <v-bottom-navigation
+    :input-value="show"
+    v-model="page"
+    shift
+    fixed
+    grow
+    color="primary"
+  >
+    <v-btn v-for="item in items" :key="item.id" :to="item.to">
+      <span>{{ item.title }}</span>
 
-        <v-icon>{{ item.icon }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
-  </div>
+      <v-icon>{{ item.icon }}</v-icon>
+    </v-btn>
+  </v-bottom-navigation>
 </template>
 
 <script lang="ts">
@@ -20,20 +25,12 @@ export default Vue.extend({
     show: false,
     items: bottomItems,
   }),
-  watch: {
-    $route(route) {
-      this.setShow(route);
-    },
-  },
   mounted() {
-    this.setShow(this.$route);
+    this.setShow();
   },
   methods: {
-    setShow(route: any) {
-      let meta = route.meta(route);
-      if (meta.noBottomNavigation) {
-        this.show = false;
-      } else this.show = window.screen.width <= 700;
+    setShow() {
+      this.show = window.screen.width <= 700;
     },
   },
 });

@@ -1,7 +1,6 @@
 ﻿using Entity.Article;
+using Microsoft.AspNetCore.Http;
 using Service.Rules;
-using Services.Base;
-using ViewModel.Category;
 
 namespace Service.Service;
 

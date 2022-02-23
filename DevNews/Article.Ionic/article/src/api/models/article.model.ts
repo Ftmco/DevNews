@@ -1,13 +1,11 @@
 export type UpsertArticle = {
-    title: string;
-    shortDescription: string;
-    text: string;
-    file: FileModel;
-    attachments: FileModel[],
-    channelToken?: string;
-    tags?: string;
-    isActive: boolean;
-    ownerType: number
+    id?: string,
+    text: string,
+    shortDescription: string,
+    title: string,
+    categories: string[],
+    image: FileModel,
+    attechmentFiles: FileModel[],
 }
 
 export type FileModel = {

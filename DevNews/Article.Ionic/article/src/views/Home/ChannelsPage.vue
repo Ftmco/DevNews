@@ -24,8 +24,8 @@
             <img :src="channel.image" />
           </ion-avatar>
           <ion-label>
-            <h2>{{ channel.name }}</h2>
-            <p>{{ channel.name }}</p>
+            <h2>{{ channel.Name }}</h2>
+            <p>{{ channel.Name }}</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -94,6 +94,7 @@ export default defineComponent({
   data: () => ({
     loading: loadingController.create({
       message: "Plase Wait...",
+      spinner:'bubbles'
     }),
     channels: [{}],
     channelService: new ChannelServices(apiCall),
@@ -108,22 +109,25 @@ export default defineComponent({
       this.channelService
         .getChannels()
         .then((res) => {
+
+          console.log(res);
+          
           this.channels = [];
-          if (res.status) {
-            res.result.forEach((channel: any) => {
+          if (res.Status) {
+            res.Result.forEach((channel: any) => {
               const item = {
                 ...channel,
-                image: createFileAddress(channel.avatar[0]),
+                image: createFileAddress(channel.Avatar[0]),
               };
               this.channels.push(item);
             });
           } else {
-            showToast(res.title);
+            showToast(res.Title);
           }
           this.closeLoadin();
         })
         .catch((e) => {
-          showToast(messages.netWorkError(e.message).message);
+          showToast(messages.netWorkError(e.message).Message);
           this.closeLoadin();
         });
     },
@@ -149,6 +153,7 @@ export default defineComponent({
         initialBreakpoint: 0.9,
         component: CreateChannel,
         backdropDismiss: true,
+        mode:'ios'
       });
       sheetModal.present();
 

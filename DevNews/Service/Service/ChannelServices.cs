@@ -3,11 +3,8 @@ using Entity.Channel;
 using Entity.User;
 using Microsoft.AspNetCore.Http;
 using Service.Rules;
-using Services.Base;
-using System.Linq;
 using Tools.Crypto;
 using Tools.FileTools;
-using ViewModel.Channel;
 using ViewModel.File;
 
 namespace Service.Service;
@@ -22,14 +19,14 @@ public class ChannelServices : IChannelRules
 
     private readonly IBaseRules<ChannelsAdmins> _channelsAdminsCrud;
 
-    private readonly IBaseRules<Entity.Article.File> _fileCrud;
+    private readonly IBaseRules<Entity.Article.TFile> _fileCrud;
 
     private readonly IPostRules _post;
 
     private readonly IAccountRules _account;
 
     public ChannelServices(IBaseRules<Channel> channelCrud, IAccountRules account,
-        IBaseRules<ChannelsUsers> channelsUsersCrud, IBaseRules<Entity.Article.File> fileCrud,
+        IBaseRules<ChannelsUsers> channelsUsersCrud, IBaseRules<Entity.Article.TFile> fileCrud,
             IBaseRules<ChannelsAdmins> channelsAdminsCrud, IBaseRules<User> userCrud, IPostRules post)
     {
         _channelCrud = channelCrud;
@@ -64,7 +61,7 @@ public class ChannelServices : IChannelRules
                 {
                     SaveFileResponse saveChannelAvatar = await new SaveFileViewModel(insert.Avatar.Base64, "Files/Channel").SaveFileAsync();
 
-                    Entity.Article.File channelAvatar = new()
+                    Entity.Article.TFile channelAvatar = new()
                     {
                         CreateDate = DateTime.Now,
                         Directory = "Files/Channel",
@@ -82,6 +79,13 @@ public class ChannelServices : IChannelRules
                 return new UpsertChannelResponse(ChannelsStatus.Exception, null);
             }
             return new UpsertChannelResponse(ChannelsStatus.Exception, null);
+        });
+
+    public async Task<UpsertChannelResponse> CreateAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            UpsertChannelViewModel upsert = await request.ReadRequestDataAsync<UpsertChannelViewModel>(httpContext);
+            return await CreateAsync(upsert, httpContext.Request.Headers);
         });
 
     public void Dispose()
@@ -134,17 +138,17 @@ public class ChannelServices : IChannelRules
             Channel channel = await GetChannelByTokenAsync(token);
             if (channel != null)
             {
-                IEnumerable<Post> posts = await _post.GetChannelPostsAsync(channel.Id, index);
-                IEnumerable<PostViewModel> postsViewModel = await _post.CreatePostViewModelAsync(posts);
-                return new GetPostResponse(PostStaus.Success, postsViewModel);
+                GetPosts getPosts = await _post.GetChannelPostsAsync(channel.Id, index);
+                IEnumerable<PostViewModel> postsViewModel = await _post.CreatePostViewModelAsync(getPosts.Posts);
+                return new GetPostResponse(PostStaus.Success, postsViewModel, getPosts.TotalCount);
             }
-            return new GetPostResponse(PostStaus.ChannelNotFound, null);
+            return new GetPostResponse(PostStaus.ChannelNotFound, null, 0);
         });
 
     public async Task<ChannelPreviewViewModel> GetChannelPreviewViewModelAsync(Channel channel)
         => await Task.Run(async () =>
        {
-           IEnumerable<Entity.Article.File> channelAvatars = await _fileCrud.GetAsync(ca => ca.ObjectId == channel.Id);
+           IEnumerable<Entity.Article.TFile> channelAvatars = await _fileCrud.GetAsync(ca => ca.ObjectId == channel.Id);
            ChannelPreviewViewModel channelPreview = new(
            Token: channel.Token,
            Name: channel.Name,
@@ -241,6 +245,13 @@ public class ChannelServices : IChannelRules
                 return new SendPostResponse(PostStaus.ChannelNotFound, null);
             }
             return new SendPostResponse(PostStaus.UserNotFound, null);
+        });
+
+    public async Task<SendPostResponse> SendPostAsync(ApiRequest request, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            SendPostViewModel post = await request.ReadRequestDataAsync<SendPostViewModel>(httpContext);
+            return await SendPostAsync(post, httpContext.Request.Headers);
         });
 
     public async Task<ChannelsStatus> SubscribeChannelAsync(string token, IHeaderDictionary headers)

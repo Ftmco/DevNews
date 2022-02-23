@@ -24,4 +24,5 @@ public class Article
 
 
     public virtual ICollection<ArticleCategories> ArticleCategories { get; set; }
+
 }

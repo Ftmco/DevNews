@@ -1,5 +1,3 @@
-using Entity.Article;
-
 namespace Entity.Channel;
 
 public record Channel
@@ -11,15 +9,15 @@ public record Channel
     public string Name { get; set; }
 
     public string About { get; set; }
-    
+
     [Required]
-    public string Link {get;set;} 
-        
+    public string Link { get; set; }
+
     [Required]
-    public string Token {get;set;} 
-    
+    public string Token { get; set; }
+
     [Required]
-    public short Type {get;set;} 
+    public short Type { get; set; }
 
     [Required]
     public DateTime CreateDate { get; set; }
@@ -27,8 +25,12 @@ public record Channel
     [Required]
     public Guid OwnerId { get; set; }
 
+    [Required]
+    public int LanguageId { get; set; }
+
+    //Navigation Property
+    //Relationships
     public virtual ICollection<ChannelsUsers> ChannelsUsers { get; set; }
 
     public virtual ICollection<ChannelsAdmins> ChannelsAdmins { get; set; }
-
 }

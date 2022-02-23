@@ -92,7 +92,6 @@ const router = createRouter({
   routes
 })
 
-
 router.beforeEach((to: any, from, next) => {
 
   const meta = to.meta

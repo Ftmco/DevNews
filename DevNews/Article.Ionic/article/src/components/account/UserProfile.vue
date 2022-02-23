@@ -1,6 +1,10 @@
 <template>
-  <ion-list-header>Profile</ion-list-header>
   <ion-card>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Profile</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-card-header>
       <ion-row>
         <ion-avatar>
@@ -8,7 +12,7 @@
         </ion-avatar>
         <ion-fab horizontal="end">
           <ion-fab-button>
-            <ion-icon :icon="arrowBack"></ion-icon>
+            <ion-icon :icon="settings"></ion-icon>
           </ion-fab-button>
           <ion-fab-list side="start">
             <ion-fab-button color="warning">
@@ -29,7 +33,7 @@
         <ion-label position="floating">Full Name</ion-label>
         <ion-input
           readonly
-          :value="profile.fullName"
+          :value="profile.FullName"
           placeholder="Full Name"
         ></ion-input>
       </ion-item>
@@ -37,7 +41,7 @@
         <ion-label position="floating">User Name</ion-label>
         <ion-input
           readonly
-          :value="profile.userName"
+          :value="profile.UserName"
           placeholder="User Name"
         ></ion-input>
       </ion-item>
@@ -45,7 +49,7 @@
         <ion-label position="floating">MobileNo</ion-label>
         <ion-input
           readonly
-          readonly:value="profile.mobileno"
+          readonly:value="profile.Mobileno"
           placeholder="Mobileno"
         ></ion-input>
       </ion-item>
@@ -53,7 +57,7 @@
         <ion-label position="floating">E-mail</ion-label>
         <ion-input
           readonly
-          :value="profile.email"
+          :value="profile.Email"
           placeholder="E-mail"
         ></ion-input>
       </ion-item>
@@ -67,7 +71,7 @@ import ProfileService from "@/api/service/profile.service";
 import { showToast } from "@/services/components/Toast";
 import { defineComponent } from "vue";
 import { createFileAddress } from "@/services/file";
-import { pencil, arrowBack, exit } from "ionicons/icons";
+import { pencil, exit, settings } from "ionicons/icons";
 import AccountServiec from "@/api/service/account.service";
 
 import {
@@ -79,12 +83,14 @@ import {
   IonIcon,
   IonFabButton,
   IonFabList,
-  IonListHeader,
   IonImg,
   IonRow,
   IonCard,
   IonCardContent,
   IonCardHeader,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
 } from "@ionic/vue";
 
 export default defineComponent({
@@ -97,20 +103,22 @@ export default defineComponent({
     IonIcon,
     IonFabButton,
     IonFabList,
-    IonListHeader,
     IonImg,
     IonRow,
     IonCard,
     IonCardContent,
     IonCardHeader,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
   },
   data: () => ({
     profile: {},
     profleServices: new ProfileService(apiCall),
     accountServices: new AccountServiec(apiCall),
     pencil,
-    arrowBack,
     exit,
+    settings,
   }),
   beforeMount() {
     this.getProfile();
@@ -120,13 +128,15 @@ export default defineComponent({
       this.profleServices
         .getProfile()
         .then((res) => {
-          if (res.status) {
+          console.log(res);
+
+          if (res.Status) {
             this.profile = {
-              ...res.result,
-              avatar: createFileAddress(res.result.image[0]),
+              ...res.Result,
+              avatar: createFileAddress(res.Result.Image[0]),
             };
           }
-          showToast(res.title);
+          showToast(res.Title);
         })
         .catch((e) => {
           showToast(e.message);

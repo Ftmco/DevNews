@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.SqlServer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tools.AppSetting;
 
 namespace Trainer.Data.Context;
 
@@ -20,7 +15,8 @@ public class TrainerContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=Trainer_Db;Integrated Security=True");
+            string cnn = "ConnectionStrings".GetDataAsync("Trainer").Result;
+            optionsBuilder.UseSqlServer(cnn);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Service.Rules;
-using ViewModel.Category;
+﻿using ViewModel.Category;
 
 namespace Article.Web.Server.V2.Controllers.Client;
 
@@ -25,6 +22,18 @@ public class GroupController : ControllerBase
             CategoryStatus.Success => Ok(Success("", "Categories", categories.Categories)),
             CategoryStatus.Exception => Ok(ApiException("Exception", "")),
             _ => Ok(ApiException("Exception", "")),
+        };
+    }
+
+    [HttpGet("GetEnc")]
+    public async Task<IActionResult> GetEnc()
+    {
+        GetCategoriesResponse? categories = await _category.GetCategoriesAsync();
+        return categories.Status switch
+        {
+            CategoryStatus.Success => Ok(await Success("", "Categories", categories.Categories).SendResponseAsync(HttpContext)),
+            CategoryStatus.Exception => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
+            _ => Ok(await ApiException("Exception", "").SendResponseAsync(HttpContext)),
         };
     }
 }

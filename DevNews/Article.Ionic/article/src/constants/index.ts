@@ -66,10 +66,10 @@ export const navigationItems = [
 
 export const messages = {
     netWorkError: (message: string) => ({
-        status: false,
-        code: 500,
-        title: 'Connection to server faild',
-        message: message
+        Status: false,
+        Code: 500,
+        Title: 'Connection to server faild',
+        Message: message
     }),
     invalidForm: 'Please fill in all fields'
 }

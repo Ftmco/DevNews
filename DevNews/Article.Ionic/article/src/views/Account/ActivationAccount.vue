@@ -101,19 +101,22 @@ export default defineComponent({
   }),
   methods: {
     async active() {
-      const loading = await openLoading();
+      const loading = openLoading();
       this.accountServices
         .Acivation(this.user)
         .then((res) => {
           if (res.status) {
             router.push({
               name: "login",
+              query: {
+                userName: this.user.userName,
+              },
             });
           }
           showToast(res.title);
         })
         .finally(() => {
-          closeLoading(loading);
+          loading.then((res) => res.dismiss());
         });
     },
   },

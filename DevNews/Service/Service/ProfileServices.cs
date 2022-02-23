@@ -1,7 +1,6 @@
 ﻿using Entity.User;
 using Microsoft.AspNetCore.Http;
 using Service.Rules;
-using Services.Base;
 using Tools.AppSetting;
 using Tools.FileTools;
 using ViewModel.File;
@@ -17,10 +16,10 @@ public class ProfileServices : IProfileRules
 
     private readonly IBaseRules<User> _userCrud;
 
-    private readonly IBaseRules<Entity.Article.File> _fileCrud;
+    private readonly IBaseRules<Entity.Article.TFile> _fileCrud;
 
     public ProfileServices(IAccountRules account, IBaseRules<User> userCrud,
-        IBaseRules<Entity.Article.File> fileCrud, IUserRules user)
+        IBaseRules<Entity.Article.TFile> fileCrud, IUserRules user)
     {
         _account = account;
         _userCrud = userCrud;
@@ -68,7 +67,7 @@ public class ProfileServices : IProfileRules
                     {
                         var directory = await "Directories".GetDataAsync("User");
                         var save = await new SaveFileViewModel(profile.Image.Base64, directory).SaveFileAsync();
-                        Entity.Article.File profileImage = new()
+                        Entity.Article.TFile profileImage = new()
                         {
                             CreateDate = DateTime.Now,
                             Directory = directory,
@@ -90,5 +89,12 @@ public class ProfileServices : IProfileRules
                 return new ProfileResponse(ProfileStatus.UserNameExist, null);
             }
             return new ProfileResponse(ProfileStatus.UserNotFound, null);
+        });
+
+    public async Task<ProfileResponse> UpdateProfileAsync(ApiRequest reqeust, HttpContext httpContext)
+        => await Task.Run(async () =>
+        {
+            UpdateProfileViewModel update = await reqeust.ReadRequestDataAsync<UpdateProfileViewModel>(httpContext);
+            return await UpdateProfileAsync(update, httpContext.Request.Headers);
         });
 }

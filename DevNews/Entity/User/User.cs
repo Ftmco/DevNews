@@ -1,4 +1,5 @@
-﻿using Entity.Channel;
+﻿using Entity.Article;
+using Entity.Channel;
 
 namespace Entity.User;
 
@@ -32,5 +33,5 @@ public record User
 
     public virtual ICollection<ChannelsUsers> ChannelsUsers { get; set; }
 
-    public virtual ICollection<ChannelsAdmins> ChannelsAdmins { get; set; }
+    public virtual ICollection<ChannelsAdmins> ChannelsAdmins { get; set; }  
 }
