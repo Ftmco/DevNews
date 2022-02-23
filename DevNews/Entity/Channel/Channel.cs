@@ -25,8 +25,12 @@ public record Channel
     [Required]
     public Guid OwnerId { get; set; }
 
+    [Required]
+    public int LanguageId { get; set; }
+
+    //Navigation Property
+    //Relationships
     public virtual ICollection<ChannelsUsers> ChannelsUsers { get; set; }
 
     public virtual ICollection<ChannelsAdmins> ChannelsAdmins { get; set; }
-
 }

@@ -16,10 +16,10 @@ public class ProfileServices : IProfileRules
 
     private readonly IBaseRules<User> _userCrud;
 
-    private readonly IBaseRules<Entity.Article.File> _fileCrud;
+    private readonly IBaseRules<Entity.Article.TFile> _fileCrud;
 
     public ProfileServices(IAccountRules account, IBaseRules<User> userCrud,
-        IBaseRules<Entity.Article.File> fileCrud, IUserRules user)
+        IBaseRules<Entity.Article.TFile> fileCrud, IUserRules user)
     {
         _account = account;
         _userCrud = userCrud;
@@ -67,7 +67,7 @@ public class ProfileServices : IProfileRules
                     {
                         var directory = await "Directories".GetDataAsync("User");
                         var save = await new SaveFileViewModel(profile.Image.Base64, directory).SaveFileAsync();
-                        Entity.Article.File profileImage = new()
+                        Entity.Article.TFile profileImage = new()
                         {
                             CreateDate = DateTime.Now,
                             Directory = directory,

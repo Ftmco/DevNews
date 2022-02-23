@@ -2,9 +2,9 @@
 
 namespace ViewModel.Channel;
 
-public record ChannelViewModel(string Token, string Link, string Name, IEnumerable<Entity.Article.File> Avatar);
+public record ChannelViewModel(string Token, string Link, string Name, IEnumerable<Entity.Article.TFile> Avatar);
 
-public record ChannelPreviewViewModel(string Token, string Name, IEnumerable<Entity.Article.File> Avatar, int NewPosts);
+public record ChannelPreviewViewModel(string Token, string Name, IEnumerable<Entity.Article.TFile> Avatar, int NewPosts);
 
 public record GetChannelsResponse(ChannelsStatus Status, IEnumerable<ChannelPreviewViewModel> Channels);
 
@@ -14,7 +14,7 @@ public record UpsertChannelResponse(ChannelsStatus Status, ChannelPreviewViewMod
 
 public record ChannelInfoViewModel(ChannelsStatus Status, ChannelViewModel Channel, OwnerViewModel Owner, bool IsAdmin, bool IsIn);
 
-public record OwnerViewModel(string Email, string Token, string UserName, IEnumerable<Entity.Article.File> Avatar);
+public record OwnerViewModel(string Email, string Token, string UserName, IEnumerable<Entity.Article.TFile> Avatar);
 
 public enum ChannelsStatus
 {

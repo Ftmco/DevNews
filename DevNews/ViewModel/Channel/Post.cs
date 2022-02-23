@@ -2,7 +2,7 @@
 
 namespace ViewModel.Channel;
 
-public record PostViewModel(string Message, string CreateDate, Guid OwnerId, short OwnerType, IEnumerable<Entity.Article.File> Files);
+public record PostViewModel(string Message, string CreateDate, Guid OwnerId, short OwnerType, IEnumerable<Entity.Article.TFile> Files);
 
 public record GetPostResponse(PostStaus Staus, IEnumerable<PostViewModel> Posts,int TotalCount);
 

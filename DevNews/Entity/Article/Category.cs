@@ -13,5 +13,10 @@ public class Category
 
     public Guid? ParrentId { get; set; }
 
+    [Required]
+    public int LanguageId { get; set; }
+
+    //Navigation Property
+    //Realtionships
     public virtual ICollection<ArticleCategories> ArticleCategories { get; set; }
 }

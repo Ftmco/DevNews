@@ -1,4 +1,5 @@
-﻿using Entity.Article;
+﻿using Entity.Application;
+using Entity.Article;
 using Entity.Channel;
 using Entity.Comment;
 using Entity.Explore;
@@ -25,7 +26,7 @@ public static class Injector
         service.AddScoped<IBaseRules<Article>, BaseServices<Article>>();
         service.AddScoped<IBaseRules<ArticleCategories>, BaseServices<ArticleCategories>>();
         service.AddScoped<IBaseRules<Category>, BaseServices<Category>>();
-        service.AddScoped<IBaseRules<Entity.Article.File>, BaseServices<Entity.Article.File>>();
+        service.AddScoped<IBaseRules<Entity.Article.TFile>, BaseServices<Entity.Article.TFile>>();
         service.AddScoped<IBaseRules<Post>, BaseServices<Post>>();
         service.AddScoped<IBaseRules<Channel>, BaseServices<Channel>>();
         service.AddScoped<IBaseRules<ChannelsAdmins>, BaseServices<ChannelsAdmins>>();
@@ -36,6 +37,9 @@ public static class Injector
         service.AddScoped<IBaseRules<Explore>, BaseServices<Explore>>();
         service.AddScoped<IBaseRules<VisitArticles>, BaseServices<VisitArticles>>();
         service.AddScoped<IBaseRules<Page>, BaseServices<Page>>();
+        service.AddScoped<IBaseRules<Settings>, BaseServices<Settings>>();
+        service.AddScoped<IBaseRules<Language>, BaseServices<Language>>();
+        service.AddScoped<IBaseRules<AppItems>, BaseServices<AppItems>>();
 
         return service;
     }
@@ -53,6 +57,7 @@ public static class Injector
         service.AddTransient<IPostRules, PostServices>();
         service.AddTransient<ISearchRules, SearchServices>();
         service.AddTransient<IPageRules, PageServices>();
+        service.AddTransient<IApplicationRules, ApplicationServices>();
         return service;
     }
 

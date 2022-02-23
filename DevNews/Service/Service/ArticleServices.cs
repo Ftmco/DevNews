@@ -18,14 +18,14 @@ public class ArticleServices : IArticleRules
 
     private readonly IBaseRules<Article> _articleCrud;
 
-    private readonly IBaseRules<Entity.Article.File> _fileCrud;
+    private readonly IBaseRules<Entity.Article.TFile> _fileCrud;
 
     private readonly IChannelRules _channel;
 
     private readonly IPageRules _page;
 
     public ArticleServices(ICategoryRules category, IBaseRules<Category> categoryCrud, IBaseRules<ArticleCategories> articleCategoriesCrud,
-            IBaseRules<Article> articleCrud, IChannelRules channel, IPageRules page, IBaseRules<Entity.Article.File> fileCrud)
+            IBaseRules<Article> articleCrud, IChannelRules channel, IPageRules page, IBaseRules<Entity.Article.TFile> fileCrud)
     {
         _category = category;
         _categoryCrud = categoryCrud;
@@ -108,7 +108,7 @@ public class ArticleServices : IArticleRules
             {
                 string directory = await "Directories".GetDataAsync("Article");
                 SaveFileResponse saveFile = await new SaveFileViewModel(uploadFile.Base64, directory).SaveFileAsync();
-                Entity.Article.File articleFile = new()
+                Entity.Article.TFile articleFile = new()
                 {
                     CreateDate = DateTime.Now,
                     Directory = directory,

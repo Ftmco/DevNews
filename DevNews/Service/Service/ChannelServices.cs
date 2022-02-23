@@ -19,14 +19,14 @@ public class ChannelServices : IChannelRules
 
     private readonly IBaseRules<ChannelsAdmins> _channelsAdminsCrud;
 
-    private readonly IBaseRules<Entity.Article.File> _fileCrud;
+    private readonly IBaseRules<Entity.Article.TFile> _fileCrud;
 
     private readonly IPostRules _post;
 
     private readonly IAccountRules _account;
 
     public ChannelServices(IBaseRules<Channel> channelCrud, IAccountRules account,
-        IBaseRules<ChannelsUsers> channelsUsersCrud, IBaseRules<Entity.Article.File> fileCrud,
+        IBaseRules<ChannelsUsers> channelsUsersCrud, IBaseRules<Entity.Article.TFile> fileCrud,
             IBaseRules<ChannelsAdmins> channelsAdminsCrud, IBaseRules<User> userCrud, IPostRules post)
     {
         _channelCrud = channelCrud;
@@ -61,7 +61,7 @@ public class ChannelServices : IChannelRules
                 {
                     SaveFileResponse saveChannelAvatar = await new SaveFileViewModel(insert.Avatar.Base64, "Files/Channel").SaveFileAsync();
 
-                    Entity.Article.File channelAvatar = new()
+                    Entity.Article.TFile channelAvatar = new()
                     {
                         CreateDate = DateTime.Now,
                         Directory = "Files/Channel",
@@ -148,7 +148,7 @@ public class ChannelServices : IChannelRules
     public async Task<ChannelPreviewViewModel> GetChannelPreviewViewModelAsync(Channel channel)
         => await Task.Run(async () =>
        {
-           IEnumerable<Entity.Article.File> channelAvatars = await _fileCrud.GetAsync(ca => ca.ObjectId == channel.Id);
+           IEnumerable<Entity.Article.TFile> channelAvatars = await _fileCrud.GetAsync(ca => ca.ObjectId == channel.Id);
            ChannelPreviewViewModel channelPreview = new(
            Token: channel.Token,
            Name: channel.Name,
