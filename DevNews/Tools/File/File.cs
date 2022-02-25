@@ -34,4 +34,18 @@ public static class FileExtensions
                 return new SaveFileResponse(SaveFileStatus.Exception, "", "", 0);
             }
         });
+
+    public static async Task<bool> DeleteFileAsync(this string path)
+        => await Task.Run(() =>
+        {
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        });
 }
