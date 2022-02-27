@@ -39,7 +39,18 @@
     <v-card-text>
       <div>{{ post.message }}</div>
     </v-card-text>
-    <v-card-subtitle>{{post.createDate}}</v-card-subtitle>
+    <v-card-actions>
+      <v-btn icon color="error">
+        <v-icon>mdi-heart-outline</v-icon>
+      </v-btn>
+      <v-btn icon color="info">
+        <v-icon>mdi-message-outline</v-icon>
+      </v-btn>
+      <v-btn icon color="warning">
+        <v-icon>mdi-bookmark-outline</v-icon>
+      </v-btn>
+    </v-card-actions>
+    <v-card-subtitle>{{ post.createDate }}</v-card-subtitle>
   </v-card>
 </template>
 

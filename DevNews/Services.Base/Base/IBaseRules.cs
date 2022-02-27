@@ -2,7 +2,7 @@
 
 namespace Services.Base;
 
-public interface IBaseRules<Tentity> where Tentity : class
+public interface IBaseRules<Tentity> : IAsyncDisposable where Tentity : class
 {
     Task<IEnumerable<Tentity>> GetAsync();
 
@@ -20,7 +20,7 @@ public interface IBaseRules<Tentity> where Tentity : class
 
     Task<int> CountAsync();
 
-    Task<int> CountAsync(Expression<Func<Tentity,bool>> count);
+    Task<int> CountAsync(Expression<Func<Tentity, bool>> count);
 
     Task<Tentity?> GetAsync(object id);
 

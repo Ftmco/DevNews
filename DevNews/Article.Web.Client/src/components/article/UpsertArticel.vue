@@ -36,8 +36,23 @@
           ></v-textarea>
         </v-col>
         <v-col cols="12">
+          <v-select
+            placeholder="Categories"
+            multiple
+            outlined
+            chips
+            :items="categories"
+            item-text="name"
+            counter
+            clearable
+            deletable-chips
+            item-value="id"
+            open-on-clear
+            v-model="article.categories"
+          ></v-select>
+        </v-col>
+        <v-col cols="12">
           <mavon-editor
-            :toolbars="toolbars"
             language="en"
             v-model="article.text"
           />
@@ -52,16 +67,22 @@
           <v-text-field outlined placeholder="Tags" label="Tags"></v-text-field>
         </v-col>
       </v-row>
+
+      <v-btn color="primary" block elevation="5"> Create Article </v-btn>
     </v-col>
   </v-card>
 </template>
 
 <script lang="ts">
+import { apiCall } from "@/api";
 import { FileModel } from "@/api/models/article.model";
+import CategoryService from "@/api/service/category.service";
 import { convertToBase64File } from "@/services/file";
+import { showMessage } from "@/services/message";
 import Vue from "vue";
 export default Vue.extend({
   data: () => ({
+    categoryServices: new CategoryService(apiCall),
     article: {
       title: "",
       shortDescription: "",
@@ -78,6 +99,7 @@ export default Vue.extend({
       ownerToken: "",
       isActive: true,
     },
+    categories: [],
     toolbars: {
       bold: true, // 粗体
       italic: true, // 斜体
@@ -114,12 +136,21 @@ export default Vue.extend({
       preview: true, // 预览
     },
   }),
+  created() {
+    this.getCategories();
+  },
   methods: {
     imageSelect(e: any) {
       convertToBase64File(e).then((res) => {
         if (res != null) {
           this.article.image = res as FileModel;
         } else this.article.image = { base64: "", ogName: "", type: "" };
+      });
+    },
+    getCategories() {
+      this.categoryServices.getCategories().then((res) => {
+        if (res.status) this.categories = res.result;
+        showMessage(this, res.title);
       });
     },
   },

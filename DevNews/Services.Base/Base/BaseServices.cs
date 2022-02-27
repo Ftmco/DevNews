@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Services.Base;
 
-public class BaseServices<TEntity> : IAsyncDisposable, IBaseRules<TEntity> where TEntity : class
+public class BaseServices<TEntity> : IBaseRules<TEntity> where TEntity : class
 {
     #region -- Dependency --
 

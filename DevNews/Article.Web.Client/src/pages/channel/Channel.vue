@@ -92,7 +92,7 @@
         </v-col>
       </v-sheet>
     </v-bottom-sheet>
-    <app-dialog :title="dialogTitle" :titleColor="dialogColor">
+    <app-dialog :title="dialogTitle" app="false" :titleColor="dialogColor">
       <template v-slot:body>
         <upsert-articel />
       </template>
